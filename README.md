@@ -6,8 +6,7 @@
 **java标准后端模板**
 
 包含如下技术栈：
-- <a href="https://spring.io/projects/spring-boot" target="_blank">spring-boot</a>
-+ <a href="http://www.mybatis.org/mybatis-3" target="_blank">mybatis</a>架构
+- <a href="https://spring.io/projects/spring-boot" target="_blank">spring-boot</a> + <a href="http://www.mybatis.org/mybatis-3" target="_blank">mybatis</a>架构
 - <a href="http://hibernate.org/validator/releases" target="_blank">hibernate-validator</a>
 - <a href="https://swagger.io" target="_blank">swagger</a>(API文档自动生成)
 - <a href="http://mapstruct.org" target="_blank">mapstruct</a>(属性映射)
