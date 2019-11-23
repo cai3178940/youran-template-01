@@ -2,15 +2,15 @@
 
 #### 介绍
 
-本项目是[youran代码自动化平台](https://gitee.com/caixiaoge/youran){:target="_blank"}的预置代码模板：
+本项目是<a href="https://gitee.com/caixiaoge/youran" target="_blank">youran代码自动化平台</a>的预置代码模板：
 **java标准后端模板**
 
 包含如下技术栈：
-- [spring-boot](https://spring.io/projects/spring-boot?_blank)+[mybatis](http://www.mybatis.org/mybatis-3?_blank)架构
-- [hibernate-validator](http://hibernate.org/validator/releases?_blank)
-- [swagger](https://swagger.io?_blank)(API文档自动生成)
-- [mapstruct](http://mapstruct.org?_blank)(属性映射)
-- 基于[H2](http://www.h2database.com?_blank)内存数据库的单元测试
+- [spring-boot](https://spring.io/projects/spring-boot)+[mybatis](http://www.mybatis.org/mybatis-3)架构
+- [hibernate-validator](http://hibernate.org/validator/releases)
+- [swagger](https://swagger.io)(API文档自动生成)
+- [mapstruct](http://mapstruct.org)(属性映射)
+- 基于[H2](http://www.h2database.com)内存数据库的单元测试
 
 
 #### 软件架构
