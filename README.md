@@ -6,12 +6,12 @@
 **java标准后端模板**
 
 包含如下技术栈：
-- [spring-boot](https://spring.io/projects/spring-boot)+[mybatis](http://www.mybatis.org/mybatis-3)架构
-- [hibernate-validator](http://hibernate.org/validator/releases)
-- [swagger](https://swagger.io)(API文档自动生成)
-- [mapstruct](http://mapstruct.org)(属性映射)
-- 基于[H2](http://www.h2database.com)内存数据库的单元测试
-
+- <a href="https://spring.io/projects/spring-boot" target="_blank">spring-boot</a>
++ <a href="http://www.mybatis.org/mybatis-3" target="_blank">mybatis</a>架构
+- <a href="http://hibernate.org/validator/releases" target="_blank">hibernate-validator</a>
+- <a href="https://swagger.io" target="_blank">swagger</a>(API文档自动生成)
+- <a href="http://mapstruct.org" target="_blank">mapstruct</a>(属性映射)
+- 基于<a href="http://www.h2database.com" target="_blank">H2</a>内存数据库的单元测试
 
 #### 软件架构
 标准的maven模块化结构，包含以下三个模块：
