@@ -1,7 +1,9 @@
-# youran-template
+# youran-template-01
 
 #### 介绍
-代码自动化平台预置模板-java标准后端模板
+
+本项目是[youran代码自动化平台](https://gitee.com/caixiaoge/youran)的预置代码模板：
+**java标准后端模板**
 
 包含如下技术栈：
 - [spring-boot](https://spring.io/projects/spring-boot/)+[mybatis](http://www.mybatis.org/mybatis-3/)架构
