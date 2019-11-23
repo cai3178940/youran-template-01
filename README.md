@@ -1,37 +1,56 @@
 # youran-template
 
 #### 介绍
-代码自动化平台预置模板
+代码自动化平台预置模板-java标准后端模板
+
+包含如下技术栈：
+- [spring-boot](https://spring.io/projects/spring-boot/)+[mybatis](http://www.mybatis.org/mybatis-3/)架构
+- [hibernate-validator](http://hibernate.org/validator/releases/)
+- [swagger](https://swagger.io/)(API文档自动生成)
+- [mapstruct](http://mapstruct.org/)(属性映射)
+- 基于[H2](http://www.h2database.com)内存数据库的单元测试
+
 
 #### 软件架构
-软件架构说明
+标准的maven模块化结构，包含以下三个模块：
+
+1. common模块
+2. core模块
+3. web模块
+
+##### common模块
+
+和业务无关的通用代码，包括：
+- LoginContext接口
+- dao接口
+- BusinessException异常类
+- 乐观锁相关抽象代码
+- pojo的超类及接口
+- 通用util工具包
+- 防xss相关通用代码
+
+
+##### core模块
+
+和具体业务相关的核心代码，包括：
+- 业务相关dao接口及mybatis的dao.xml
+- 业务相关pojo类
+- 业务相关service类
+
+##### web模块
+
+和具体业务相关的web层代码，包括：
+- 项目启动入口类
+- 包含swagger注解的api文档接口
+- controller类
+- 单元测试代码
+- 单元测试目录下还有数据库建表脚本
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  首先保证本地maven仓库中已经安装了youran代码生成器的核心jar包
+2.  用package命令直接编译打包本项目
+3.  打包完之后生成的youran-template-01-x.x.x-SNAPSHOT-src.zip
+就能在youran平台中导入了
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
