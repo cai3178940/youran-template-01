@@ -2,7 +2,6 @@
 <#include "/abstracted/checkFeatureForRest.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.web.rest.*")/>
 <@call this.addImport("org.junit.runner.RunWith")/>
 <@call this.addImport("org.junit.runners.Suite")/>
 <@call this.printClassCom("合并测试类")/>
@@ -10,6 +9,7 @@
 @Suite.SuiteClasses({
 <#list this.metaEntities as metaEntity>
     <#if getGenRest(metaEntity)>
+        <@call this.addImport("${this.packageName}.web.rest.*")/>
     ${metaEntity.className}ControllerTest.class,
     </#if>
 </#list>
