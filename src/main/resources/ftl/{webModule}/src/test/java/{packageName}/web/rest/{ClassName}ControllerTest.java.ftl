@@ -30,7 +30,7 @@
     @Test
     public void save() throws Exception {
     <#list saveExampleCode as saveExample>
-        <#if saveExample_has_next>
+        <#if saveExample?hasNext>
         ${saveExample}
         </#if>
     </#list>

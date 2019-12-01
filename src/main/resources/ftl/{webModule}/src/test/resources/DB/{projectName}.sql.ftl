@@ -4,14 +4,14 @@ DROP TABLE IF EXISTS `${metaEntity.tableName}`;
 
 CREATE TABLE `${metaEntity.tableName}` (
     <#list metaEntity.fields as fieldId,field>
-        <#assign comma_holder><#if metaEntity_has_next || metaEntity.pkField?? || (metaEntity.indexes?? && (metaEntity.indexes?size > 0))>,</#if></#assign>
+        <#assign comma_holder><#if metaEntity?hasNext || metaEntity.pkField?? || (metaEntity.indexes?? && (metaEntity.indexes?size > 0))>,</#if></#assign>
     `${field.fieldName}` ${field.fieldType}${SqlTemplateFunction.getLengthDisplay(field)}${SqlTemplateFunction.getAutoIncrementDisplay(field)}${SqlTemplateFunction.getNotNullDisplay(field)}${SqlTemplateFunction.getDefaultDisplay(field)}${SqlTemplateFunction.getCommentDisplay(field.fieldComment,true)}${comma_holder}
     </#list>
     <#if metaEntity.pkField??>
     PRIMARY KEY (`${metaEntity.pkField.fieldName}`)<#if metaEntity.indexes?? && (metaEntity.indexes?size > 0)>,</#if>
     </#if>
     <#list metaEntity.indexes! as index>
-    <#if index.unique>UNIQUE </#if>KEY `${index.indexName}` (<#list index.fields as field>`${field.fieldName}`<#if field_has_next >,</#if></#list>) USING BTREE<#if index_has_next>,</#if>
+    <#if index.unique>UNIQUE </#if>KEY `${index.indexName}` (<#list index.fields as field>`${field.fieldName}`<#if field?hasNext >,</#if></#list>) USING BTREE<#if index?hasNext>,</#if>
     </#list>
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4${SqlTemplateFunction.getCommentDisplay(metaEntity.desc,false)};
 

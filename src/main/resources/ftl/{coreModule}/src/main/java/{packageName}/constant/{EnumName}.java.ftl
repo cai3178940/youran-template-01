@@ -14,7 +14,7 @@ public enum ${this.constNameUpper} {
     <#elseif this.constType==MetaConstType.STRING>
         <#assign valueStr>"${detail.detailValue}"</#assign>
     </#if>
-    <#if detail_has_next>
+    <#if detail?hasNext>
         <#assign allValuesStr+=detail.detailValue+",">
     <#else>
         <#assign allValuesStr+=detail.detailValue>
@@ -22,7 +22,7 @@ public enum ${this.constNameUpper} {
     /**
      * ${detail.detailRemark}
      */
-    ${detail.detailName}(${valueStr},"${detail.detailRemark}")<#if detail_has_next>,<#else >;</#if>
+    ${detail.detailName}(${valueStr},"${detail.detailRemark}")<#if detail?hasNext>,<#else >;</#if>
 </#list>
 
 

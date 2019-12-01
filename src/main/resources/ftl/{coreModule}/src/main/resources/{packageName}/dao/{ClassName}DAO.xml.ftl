@@ -17,7 +17,7 @@
 
     <sql id="${this.className}Columns">
         <#list this.fields as id,field>
-        ${r'$'}{alias}.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if id_has_next>,</#if>
+        ${r'$'}{alias}.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if id?hasNext>,</#if>
         </#list>
     </sql>
 
@@ -48,11 +48,11 @@
     <insert id="_save" <#if this.pk.autoIncrement>useGeneratedKeys="true" </#if>keyProperty="${this.id}" parameterType="${this.classNameUpper}PO">
         insert into ${wrapTableName}(
     <#list this.fields as id,field>
-        ${wrapMysqlKeyword(field.fieldName)}<#if id_has_next>,</#if>
+        ${wrapMysqlKeyword(field.fieldName)}<#if id?hasNext>,</#if>
     </#list>
         ) VALUES (
     <#list this.fields as id,field>
-        ${r'#'}{${field.jfieldName},jdbcType=${JFieldType.mapperJdbcType(field.jfieldType)}}<#if id_has_next>,</#if>
+        ${r'#'}{${field.jfieldName},jdbcType=${JFieldType.mapperJdbcType(field.jfieldType)}}<#if id?hasNext>,</#if>
     </#list>
         )
     </insert>
@@ -70,9 +70,9 @@
         </#list>
         <#list set_field_arr as field>
             <#if field.specialField?? && field.specialField==MetaSpecialField.VERSION>
-            ${wrapMysqlKeyword(field.fieldName)} = ${wrapMysqlKeyword(field.fieldName)}+1<#if field_has_next>,</#if>
+            ${wrapMysqlKeyword(field.fieldName)} = ${wrapMysqlKeyword(field.fieldName)}+1<#if field?hasNext>,</#if>
             <#elseIf !field.primaryKey && !MetaSpecialField.isCreatedBy(field.specialField)  && !MetaSpecialField.isCreatedTime(field.specialField) >
-            ${wrapMysqlKeyword(field.fieldName)}=${r'#'}{${field.jfieldName},jdbcType=${JFieldType.mapperJdbcType(field.jfieldType)}}<#if field_has_next>,</#if>
+            ${wrapMysqlKeyword(field.fieldName)}=${r'#'}{${field.jfieldName},jdbcType=${JFieldType.mapperJdbcType(field.jfieldType)}}<#if field?hasNext>,</#if>
             </#if>
         </#list>
         where ${wrapPkFieldName}=${r'#'}{${this.id},jdbcType=${JFieldType.mapperJdbcType(this.pk.jfieldType)}}
@@ -447,7 +447,7 @@
         select
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field=mtmCascadeExt.cascadeField>
-            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt_has_next>,</#if>
+            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt?hasNext>,</#if>
         </#list>
         from ${wrapTableName} t
         inner join ${wrapMtmTableName} r
@@ -480,7 +480,7 @@
         select
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field=mtmCascadeExt.cascadeField>
-            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt_has_next>,</#if>
+            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt?hasNext>,</#if>
         </#list>
         from ${wrapTableName} t
         inner join ${wrapMtmTableName} r
