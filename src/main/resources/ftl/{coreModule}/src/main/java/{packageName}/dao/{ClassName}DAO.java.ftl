@@ -56,7 +56,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 </#list>
 <#list this.metaEntity.checkUniqueIndexes as index>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
-    <#assign suffix=(index_index==0)?string('',''+index_index)>
+    <#assign suffix=(index?index==0)?string('',''+index?index)>
     <#assign params=''>
     <#list index.fields as field>
         <#assign params+='@Param("'+field.jfieldName+'")'+field.jfieldType+' '+field.jfieldName+', '>
@@ -66,7 +66,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 </#list>
 <#--为被持有的实体提供级联【列表】查询方法-->
 <#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign mtm=mtmForOppList[otherEntity_index]>
+    <#assign mtm=mtmForOppList[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
@@ -76,7 +76,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 </#list>
 <#--为被持有的实体提供级联【详情】查询方法-->
 <#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign mtm=mtmForOppShow[otherEntity_index]>
+    <#assign mtm=mtmForOppShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>

@@ -64,7 +64,7 @@ public class ${this.classNameUpper}Service {
      */
     private void checkUnique(${this.classNameUpper}PO ${this.className}, boolean isUpdate){
     <#list this.metaEntity.checkUniqueIndexes as index>
-        <#assign suffix=(index_index==0)?string('',''+index_index)>
+        <#assign suffix=(index?index==0)?string('',''+index?index)>
         <#assign params=''>
         <#list index.fields as field>
             <#assign params+=this.className+'.get'+field.jfieldName?capFirst+'(), '>

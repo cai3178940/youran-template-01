@@ -185,10 +185,10 @@
         </#if>
     </#list>
     <#list mtmCascadeEntitiesForQuery as otherEntity>
-        <#assign mtmCascadeExts = groupMtmCascadeExtsForQuery[otherEntity_index]>
-        <#assign mtm = mtmForQuery[otherEntity_index]>
-        <#assign table_r = 'r${otherEntity_index+1}'>
-        <#assign table_m = 'm${otherEntity_index+1}'>
+        <#assign mtmCascadeExts = groupMtmCascadeExtsForQuery[otherEntity?index]>
+        <#assign mtm = mtmForQuery[otherEntity?index]>
+        <#assign table_r = 'r${otherEntity?index+1}'>
+        <#assign table_m = 'm${otherEntity?index+1}'>
         <#assign other_fk_id=mtm.getFkAlias(otherEntity.entityId,true)>
         <#assign the_fk_id=mtm.getFkAlias(this.entityId,true)>
         <#list mtmCascadeExts as mtmCascadeExt>
@@ -415,7 +415,7 @@
 
 </#list>
 <#list this.metaEntity.checkUniqueIndexes as index>
-    <#assign suffix=(index_index==0)?string('',''+index_index)>
+    <#assign suffix=(index?index==0)?string('',''+index?index)>
     <select id="notUnique${suffix}" resultType="boolean">
         select count(1) from ${wrapTableName} t
         <where>
@@ -435,8 +435,8 @@
 
 <#--为被持有的实体提供级联【列表】查询方法-->
 <#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign mtm=mtmForOppList[otherEntity_index]>
-    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppList[otherEntity_index]>
+    <#assign mtm=mtmForOppList[otherEntity?index]>
+    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppList[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
@@ -468,8 +468,8 @@
 </#list>
 <#--为被持有的实体提供级联【详情】查询方法-->
 <#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign mtm=mtmForOppShow[otherEntity_index]>
-    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppShow[otherEntity_index]>
+    <#assign mtm=mtmForOppShow[otherEntity?index]>
+    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>

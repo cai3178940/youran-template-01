@@ -83,7 +83,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
 
 <#--多对多详情展示-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
-    <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity_index]>
+    <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     public static class ${otherCName}VO extends AbstractVO {
 
