@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version><#if this.projectFeature.bootVersion==2>2.2.1.RELEASE<#else>1.5.22.RELEASE</#if></version>
+        <version><#if this.projectFeature.bootVersion==2>2.2.2.RELEASE<#else>1.5.22.RELEASE</#if></version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>${this.groupId}</groupId>
