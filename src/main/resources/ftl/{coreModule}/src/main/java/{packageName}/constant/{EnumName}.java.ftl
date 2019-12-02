@@ -11,7 +11,7 @@ public enum ${this.constNameUpper} {
 <#list this.detailList as detail>
     <#if this.constType==MetaConstType.INTEGER>
         <#assign valueStr>${detail.detailValue}</#assign>
-    <#elseif this.constType==MetaConstType.STRING>
+    <#elseIf this.constType==MetaConstType.STRING>
         <#assign valueStr>"${detail.detailValue}"</#assign>
     </#if>
     <#if detail?hasNext>

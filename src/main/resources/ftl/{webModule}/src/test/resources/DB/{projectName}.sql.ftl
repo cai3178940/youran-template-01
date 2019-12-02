@@ -31,8 +31,8 @@ CREATE TABLE `${mtm.tableName}` (
     <#if mtm.needId>
     PRIMARY KEY (`id`),
     </#if>
-    KEY `IDX_${mtm.tableName?upper_case}_1` (`${mtm.fkAliasForSql1}`),
-    KEY `IDX_${mtm.tableName?upper_case}_2` (`${mtm.fkAliasForSql2}`)
+    KEY `IDX_${mtm.tableName?upperCase}_1` (`${mtm.fkAliasForSql1}`),
+    KEY `IDX_${mtm.tableName?upperCase}_2` (`${mtm.fkAliasForSql2}`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4${SqlTemplateFunction.getCommentDisplay(mtm.desc,false)};
 
 </#list>

@@ -15,7 +15,7 @@
 |------ | ---- | --- | --- | ---- |
     <#list metaEntity.fields as fieldId,field>
         <#assign pk_display><#if field.primaryKey>主键</#if></#assign>
-        <#assign notNull_display><#if field.notNull>是<#elseif field.defaultValue=='NULL'> 否 </#if></#assign>
+        <#assign notNull_display><#if field.notNull>是<#elseIf field.defaultValue=='NULL'> 否 </#if></#assign>
 | ${field.fieldName} | ${field.fieldType}${SqlTemplateFunction.getLengthDisplay(field)} | ${notNull_display} | ${pk_display} | ${CommonTemplateFunction.convertCommentDisplay(field.fieldComment)} |
     </#list>
 </#list>
