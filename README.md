@@ -2,7 +2,7 @@
 
 ## 介绍
 
-本项目是<a href="https://gitee.com/caixiaoge/youran" target="_blank">youran代码自动化平台</a>的预置代码模板：
+本项目是<a href="../../../youran" target="_blank">youran代码自动化平台</a>的预置代码模板：
 **java标准后端模板**
 
 包含如下技术栈：
