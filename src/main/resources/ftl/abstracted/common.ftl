@@ -2,4 +2,4 @@
 <#macro call func><#if func??>${func}</#if></#macro>
 
 <#-- 将当前model赋值给this变量 -->
-<#assign this = .data_model>
+<#assign this = .dataModel>
