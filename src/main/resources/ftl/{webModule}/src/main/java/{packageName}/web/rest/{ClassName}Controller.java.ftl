@@ -73,6 +73,17 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     </#if>
 
 </#if>
+<#if this.titleField??>
+    <@call this.addImport("java.util.List")/>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    @Override
+    @GetMapping(value = "/options")
+    public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions() {
+        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}Service.findOptions();
+        return ResponseEntity.ok(options);
+    }
+
+</#if>
 <#if this.entityFeature.show>
     @Override
     @GetMapping(value = "/{${this.id}}")

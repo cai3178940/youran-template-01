@@ -46,6 +46,7 @@
     {"fileName":"OperatedTime.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/po","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"Version.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/po","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"AbstractVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"abstracted":false,"binary":false},
+    {"fileName":"OptionVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"PageVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"ReplyVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"ConvertUtil.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/util","contextType":1,"abstracted":false,"binary":false},

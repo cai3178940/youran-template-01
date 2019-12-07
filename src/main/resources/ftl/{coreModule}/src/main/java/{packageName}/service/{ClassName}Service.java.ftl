@@ -91,6 +91,7 @@ public class ${this.classNameUpper}Service {
 
     /**
      * 新增【${this.title}】
+     *
      * @param ${this.className}DTO
      * @return
      */
@@ -128,6 +129,7 @@ public class ${this.classNameUpper}Service {
 
     /**
      * 修改【${this.title}】
+     *
      * @param ${this.className}UpdateDTO
      * @return
      */
@@ -139,7 +141,7 @@ public class ${this.classNameUpper}Service {
     public ${this.classNameUpper}PO update(${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO) {
         ${this.type} ${this.id} = ${this.className}UpdateDTO.get${this.idUpper}();
         ${this.classNameUpper}PO ${this.className} = this.get${this.classNameUpper}(${this.id}, true);
-        ${this.classNameUpper}Mapper.INSTANCE.setUpdateDTO(${this.className},${this.className}UpdateDTO);
+        ${this.classNameUpper}Mapper.INSTANCE.setUpdateDTO(${this.className}, ${this.className}UpdateDTO);
         <@checkForeignKeys this.updateFields/>
 <#if this.metaEntity.checkUniqueIndexes?? && this.metaEntity.checkUniqueIndexes?size &gt; 0>
         // 唯一性校验
@@ -162,10 +164,12 @@ public class ${this.classNameUpper}Service {
 </#list>
         return ${this.className};
     }
+
 <#if this.pageSign>
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     /**
      * 查询分页列表
+     *
      * @param ${this.className}QO
      * @return
      */
@@ -186,6 +190,7 @@ public class ${this.classNameUpper}Service {
 <@call this.addImport("java.util.List")/>
     /**
      * 查询列表
+     *
      * @param ${this.className}QO
      * @return
      */
@@ -204,6 +209,20 @@ public class ${this.classNameUpper}Service {
     }
 </#if>
 
+<#if this.titleField??>
+    <@call this.addImport("java.util.List")/>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    /**
+     * 查询【${this.title}】选项列表
+     *
+     * @return
+     */
+    public List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions() {
+        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}DAO.findOptions();
+        return options;
+    }
+
+</#if>
 <#if this.holds!?hasContent>
     /**
      * 根据主键获取【${this.title}】
@@ -223,6 +242,7 @@ public class ${this.classNameUpper}Service {
 </#if>
     /**
      * 根据主键获取【${this.title}】
+     *
      * @param ${this.id} 主键
 <#assign withHoldParam="">
 <#list this.holds! as otherEntity,mtm>
@@ -252,6 +272,7 @@ public class ${this.classNameUpper}Service {
 
     /**
      * 查询【${this.title}】详情
+     *
      * @param ${this.id}
      * @return
      */
@@ -282,6 +303,7 @@ public class ${this.classNameUpper}Service {
 
     /**
      * 删除【${this.title}】
+     *
      * @param ${this.id}s
      * @return
      */
@@ -309,6 +331,7 @@ public class ${this.classNameUpper}Service {
     <#assign alreadyFind=false>
     /**
      * 校验是否存在【${foreignEntity.title}】关联
+     *
      * @param ${this.id}
      */
     private void checkDeleteBy${foreignCName}(${this.type} ${this.id}) {
@@ -329,6 +352,7 @@ public class ${this.classNameUpper}Service {
     <#assign othercName=otherEntity.className?uncapFirst>
     /**
      * 校验是否存在【${otherEntity.title}】关联
+     *
      * @param ${this.id}
      */
     private void checkDeleteBy${otherCName}(${this.type} ${this.id}) {
@@ -348,6 +372,7 @@ public class ${this.classNameUpper}Service {
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     /**
      * 执行【${otherEntity.title}】添加
+     *
      * @param ${this.id}
      * @param ${otherFkId}
      * @return
@@ -365,6 +390,7 @@ public class ${this.classNameUpper}Service {
     <#if entityFeature.addRemove>
     /**
      * 添加【${otherEntity.title}】
+     *
      * @param ${this.id}
      * @param ${otherFkId}
      * @return
@@ -380,6 +406,7 @@ public class ${this.classNameUpper}Service {
 
     /**
      * 移除【${otherEntity.title}】
+     *
      * @param ${this.id}
      * @param ${otherFkId}
      * @return
@@ -397,6 +424,7 @@ public class ${this.classNameUpper}Service {
     <#if entityFeature.set || entityFeature.withinEntity>
     /**
      * 设置【${otherEntity.title}】
+     *
      * @param ${this.id}
      * @param ${otherFkId}
      * @return

@@ -36,7 +36,7 @@
     </#list>
         ${this.classNameUpper}AddDTO addDTO = ${this.className}Helper.get${this.classNameUpper}AddDTO(<@call this.printSaveExampleArg(this.metaEntity)/>);
         restMockMvc.perform(post(WebConst.API_PATH + "/${this.className}")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(addDTO)))
             .andExpect(status().isCreated());
     }
@@ -53,7 +53,7 @@
         </#list>
         ${this.classNameUpper}UpdateDTO updateDTO = ${this.className}Helper.get${this.classNameUpper}UpdateDTO(${this.className});
         restMockMvc.perform(put(WebConst.API_PATH + "/${this.className}")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(updateDTO)))
             .andExpect(status().isOk());
     }
@@ -79,6 +79,22 @@
     <#else>
             .andExpect(jsonPath("$.length()").value(is(1)));
     </#if>
+    }
+
+</#if>
+<#if this.titleField??>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    /**
+     * 查询【${this.title}】选项列表
+     */
+    @Test
+    public void findOptions() throws Exception {
+    <#list saveExampleCode as saveExample>
+        ${saveExample}
+    </#list>
+        restMockMvc.perform(get(WebConst.API_PATH + "/${this.className}/options"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.length()").value(is(1)));
     }
 
 </#if>
@@ -121,7 +137,7 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(delete(WebConst.API_PATH + "/${this.className}")
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${this.className}.get${this.idUpper}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
@@ -148,14 +164,14 @@
         // 先测试添加【${otherEntity.title}】关联
         restMockMvc.perform(post(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
             ${this.className}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
         // 再测试移除【${otherEntity.title}】关联
         restMockMvc.perform(delete(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
             ${this.className}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
@@ -173,7 +189,7 @@
         </#list>
         restMockMvc.perform(put(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
             ${this.className}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));

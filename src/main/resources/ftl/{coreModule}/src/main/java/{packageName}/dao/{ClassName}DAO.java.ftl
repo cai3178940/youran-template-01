@@ -24,6 +24,12 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
     List<${this.classNameUpper}ListVO> findListByQuery(${this.classNameUpper}QO ${this.className}QO);
 
 </#if>
+<#if this.titleField??>
+    <@call this.addImport("java.util.List")/>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions();
+
+</#if>
 <#list this.fkFields as id,field>
     int getCountBy${field.jfieldName?capFirst}(${field.jfieldType} ${field.jfieldName});
 

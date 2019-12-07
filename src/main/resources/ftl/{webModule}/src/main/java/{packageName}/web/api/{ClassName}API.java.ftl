@@ -60,6 +60,16 @@ public interface ${this.classNameUpper}API {
     </#if>
 
 </#if>
+<#if this.titleField??>
+    <@call this.addImport("java.util.List")/>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    /**
+     * 查询【${this.title}】选项列表
+     */
+    @ApiOperation(value = "查询【${this.title}】选项列表")
+    ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions();
+
+</#if>
 <#if this.entityFeature.show>
     /**
      * 查看【${this.title}】详情

@@ -9,6 +9,7 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
+        <package name="${this.commonPackage}.pojo"/>
         <package name="${this.packageName}.pojo"/>
     </typeAliases>
     <mappers>

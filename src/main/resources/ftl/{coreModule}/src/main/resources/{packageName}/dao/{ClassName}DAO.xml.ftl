@@ -310,6 +310,20 @@
     </#if>
     </select>
 
+<#if this.titleField??>
+    <select id="findOptions" resultType="OptionVO">
+        select
+            t.${wrapPkFieldName},
+            t.${wrapMysqlKeyword(this.titleField.fieldName)}<#if this.titleField.fieldName?capitalize!=this.titleField.jfieldName?capitalize> as ${wrapMysqlKeyword(this.titleField.jfieldName)}</#if>
+        from ${wrapTableName} t
+        <where>
+        <#if delField??>
+            and t.${wrapDelFieldName}=0
+        </#if>
+        </where>
+    </select>
+
+</#if>
 <#list this.fkFields as id,field>
     <#assign wrapFieldName=wrapMysqlKeyword(field.fieldName)>
     <select id="getCountBy${field.jfieldName?capFirst}" parameterType="${field.jfieldType}" resultType="int">
