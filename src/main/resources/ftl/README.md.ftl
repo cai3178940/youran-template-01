@@ -16,7 +16,7 @@
     <#list metaEntity.fields as fieldId,field>
         <#assign pk_display><#if field.primaryKey>主键</#if></#assign>
         <#assign notNull_display><#if field.notNull>是<#elseIf field.defaultValue=='NULL'> 否 </#if></#assign>
-| ${field.fieldName} | ${field.fieldType}${SqlTemplateFunction.getLengthDisplay(field)} | ${notNull_display} | ${pk_display} | ${CommonTemplateFunction.convertCommentDisplay(field.fieldComment)} |
+| ${field.fieldName} | ${field.fieldType}${SqlTemplateFunction.getLengthDisplay(field)} | ${notNull_display} | ${pk_display} | ${CommonTemplateFunction.convertCommentDisplay(field.fetchComment())} |
     </#list>
 </#list>
 <#list this.mtms! as mtm>
@@ -26,6 +26,6 @@
 ### ${mtm.desc?replace('\'','"')?replace('\n','\\n')}【${mtm.tableName}】
 |字段名 | 类型 | 非空 | 键 | 注释 |
 |------ | ---- | --- | --- | ---- |
-| ${mtm.fkAliasForSql1} | ${field1.fieldType}${SqlTemplateFunction.getLengthDisplay(field1)} | 是 |  | ${CommonTemplateFunction.convertCommentDisplay(field1.fieldComment)} |
-| ${mtm.fkAliasForSql2} | ${field2.fieldType}${SqlTemplateFunction.getLengthDisplay(field2)} | 是 |  | ${CommonTemplateFunction.convertCommentDisplay(field2.fieldComment)} |
+| ${mtm.fkAliasForSql1} | ${field1.fieldType}${SqlTemplateFunction.getLengthDisplay(field1)} | 是 |  | ${CommonTemplateFunction.convertCommentDisplay(field1.fetchComment())} |
+| ${mtm.fkAliasForSql2} | ${field2.fieldType}${SqlTemplateFunction.getLengthDisplay(field2)} | 是 |  | ${CommonTemplateFunction.convertCommentDisplay(field2.fetchComment())} |
 </#list>

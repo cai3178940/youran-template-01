@@ -93,7 +93,7 @@ public class ${this.classNameUpper}PO extends AbstractPO${implementsStr} {
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     /**
-${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fieldComment)}
+${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())}
     <#if field.dicType??>
      * @see ${this.getConstFullClassPath(field.dicType)}
     </#if>
