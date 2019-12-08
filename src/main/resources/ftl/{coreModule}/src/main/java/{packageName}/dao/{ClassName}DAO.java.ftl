@@ -71,26 +71,6 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
     boolean notUnique${suffix}(${params}@Param("${this.id}")${this.type} ${this.id});
 
 </#list>
-<#--为被持有的实体提供级联【列表】查询方法-->
-<#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign mtm=mtmForOppList[otherEntity?index]>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
-    List<${otherCName}ListVO.${this.classNameUpper}VO> findVOFor${otherCName}List(${otherType} ${otherFkId});
-
-</#list>
-<#--为被持有的实体提供级联【详情】查询方法-->
-<#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign mtm=mtmForOppShow[otherEntity?index]>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ShowVO")/>
-    List<${otherCName}ShowVO.${this.classNameUpper}VO> findVOFor${otherCName}Show(${otherType} ${otherFkId});
-
-</#list>
 }
 </#assign>
 <#--开始渲染代码-->

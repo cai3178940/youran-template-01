@@ -2,8 +2,6 @@
 <#include "/abstracted/mybatis.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
-<#include "/abstracted/mtmCascadeExtsForOppList.ftl">
-<#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
 <#function getSelectFieldWithAlias field alias>
     <#if field.fieldName?capitalize!=field.jfieldName?capitalize>
         <#return "${alias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
@@ -433,75 +431,6 @@
             and t.${wrapPkFieldName} != ${r'#'}{${this.id}}
         </if>
         </where>
-    </select>
-
-</#list>
-
-<#--为被持有的实体提供级联【列表】查询方法-->
-<#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign mtm=mtmForOppList[otherEntity?index]>
-    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppList[otherEntity?index]>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#assign other_fk_id=mtm.getFkAlias(otherEntity.entityId,true)>
-    <#assign the_fk_id=mtm.getFkAlias(this.entityId,true)>
-    <#assign wrapMtmTableName=wrapMysqlKeyword(mtm.tableName)>
-    <select id="findVOFor${otherCName}List" parameterType="${otherType}" resultType="${this.packageName}.pojo.vo.${otherCName}ListVO$${this.classNameUpper}VO">
-        select
-            ${getSelectFieldWithAlias(this.pk,"t")},
-        <#list mtmCascadeExts as mtmCascadeExt>
-            <#assign field=mtmCascadeExt.cascadeField>
-            ${getSelectFieldWithAlias(field,"t")}<#if mtmCascadeExt?hasNext>,</#if>
-        </#list>
-        from ${wrapTableName} t
-        inner join ${wrapMtmTableName} r
-            on t.${wrapPkFieldName}=r.${the_fk_id}
-        where
-            r.${other_fk_id}=${r'#'}{arg0}
-        <#if delField??>
-            and t.${wrapDelFieldName}=0
-        </#if>
-        order by
-        <#if mtm.needId>
-            r.id
-        <#else>
-            r.created_time
-        </#if>
-    </select>
-
-</#list>
-<#--为被持有的实体提供级联【详情】查询方法-->
-<#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign mtm=mtmForOppShow[otherEntity?index]>
-    <#assign mtmCascadeExts=groupMtmCascadeExtsForOppShow[otherEntity?index]>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#assign other_fk_id=mtm.getFkAlias(otherEntity.entityId,true)>
-    <#assign the_fk_id=mtm.getFkAlias(this.entityId,true)>
-    <#assign wrapMtmTableName=wrapMysqlKeyword(mtm.tableName)>
-    <select id="findVOFor${otherCName}Show" parameterType="${otherType}" resultType="${this.packageName}.pojo.vo.${otherCName}ShowVO$${this.classNameUpper}VO">
-        select
-            ${getSelectFieldWithAlias(this.pk,"t")},
-        <#list mtmCascadeExts as mtmCascadeExt>
-            <#assign field=mtmCascadeExt.cascadeField>
-            ${getSelectFieldWithAlias(field,"t")}<#if mtmCascadeExt?hasNext>,</#if>
-        </#list>
-        from ${wrapTableName} t
-        inner join ${wrapMtmTableName} r
-            on t.${wrapPkFieldName}=r.${the_fk_id}
-        where
-            r.${other_fk_id}=${r'#'}{arg0}
-        <#if delField??>
-            and t.${wrapDelFieldName}=0
-        </#if>
-        order by
-        <#if mtm.needId>
-            r.id
-        <#else>
-            r.created_time
-        </#if>
     </select>
 
 </#list>

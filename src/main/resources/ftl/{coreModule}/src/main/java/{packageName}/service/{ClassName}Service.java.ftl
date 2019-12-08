@@ -180,7 +180,9 @@ public class ${this.classNameUpper}Service {
             <#list mtmCascadeEntitiesForList as otherEntity>
                 <#assign otherCName=otherEntity.className?capFirst>
                 <#assign othercName=otherEntity.className?uncapFirst>
-            listVO.set${otherCName}List(${othercName}DAO.findVOFor${this.classNameUpper}List(listVO.get${this.idUpper}()));
+                <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+            listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}List(
+                    ${othercName}DAO.findBy${this.classNameUpper}(listVO.get${this.idUpper}())));
             </#list>
         }
         </#if>
@@ -201,7 +203,9 @@ public class ${this.classNameUpper}Service {
         <#list mtmCascadeEntitiesForList as otherEntity>
             <#assign otherCName=otherEntity.className?capFirst>
             <#assign othercName=otherEntity.className?uncapFirst>
-            listVO.set${otherCName}List(${othercName}DAO.findVOFor${this.classNameUpper}List(listVO.get${this.idUpper}()));
+            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+            listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}List(
+                    ${othercName}DAO.findBy${this.classNameUpper}(listVO.get${this.idUpper}())));
         </#list>
         }
     </#if>
@@ -311,8 +315,10 @@ public class ${this.classNameUpper}Service {
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign othercName=otherEntity.className?uncapFirst>
+    <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
         // 设置【${otherEntity.title}】列表
-        showVO.set${otherCName}List(${othercName}DAO.findVOFor${this.classNameUpper}Show(${this.id}));
+        showVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(
+                ${othercName}DAO.findBy${this.classNameUpper}(${this.id})));
 </#list>
         return showVO;
     }
