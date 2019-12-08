@@ -1,8 +1,16 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/mybatis.ftl">
+<#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
+<#function getSelectFieldWithAlias field alias>
+    <#if field.fieldName?capitalize!=field.jfieldName?capitalize>
+        <#return "${alias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
+    <#else>
+        <#return "${alias}.${wrapMysqlKeyword(field.fieldName)}">
+    </#if>
+</#function>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -17,7 +25,7 @@
 
     <sql id="${this.className}Columns">
         <#list this.fields as id,field>
-        ${r'$'}{alias}.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if id?hasNext>,</#if>
+        ${getSelectFieldWithAlias(field,"${r'$'}{alias}")}<#if id?hasNext>,</#if>
         </#list>
     </sql>
 
@@ -313,8 +321,8 @@
 <#if this.titleField??>
     <select id="findOptions" resultType="OptionVO">
         select
-            t.${wrapPkFieldName},
-            t.${wrapMysqlKeyword(this.titleField.fieldName)}<#if this.titleField.fieldName?capitalize!=this.titleField.jfieldName?capitalize> as ${wrapMysqlKeyword(this.titleField.jfieldName)}</#if>
+            ${getSelectFieldWithAlias(this.pk,"t")},
+            ${getSelectFieldWithAlias(this.titleField,"t")}
         from ${wrapTableName} t
         <where>
         <#if delField??>
@@ -357,25 +365,6 @@
     </#if>
     </select>
 
-    <select id="findBy${otherCName}" parameterType="${otherType}" resultType="${this.classNameUpper}PO">
-        select
-            <include refid="${this.className}Columns"><property name="alias" value="t"/></include>
-        from ${wrapTableName} t
-        inner join ${wrapMtmTableName} r
-            on t.${wrapPkFieldName}=r.${the_fk_id}
-        where
-            r.${other_fk_id}=${r'#'}{arg0}
-    <#if delField??>
-            and t.${wrapDelFieldName}=0
-    </#if>
-        order by
-    <#if mtm.needId>
-            r.id
-    <#else>
-            r.created_time
-    </#if>
-    </select>
-
     <insert id="add${otherCName}" parameterType="map">
         insert into ${mtm.tableName}(
             ${the_fk_id},
@@ -402,7 +391,8 @@
     </delete>
 
 </#list>
-<#list this.unHolds! as otherEntity,mtm>
+<#list mtmEntitiesForOpp as otherEntity>
+    <#assign mtm=mtmsForOpp[otherEntity?index]/>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign other_fk_id=mtm.getFkAlias(otherEntity.entityId,true)>
@@ -459,9 +449,10 @@
     <#assign wrapMtmTableName=wrapMysqlKeyword(mtm.tableName)>
     <select id="findVOFor${otherCName}List" parameterType="${otherType}" resultType="${this.packageName}.pojo.vo.${otherCName}ListVO$${this.classNameUpper}VO">
         select
+            ${getSelectFieldWithAlias(this.pk,"t")},
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field=mtmCascadeExt.cascadeField>
-            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt?hasNext>,</#if>
+            ${getSelectFieldWithAlias(field,"t")}<#if mtmCascadeExt?hasNext>,</#if>
         </#list>
         from ${wrapTableName} t
         inner join ${wrapMtmTableName} r
@@ -492,9 +483,10 @@
     <#assign wrapMtmTableName=wrapMysqlKeyword(mtm.tableName)>
     <select id="findVOFor${otherCName}Show" parameterType="${otherType}" resultType="${this.packageName}.pojo.vo.${otherCName}ShowVO$${this.classNameUpper}VO">
         select
+            ${getSelectFieldWithAlias(this.pk,"t")},
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field=mtmCascadeExt.cascadeField>
-            t.${wrapMysqlKeyword(field.fieldName)}<#if field.fieldName?capitalize!=field.jfieldName?capitalize> as ${wrapMysqlKeyword(field.jfieldName)}</#if><#if mtmCascadeExt?hasNext>,</#if>
+            ${getSelectFieldWithAlias(field,"t")}<#if mtmCascadeExt?hasNext>,</#if>
         </#list>
         from ${wrapTableName} t
         inner join ${wrapMtmTableName} r

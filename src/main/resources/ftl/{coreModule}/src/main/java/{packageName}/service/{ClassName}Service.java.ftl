@@ -279,6 +279,7 @@ public class ${this.classNameUpper}Service {
     public ${this.classNameUpper}ShowVO show(${this.type} ${this.id}) {
         ${this.classNameUpper}PO ${this.className} = this.get${this.classNameUpper}(${this.id}, true);
         ${this.classNameUpper}ShowVO showVO = ${this.classNameUpper}Mapper.INSTANCE.toShowVO(${this.className});
+<#--外键级联扩展，详情展示-->
 <#list this.fkFields as id,field>
     <#if field.cascadeShowExts?? && field.cascadeShowExts?size &gt; 0>
         <#assign otherCName=field.foreignEntity.className?capFirst>
@@ -292,6 +293,21 @@ public class ${this.classNameUpper}Service {
         }
     </#if>
 </#list>
+<#--多对多随实体一起维护并且未设置级联扩展时，需要返回对方的id列表-->
+<#list this.holds! as otherEntity,mtm>
+    <#if mtm.getEntityFeature(this.entityId).withinEntity
+        && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
+        <#assign otherCName=otherEntity.className?capFirst>
+        <#assign othercName=otherEntity.className?uncapFirst>
+        <@call this.addImport("java.util.stream.Collectors")/>
+        // 设置【${otherEntity.title}】主键列表
+        showVO.set${otherCName}List(${othercName}DAO.findBy${this.classNameUpper}(${this.id})
+                .stream()
+                .map(t -> t.get${otherEntity.pkField.jfieldName?capFirst}())
+                .collect(Collectors.toList()));
+    </#if>
+</#list>
+<#--多对多级联扩展详情展示-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign othercName=otherEntity.className?uncapFirst>

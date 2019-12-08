@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
 <#--定义主体代码-->
@@ -43,8 +44,6 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     int getCountBy${otherCName}(${otherType} ${otherFkId});
 
-    List<${this.classNameUpper}PO> findBy${otherCName}(${otherType} ${otherFkId});
-
     int add${otherCName}(@Param("${theFkId}")${this.type} ${theFkId},@Param("${otherFkId}")${otherType} ${otherFkId});
 
     int remove${otherCName}(@Param("${theFkId}")${this.type} ${theFkId},@Param("${otherFkId}")${otherType}[] ${otherFkId});
@@ -52,14 +51,16 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
     int removeAll${otherCName}(${this.type} ${theFkId});
 
 </#list>
-<#list this.unHolds! as otherEntity,mtm>
+<#list mtmEntitiesForOpp as otherEntity>
     <@call this.addImport("java.util.List")/>
+    <#assign mtm=mtmsForOpp[otherEntity?index]/>
     <#assign otherCName=otherEntity.className/>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     List<${this.classNameUpper}PO> findBy${otherCName}(${otherType} ${otherFkId});
 
 </#list>
+
 <#list this.metaEntity.checkUniqueIndexes as index>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
     <#assign suffix=(index?index==0)?string('',''+index?index)>

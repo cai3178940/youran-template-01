@@ -54,7 +54,18 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
 
         </#list>
 </#list>
-<#--多对多详情展示-->
+<#--多对多随实体一起维护并且未设置级联扩展时，需要返回对方的id列表-->
+<#list this.holds! as otherEntity,mtm>
+    <#if mtm.getEntityFeature(this.entityId).withinEntity
+        && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
+        <@call this.addImport("java.util.List")/>
+        <#assign othercName=otherEntity.className?uncapFirst>
+    @ApiModelProperty(notes = "【${otherEntity.title}】主键列表")
+    private List<${otherEntity.pkField.jfieldType}> ${othercName}List;
+
+    </#if>
+</#list>
+<#--多对多级联扩展详情展示-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <@call this.addImport("java.util.List")/>
     <#assign otherCName=otherEntity.className/>
@@ -74,18 +85,34 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
         <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias,cascadeExt.cascadeField.jfieldType)/>
     </#list>
 </#list>
-<#--多对多详情展示：getter-setter方法-->
+<#--多对多随实体一起维护并且未设置级联扩展时，需要返回对方的id列表-->
+<#list this.holds! as otherEntity,mtm>
+    <#if mtm.getEntityFeature(this.entityId).withinEntity
+        && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
+        <@call JavaTemplateFunction.printGetterSetterList("${othercName}List",otherEntity.pkField.jfieldType,false)/>
+    </#if>
+</#list>
+<#--多对多级联扩展详情展示：getter-setter方法-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign otherCName=otherEntity.className/>
     <#assign othercName=otherEntity.className?uncapFirst>
     <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
 </#list>
 
-<#--多对多详情展示-->
+<#--多对多级联扩展详情展示【静态内部类】-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
+    <#assign exampleClass="${otherEntity.className?capFirst}Example">
+    <@call this.addImport("${this.packageName}.pojo.example.${exampleClass}")/>
     public static class ${otherCName}VO extends AbstractVO {
+
+    <#--主键字段-->
+    <#assign pkField=otherEntity.pkField>
+    <#--字段名转下划线大写-->
+    <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(pkField.jfieldName,true)>
+        @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase},example = ${exampleClass}.E_${pkFieldNameSnakeCase})
+        private ${pkField.jfieldType} ${pkField.jfieldName};
 
     <#--多对多级联扩展，列表展示字段-->
     <#list mtmCascadeExts as mtmCascadeExt>
@@ -97,9 +124,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
         <#if field.dicType??>
             <@call this.addConstImport(field.dicType)/>
         </#if>
-        <@call this.addImport("${this.packageName}.pojo.example.${otherEntity.className?capFirst}Example")/>
-        <#assign exampleClass="${otherEntity.className?capFirst}Example.">
-        @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
+        @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase},example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
         <#if field.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
             <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
@@ -109,6 +134,8 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
 
     </#list>
 
+    <#--主键字段：getter-setter方法-->
+    <@call JavaTemplateFunction.printGetterSetter(pkField,2)/>
     <#--多对多级联扩展，列表展示字段：getter-setter方法-->
     <#list mtmCascadeExts as mtmCascadeExt>
         <#assign field=mtmCascadeExt.cascadeField>
