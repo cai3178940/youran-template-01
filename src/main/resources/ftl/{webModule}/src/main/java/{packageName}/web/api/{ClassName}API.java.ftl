@@ -1,5 +1,6 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
+<#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#--判断如果不需要生成当前文件，则直接跳过-->
 <#if !getGenRest(this.metaEntity)>
     <@call this.skipCurrent()/>
@@ -108,6 +109,25 @@ public interface ${this.classNameUpper}API {
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#if entityFeature.addRemove || entityFeature.set>
+        <@call this.addImport("java.util.List")/>
+        <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
+        <#--如果存在级联扩展，则返回值为级联扩展VO-->
+        <#if index &gt; -1>
+            <#assign resultType='${this.classNameUpper}ShowVO.${otherCName}VO'>
+        <#else>
+            <#assign resultType=otherPk.jfieldType>
+        </#if>
+    /**
+     * 获取【${otherEntity.title}】关联
+     */
+    @ApiOperation(value="获取【${otherEntity.title}】关联")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
+    })
+    ResponseEntity<List<${resultType}>> fetch${otherCName}List(${this.type} ${this.id});
+
+    </#if>
     <#if entityFeature.addRemove>
     /**
      * 添加【${otherEntity.title}】关联

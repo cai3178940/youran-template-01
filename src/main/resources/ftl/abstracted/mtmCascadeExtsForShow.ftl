@@ -23,3 +23,12 @@
         <#assign mtmForShow += [mtm]>
     </#if>
 </#list>
+<#--根据id查询详情展示的级联实体序号-->
+<#function getMtmCascadeEntityIndexForShow entityId>
+    <#list mtmCascadeEntitiesForShow as entity>
+        <#if entity.entityId == entityId>
+            <#return entity?index>
+        </#if>
+    </#list>
+    <#return -1>
+</#function>

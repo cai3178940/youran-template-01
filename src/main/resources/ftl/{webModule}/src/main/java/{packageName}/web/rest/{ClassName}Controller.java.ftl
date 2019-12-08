@@ -1,5 +1,6 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
+<#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#--判断如果不需要生成当前文件，则直接跳过-->
 <#if !getGenRest(this.metaEntity)>
     <@call this.skipCurrent()/>
@@ -120,6 +121,41 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <#assign othercName=otherEntity.className?uncapFirst>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#if entityFeature.addRemove || entityFeature.set>
+        <@call this.addImport("java.util.List")/>
+        <@call this.addImport("${this.packageName}.pojo.po.${otherCName}PO")/>
+        <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
+        <#if index &gt; -1>
+            <#--如果存在级联扩展，则返回值为级联扩展VO-->
+            <#assign resultType='${this.classNameUpper}ShowVO.${otherCName}VO'>
+        <#else>
+            <#--如果不存在级联扩展，则返回值为id-->
+            <#assign resultType=otherPk.jfieldType>
+        </#if>
+    @Override
+    public ResponseEntity<List<${resultType}>> fetch${otherCName}List(@PathVariable ${this.type} ${this.id}) {
+        <#assign withFalseCode="">
+        <#list this.holds! as otherHoldEntity,mtm>
+            <#if otherEntity == otherHoldEntity>
+                <#assign withCode=withFalseCode+"true, ">
+            <#else>
+                <#assign withCode=withFalseCode+"false, ">
+            </#if>
+        </#list>
+        ${this.classNameUpper}PO ${this.className} = ${this.className}Service.get${this.classNameUpper}(${this.id}, ${withCode}true);
+        List<${otherCName}PO> list = ${this.className}.get${otherCName}POList();
+        <#if index &gt; -1>
+            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+        return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(list));
+        <#else>
+            <@call this.addImport("java.util.stream.Collectors")/>
+        return ResponseEntity.ok(list.stream()
+                .map(t -> t.get${otherEntity.pkField.jfieldName?capFirst}())
+                .collect(Collectors.toList()));
+        </#if>
+    }
+
+    </#if>
     <#if entityFeature.addRemove>
     @Override
     @PostMapping(value = "/{${this.id}}/${othercName}")
