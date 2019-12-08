@@ -120,7 +120,7 @@ public class ${this.classNameUpper}Service {
     <#if entityFeature.withinEntity>
         List<${otherPk.jfieldType}> ${othercName}List = ${this.className}DTO.get${otherCName}List();
         if(CollectionUtils.isNotEmpty(${othercName}List)) {
-            this.doAdd${otherCName}(${this.className}.get${this.idUpper}(), ${othercName}List.toArray(new ${otherPk.jfieldType}[]{}));
+            this.doAdd${otherCName}(${this.className}.get${this.idUpper}(), ${othercName}List.toArray(new ${otherPk.jfieldType}[0]));
         }
     </#if>
 </#list>

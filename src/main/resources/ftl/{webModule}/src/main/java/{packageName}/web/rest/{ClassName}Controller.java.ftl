@@ -133,6 +133,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
             <#assign resultType=otherPk.jfieldType>
         </#if>
     @Override
+    @GetMapping(value = "/{${this.id}}/${othercName}List")
     public ResponseEntity<List<${resultType}>> fetch${otherCName}List(@PathVariable ${this.type} ${this.id}) {
         <#assign withFalseCode="">
         <#list this.holds! as otherHoldEntity,mtm>
