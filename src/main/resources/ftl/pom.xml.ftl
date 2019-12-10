@@ -33,7 +33,7 @@
         <jsoup.version>1.12.1</jsoup.version>
         <h2.version>1.4.200</h2.version>
         <mysql2h2.version>0.2.1</mysql2h2.version>
-        <spring-boot-swagger.version><#if this.projectFeature.bootVersion==2>1.9.0.RELEASE<#else>1.6.0.RELEASE</#if></spring-boot-swagger.version>
+        <spring-boot-swagger.version><#if this.projectFeature.bootVersion==2>1.9.1.RELEASE<#else>1.6.0.RELEASE</#if></spring-boot-swagger.version>
     </properties>
 
     <dependencyManagement>
