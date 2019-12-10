@@ -1,7 +1,7 @@
 <#include "/abstracted/common.ftl">
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/${this.originProjectName}?master=1&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&useSSL=false
+        url: jdbc:mysql://localhost:3306/${this.originProjectName}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
         username: root
         password: root
 swagger:
