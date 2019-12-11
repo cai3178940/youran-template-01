@@ -4,7 +4,6 @@
 <#if !getGenRest(this.metaEntity)>
     <@call this.skipCurrent()/>
 </#if>
-<@call this.addImport("com.google.common.collect.Lists")/>
 <@call this.addImport("${this.commonPackage}.util.JsonUtil")/>
 <@call this.addImport("${this.packageName}.help.${this.classNameUpper}Helper")/>
 <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
@@ -83,7 +82,6 @@
 
 </#if>
 <#if this.titleField??>
-    <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
     /**
      * 查询【${this.title}】选项列表
      */
@@ -128,6 +126,7 @@
 
 </#if>
 <#if this.entityFeature.deleteBatch>
+    <@call this.addImport("com.google.common.collect.Lists")/>
     /**
      * 批量删除【${this.title}】
      */
@@ -153,6 +152,7 @@
     <#assign saveExampleCode=this.getPrintingSaveExampleForMtm(otherEntity)/>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove>
+        <@call this.addImport("com.google.common.collect.Lists")/>
     /**
      * 添加/移除【${otherEntity.title}】关联
      */
@@ -179,6 +179,7 @@
 
     </#if>
     <#if entityFeature.set>
+        <@call this.addImport("com.google.common.collect.Lists")/>
     /**
      * 设置【${otherEntity.title}】关联
      */
