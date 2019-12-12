@@ -5,7 +5,6 @@
 <@call this.addImport("${this.packageName}.pojo.dto.UserLoginDTO")/>
 <@call this.addImport("${this.packageName}.pojo.vo.UserLoginVO")/>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
-<@call this.addImport("${this.packageName}.web.api.UserLoginAPI")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
