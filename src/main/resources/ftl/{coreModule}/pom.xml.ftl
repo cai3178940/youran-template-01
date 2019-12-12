@@ -7,7 +7,6 @@
         <artifactId>${this.originProjectName}</artifactId>
         <groupId>${this.groupId}</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
