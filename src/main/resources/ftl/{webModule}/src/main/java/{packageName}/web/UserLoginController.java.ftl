@@ -18,13 +18,11 @@
 @RequestMapping(WebConst.API_PATH + "/_user")
 public class UserLoginController extends AbstractController {
 
-    @Override
     @PostMapping(value = "/login")
     public ResponseEntity<ReplyVO<String>> login(UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok(ReplyVO.success("this_is_token"));
     }
 
-    @Override
     @GetMapping(value = "/info")
     public ResponseEntity<ReplyVO<UserLoginVO>> info(String token) {
         UserLoginVO userLoginVO = new UserLoginVO();
@@ -35,7 +33,6 @@ public class UserLoginController extends AbstractController {
         return ResponseEntity.ok(ReplyVO.success(userLoginVO));
     }
 
-    @Override
     @PostMapping(value = "/logout")
     public ResponseEntity<ReplyVO<Void>> logout() {
         return ResponseEntity.ok(ReplyVO.success());
