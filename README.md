@@ -1,9 +1,9 @@
-# youran-template-01
+# java后端代码模板
 
 ## 介绍
 
 本项目是<a href="../../../youran" target="_blank">youran代码自动化平台</a>的预置代码模板：
-**java标准后端模板**
+**java后端模板**
 
 包含如下技术栈：
 - <a href="https://spring.io/projects/spring-boot" target="_blank">spring-boot</a> + <a href="http://www.mybatis.org/mybatis-3" target="_blank">mybatis</a>架构
