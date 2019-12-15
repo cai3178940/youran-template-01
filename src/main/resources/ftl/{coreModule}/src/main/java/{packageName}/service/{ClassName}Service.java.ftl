@@ -216,13 +216,14 @@ public class ${this.classNameUpper}Service {
 <#if this.titleField??>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
     /**
      * 查询【${this.title}】选项列表
      *
      * @return
      */
-    public List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions() {
-        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}DAO.findOptions();
+    public List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo) {
+        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}DAO.findOptions(qo);
         return options;
     }
 

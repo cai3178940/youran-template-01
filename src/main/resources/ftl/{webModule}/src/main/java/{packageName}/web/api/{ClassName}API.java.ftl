@@ -7,11 +7,6 @@
 </#if>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
 <@call this.addImport("io.swagger.annotations.Api")/>
 <@call this.addImport("io.swagger.annotations.ApiImplicitParam")/>
 <@call this.addImport("io.swagger.annotations.ApiImplicitParams")/>
@@ -22,6 +17,8 @@
 public interface ${this.classNameUpper}API {
 
 <#if this.entityFeature.save>
+    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
     /**
      * 新增【${this.title}】
      */
@@ -33,6 +30,8 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.update>
+    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
     /**
      * 修改【${this.title}】
      */
@@ -44,6 +43,8 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.list>
+    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     /**
@@ -64,14 +65,16 @@ public interface ${this.classNameUpper}API {
 <#if this.titleField??>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
     /**
      * 查询【${this.title}】选项列表
      */
     @ApiOperation(value = "查询【${this.title}】选项列表")
-    ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions();
+    ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo);
 
 </#if>
 <#if this.entityFeature.show>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
     /**
      * 查看【${this.title}】详情
      */
@@ -113,8 +116,12 @@ public interface ${this.classNameUpper}API {
         <@call this.addImport("java.util.List")/>
         <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
-        <#if index &gt; -1>
-            <#assign resultType='${this.classNameUpper}ShowVO.${otherCName}VO'>
+        <#if entityFeature.addRemove>
+            <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+            <#assign resultType="${otherCName}ListVO">
+        <#elseIf index &gt; -1>
+            <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+            <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
         <#else>
             <#assign resultType=otherPk.jfieldType>
         </#if>
@@ -149,8 +156,8 @@ public interface ${this.classNameUpper}API {
     })
     ResponseEntity<Integer> remove${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
-    </#if>
-    <#if entityFeature.set>
+    <#elseIf entityFeature.set>
+
     /**
      * 设置【${otherEntity.title}】关联
      */

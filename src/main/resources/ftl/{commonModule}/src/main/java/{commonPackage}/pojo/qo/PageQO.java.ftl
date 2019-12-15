@@ -4,7 +4,7 @@
 <@call this.addImport("io.swagger.annotations.ApiParam")/>
 <@call this.addImport("javax.validation.constraints.Max")/>
 <@call this.addImport("javax.validation.constraints.Min")/>
-<@call this.printClassCom("分页查询dto")/>
+<@call this.printClassCom("分页查询入参")/>
 public class PageQO extends AbstractQO {
 
     public static final int DEFAULT_PAGE_NO = 1;

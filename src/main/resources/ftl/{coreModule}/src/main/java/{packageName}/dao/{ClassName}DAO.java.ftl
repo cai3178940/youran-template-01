@@ -28,7 +28,8 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 <#if this.titleField??>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
-    List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions();
+    <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
+    List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo);
 
 </#if>
 <#list this.fkFields as id,field>

@@ -33,6 +33,7 @@
     {"fileName":"OptimisticLockConfiguration.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/optimistic","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"AbstractDTO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/dto","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"AbstractQO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/qo","contextType":1,"abstracted":false,"binary":false},
+    {"fileName":"OptionQO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/qo","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"PageQO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/qo","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"AbstractPO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/po","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"CreatedBy.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/po","contextType":1,"abstracted":false,"binary":false},

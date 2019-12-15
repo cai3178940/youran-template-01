@@ -7,15 +7,6 @@
 </#if>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.commonPackage}.constant.ErrorCode")/>
-<@call this.addImport("${this.commonPackage}.exception.BusinessException")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
-<@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${this.packageName}.web.api.${this.classNameUpper}API")/>
@@ -35,6 +26,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <@call this.printAutowired()/>
 
 <#if this.entityFeature.save>
+    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+    <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,6 +41,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.update>
+    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+    <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
     @Override
     @PutMapping
     public ResponseEntity<${this.classNameUpper}ShowVO> update(@Valid @RequestBody ${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO) {
@@ -55,6 +54,8 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.list>
+    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     @Override
@@ -77,15 +78,17 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 <#if this.titleField??>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
+    <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
     @Override
     @GetMapping(value = "/options")
-    public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions() {
-        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}Service.findOptions();
+    public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo) {
+        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}Service.findOptions(qo);
         return ResponseEntity.ok(options);
     }
 
 </#if>
 <#if this.entityFeature.show>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
     @Override
     @GetMapping(value = "/{${this.id}}")
     public ResponseEntity<${this.classNameUpper}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
@@ -104,6 +107,8 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.deleteBatch>
+    <@call this.addImport("${this.commonPackage}.exception.BusinessException")/>
+    <@call this.addImport("${this.commonPackage}.constant.ErrorCode")/>
     @Override
     @DeleteMapping
     public ResponseEntity<Integer> deleteBatch(@RequestBody ${this.type}[] id) {
@@ -124,12 +129,16 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${this.packageName}.pojo.po.${otherCName}PO")/>
+        <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
         <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
-        <#if index &gt; -1>
-            <#--如果存在级联扩展，则返回值为级联扩展VO-->
-            <#assign resultType='${this.classNameUpper}ShowVO.${otherCName}VO'>
+        <#--如果存在级联扩展，则返回值为级联扩展VO-->
+        <#if entityFeature.addRemove>
+            <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+            <#assign resultType="${otherCName}ListVO">
+        <#elseIf index &gt; -1>
+            <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+            <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
         <#else>
-            <#--如果不存在级联扩展，则返回值为id-->
             <#assign resultType=otherPk.jfieldType>
         </#if>
     @Override
@@ -145,7 +154,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         </#list>
         ${this.classNameUpper}PO ${this.className} = ${this.className}Service.get${this.classNameUpper}(${this.id}, ${withCode}true);
         List<${otherCName}PO> list = ${this.className}.get${otherCName}POList();
-        <#if index &gt; -1>
+        <#if entityFeature.addRemove>
+            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+        return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.toListVOList(list));
+        <#elseIf index &gt; -1>
             <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
         return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(list));
         <#else>
@@ -158,6 +170,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
     </#if>
     <#if entityFeature.addRemove>
+        <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
     @Override
     @PostMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> add${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -174,8 +187,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         return ResponseEntity.ok(count);
     }
 
-    </#if>
-    <#if entityFeature.set>
+    <#elseIf entityFeature.set>
     @Override
     @PutMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> set${otherCName}(@PathVariable ${this.type} ${this.id},

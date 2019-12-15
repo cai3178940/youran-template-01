@@ -2,11 +2,13 @@
 <#include "/abstracted/mybatis.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
-<#function getSelectFieldWithAlias field alias>
-    <#if field.fieldName?capitalize!=field.jfieldName?capitalize>
-        <#return "${alias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
+<#function getSelectFieldWithAlias field tableAlias fieldAlias>
+    <#if fieldAlias?hasContent>
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(fieldAlias)}">
+    <#elseIf field.fieldName?capitalize!=field.jfieldName?capitalize>
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
     <#else>
-        <#return "${alias}.${wrapMysqlKeyword(field.fieldName)}">
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)}">
     </#if>
 </#function>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -23,7 +25,7 @@
 
     <sql id="${this.className}Columns">
         <#list this.fields as id,field>
-        ${getSelectFieldWithAlias(field,"${r'$'}{alias}")}<#if id?hasNext>,</#if>
+        ${getSelectFieldWithAlias(field,"${r'$'}{alias}","")}<#if id?hasNext>,</#if>
         </#list>
     </sql>
 
@@ -317,16 +319,33 @@
     </select>
 
 <#if this.titleField??>
-    <select id="findOptions" resultType="OptionVO">
+    <select id="findOptions" parameterType="OptionQO" resultType="OptionVO">
         select
-            ${getSelectFieldWithAlias(this.pk,"t")},
-            ${getSelectFieldWithAlias(this.titleField,"t")}
+            ${getSelectFieldWithAlias(this.pk,"t","key")},
+            ${getSelectFieldWithAlias(this.titleField,"t","value")}
         from ${wrapTableName} t
         <where>
         <#if delField??>
             and t.${wrapDelFieldName}=0
         </#if>
+            <if test="lastKey != null">
+                and t.${wrapMysqlKeyword(this.pk.fieldName)} > ${r'#'}{lastKey}
+            </if>
+            <#if QueryType.isLike(this.titleField.queryType)>
+            <#--like类型查询-->
+            <if test="${ifNotEmptyConditionWithAlias("matchValue",this.titleField)}">
+                <bind name="matchValue_pattern" value="'%' + matchValue + '%'" />
+                and t.${wrapMysqlKeyword(this.titleField.fieldName)} like ${r'#'}{matchValue}
+            </if>
+            <#else>
+            <#--其他类型查询-->
+            <if test="${ifNotEmptyConditionWithAlias("matchValue",this.titleField)}">
+                and t.${wrapMysqlKeyword(this.titleField.fieldName)} ${QueryType.mapperSymbol(this.titleField.queryType)} ${r'#'}{matchValue}
+            </if>
+            </#if>
         </where>
+        order by t.${wrapMysqlKeyword(this.pk.fieldName)} asc
+        limit ${r'#'}{limit}
     </select>
 
 </#if>

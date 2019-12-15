@@ -168,7 +168,12 @@
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
-        // 再测试移除【${otherEntity.title}】关联
+        // 再测试查询【${otherEntity.title}】关联
+        restMockMvc.perform(get(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
+            ${this.className}.get${this.idUpper}()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.length()").value(is(1)));
+        // 最后测试移除【${otherEntity.title}】关联
         restMockMvc.perform(delete(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
             ${this.className}.get${this.idUpper}())
             .contentType(MediaType.APPLICATION_JSON)
@@ -188,12 +193,18 @@
         <#list saveExampleCode as saveExample>
         ${saveExample}
         </#list>
+        // 先测试设置【${otherEntity.title}】关联
         restMockMvc.perform(put(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
             ${this.className}.get${this.idUpper}())
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
+        // 再测试查询【${otherEntity.title}】关联
+        restMockMvc.perform(get(WebConst.API_PATH + "/${this.className}/{${this.id}}/${othercName}",
+            ${this.className}.get${this.idUpper}()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.length()").value(is(1)));
     }
 
     </#if>

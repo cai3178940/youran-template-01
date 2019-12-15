@@ -1,6 +1,7 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
+<#include "/abstracted/mtmForOpp.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
@@ -57,7 +58,18 @@ public interface ${this.classNameUpper}Mapper {
     List<${otherCName}ShowVO.${this.classNameUpper}VO> to${this.classNameUpper}VOFor${otherCName}Show(List<${this.classNameUpper}PO> list);
 
 </#list>
+<#--多对多被对方持有，提供PO列表转ListVO列表 -->
+<#list mtmEntitiesForOpp as otherEntity>
+    <#assign mtm=mtmsForOpp[otherEntity?index]/>
+    <#assign otherEntityFeature=mtm.getEntityFeature(otherEntity.entityId)>
+    <#--对方支持添加删除的情况才需要该服务 -->
+    <#if otherEntityFeature.addRemove>
+        <@call this.addImport("java.util.List")/>
+        <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    List<${this.classNameUpper}ListVO> toListVOList(List<${this.classNameUpper}PO> list);
 
+    </#if>
+</#list>
 }
 </#assign>
 <#--开始渲染代码-->
