@@ -234,6 +234,11 @@
                     <#if QueryType.isLike(cascadeField.queryType)>
                 <bind name="${mtmCascadeExt.alias}_pattern" value="'%' + ${mtmCascadeExt.alias} + '%'" />
                 and ${table_m}.${wrapMysqlKeyword(cascadeField.fieldName)} ${QueryType.mapperSymbol(cascadeField.queryType)} ${r'#'}{${mtmCascadeExt.alias}_pattern}
+                    <#elseIf QueryType.isIn(cascadeField.queryType)>
+                and ${table_m}.${wrapMysqlKeyword(cascadeField.fieldName)} in
+                <foreach collection="${mtmCascadeExt.alias}" item="_value" open="(" separator="," close=")">
+                    ${r'#'}{_value}
+                </foreach>
                     <#else>
                 and ${table_m}.${wrapMysqlKeyword(cascadeField.fieldName)} ${QueryType.mapperSymbol(cascadeField.queryType)} ${r'#'}{${mtmCascadeExt.alias}}
                     </#if>
@@ -335,7 +340,7 @@
             <#--like类型查询-->
             <if test="${ifNotEmptyConditionWithAlias("matchValue",this.titleField)}">
                 <bind name="matchValue_pattern" value="'%' + matchValue + '%'" />
-                and t.${wrapMysqlKeyword(this.titleField.fieldName)} like ${r'#'}{matchValue}
+                and t.${wrapMysqlKeyword(this.titleField.fieldName)} like ${r'#'}{matchValue_pattern}
             </if>
             <#else>
             <#--其他类型查询-->
