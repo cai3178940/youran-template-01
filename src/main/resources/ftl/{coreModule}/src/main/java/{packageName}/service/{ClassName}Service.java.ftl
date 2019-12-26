@@ -17,7 +17,7 @@
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.stereotype.Service")/>
 <@call this.addImport("org.springframework.transaction.annotation.Transactional")/>
-<@call this.printClassCom("【${this.title}】删改查服务")/>
+<@call this.printClassCom("【${this.title}】增删改查服务")/>
 @Service
 public class ${this.classNameUpper}Service {
 
