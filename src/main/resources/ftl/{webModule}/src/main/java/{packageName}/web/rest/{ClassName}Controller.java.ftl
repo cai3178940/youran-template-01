@@ -163,7 +163,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         <#else>
             <@call this.addImport("java.util.stream.Collectors")/>
         return ResponseEntity.ok(list.stream()
-                .map(t -> t.get${otherEntity.pkField.jfieldName?capFirst}())
+                .map(t -> t.get${otherPk.jfieldName?capFirst}())
                 .collect(Collectors.toList()));
         </#if>
     }
