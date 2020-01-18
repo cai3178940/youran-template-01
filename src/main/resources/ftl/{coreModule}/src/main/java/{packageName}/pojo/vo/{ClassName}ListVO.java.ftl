@@ -7,6 +7,12 @@
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
 <@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("【${this.title}】列表展示对象")/>
+<#if this.projectFeature.lombokEnabled>
+    <@call this.addImport("lombok.Data")/>
+    <@call this.addImport("lombok.EqualsAndHashCode")/>
+@Data
+@EqualsAndHashCode(callSuper=true)
+</#if>
 @ApiModel(description = "【${this.title}】列表展示对象")
 public class ${this.classNameUpper}ListVO extends AbstractVO {
 
@@ -64,22 +70,24 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
 
 </#list>
 
-<#--当前实体列表展示字段：getter-setter方法-->
-<#list this.listFields as id,field>
-    <@call JavaTemplateFunction.printGetterSetter(field)/>
-</#list>
-<#--外键级联扩展，列表展示字段：getter-setter方法-->
-<#list this.fkFields as id,field>
-    <#list field.cascadeListExts! as cascadeExt>
-        <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias,cascadeExt.cascadeField.jfieldType)/>
+<#if !this.projectFeature.lombokEnabled>
+    <#--当前实体列表展示字段：getter-setter方法-->
+    <#list this.listFields as id,field>
+        <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
-</#list>
-<#--多对多列表展示：getter-setter方法-->
-<#list mtmCascadeEntitiesForList as otherEntity>
-    <#assign otherCName=otherEntity.className/>
-    <#assign othercName=otherEntity.className?uncapFirst>
-    <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
-</#list>
+    <#--外键级联扩展，列表展示字段：getter-setter方法-->
+    <#list this.fkFields as id,field>
+        <#list field.cascadeListExts! as cascadeExt>
+            <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias,cascadeExt.cascadeField.jfieldType)/>
+        </#list>
+    </#list>
+    <#--多对多列表展示：getter-setter方法-->
+    <#list mtmCascadeEntitiesForList as otherEntity>
+        <#assign otherCName=otherEntity.className/>
+        <#assign othercName=otherEntity.className?uncapFirst>
+        <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
+    </#list>
+</#if>
 
 <#--多对多列表展示【静态内部类】-->
 <#list mtmCascadeEntitiesForList as otherEntity>
@@ -87,6 +95,10 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign exampleClass="${otherEntity.className?capFirst}Example">
     <@call this.addImport("${this.packageName}.pojo.example.${exampleClass}")/>
+    <#if this.projectFeature.lombokEnabled>
+    @Data
+    @EqualsAndHashCode(callSuper=true)
+    </#if>
     public static class ${otherCName}VO extends AbstractVO {
 
     <#--主键字段-->
@@ -116,14 +128,15 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
 
     </#list>
 
-    <#--主键字段：getter-setter方法-->
-    <@call JavaTemplateFunction.printGetterSetter(pkField,2)/>
-    <#--多对多级联扩展，列表展示字段：getter-setter方法-->
-    <#list mtmCascadeExts as mtmCascadeExt>
-        <#assign field=mtmCascadeExt.cascadeField>
-        <@call JavaTemplateFunction.printGetterSetter(field,2)/>
-    </#list>
-
+    <#if !this.projectFeature.lombokEnabled>
+        <#--主键字段：getter-setter方法-->
+        <@call JavaTemplateFunction.printGetterSetter(pkField,2)/>
+        <#--多对多级联扩展，列表展示字段：getter-setter方法-->
+        <#list mtmCascadeExts as mtmCascadeExt>
+            <#assign field=mtmCascadeExt.cascadeField>
+            <@call JavaTemplateFunction.printGetterSetter(field,2)/>
+        </#list>
+    </#if>
     }
 </#list>
 

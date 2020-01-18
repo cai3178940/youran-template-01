@@ -13,20 +13,24 @@
     <artifactId>${this.originProjectName}-core</artifactId>
     <packaging>jar</packaging>
 
-
     <dependencies>
-
         <dependency>
             <groupId>${r'$'}{project.groupId}</groupId>
             <artifactId>${this.originProjectName}-common</artifactId>
         </dependency>
-
         <!-- mapstruct提供属性映射功能 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
-
+    <#if this.projectFeature.lombokEnabled>
+        <!-- 用注解简化pojo类 https://projectlombok.org/ -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </#if>
     </dependencies>
     <build>
         <plugins>
@@ -43,6 +47,12 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${r'$'}{org.mapstruct.version}</version>
+                        </path>
+                        <!-- 编译期生成pojo的getter-setter -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${r'$'}{lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

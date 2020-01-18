@@ -34,6 +34,7 @@
         <h2.version>1.4.200</h2.version>
         <mysql2h2.version>0.2.1</mysql2h2.version>
         <spring-boot-swagger.version><#if this.projectFeature.bootVersion==2>1.9.1.RELEASE<#else>1.6.0.RELEASE</#if></spring-boot-swagger.version>
+        <#if this.projectFeature.lombokEnabled><lombok.version>1.18.10</lombok.version></#if>
     </properties>
 
     <dependencyManagement>
@@ -125,6 +126,14 @@
                 <artifactId>jsoup</artifactId>
                 <version>${r'$'}{jsoup.version}</version>
             </dependency>
+        <#if this.projectFeature.lombokEnabled>
+            <!-- 用注解简化pojo类 https://projectlombok.org/ -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${r'$'}{lombok.version}</version>
+            </dependency>
+        </#if>
         </dependencies>
     </dependencyManagement>
 

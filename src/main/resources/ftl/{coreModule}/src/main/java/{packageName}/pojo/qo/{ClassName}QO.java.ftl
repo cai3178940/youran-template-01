@@ -10,6 +10,12 @@
 </#if>
 <@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("查询【${this.title}】的参数")/>
+<#if this.projectFeature.lombokEnabled>
+    <@call this.addImport("lombok.Data")/>
+    <@call this.addImport("lombok.EqualsAndHashCode")/>
+@Data
+@EqualsAndHashCode(callSuper=true)
+</#if>
 public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>AbstractQO</#if> {
 
 <#--定义宏-查询字段申明模块
@@ -45,24 +51,6 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
     private ${field.jfieldType} ${jfieldName};
     </#if>
 
-</#macro>
-<#--定义宏-查询字段getter-setter模块
-    field-字段对象
-    alias-字段别名
--->
-<#macro queryMethod field alias="">
-    <#if alias?hasContent>
-        <#assign jfieldName=alias>
-    <#else>
-        <#assign jfieldName=field.jfieldName>
-    </#if>
-    <#--查询方式：IN-->
-    <#if QueryType.isIn(field.queryType)>
-        <@call JavaTemplateFunction.printGetterSetterList("${jfieldName}","${field.jfieldType}",false)/>
-    <#else>
-    <#--其他查询方式-->
-        <@call JavaTemplateFunction.printGetterSetter("${jfieldName}","${field.jfieldType}")/>
-    </#if>
 </#macro>
 <#--开始渲染查询字段声明语句-->
 <#list this.queryFields as id,field>
@@ -112,42 +100,61 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
 
 </#list>
 
-<#--开始渲染查询字段getter-setter方法-->
-<#list this.queryFields as id,field>
-    <#if !QueryType.isBetween(field.queryType)>
-        <@queryMethod field></@queryMethod>
-    <#else>
-        <@queryMethod field field.jfieldName+"Start"></@queryMethod>
-        <@queryMethod field field.jfieldName+"End"></@queryMethod>
-    </#if>
-</#list>
-<#--开始渲染【外键级联扩展】字段getter-setter方法-->
-<#list this.fkFields as id,field>
-    <#list field.cascadeQueryExts! as cascadeExt>
-        <#assign cascadeField=cascadeExt.cascadeField>
-        <#if !QueryType.isBetween(cascadeField.queryType)>
-            <@queryMethod cascadeField cascadeExt.alias></@queryMethod>
+<#if !this.projectFeature.lombokEnabled>
+    <#--定义宏-查询字段getter-setter模块
+        field-字段对象
+        alias-字段别名
+    -->
+    <#macro queryMethod field alias="">
+        <#if alias?hasContent>
+            <#assign jfieldName=alias>
         <#else>
-            <@queryMethod cascadeField cascadeExt.alias+"Start"></@queryMethod>
-            <@queryMethod cascadeField cascadeExt.alias+"End"></@queryMethod>
+            <#assign jfieldName=field.jfieldName>
+        </#if>
+        <#--查询方式：IN-->
+        <#if QueryType.isIn(field.queryType)>
+            <@call JavaTemplateFunction.printGetterSetterList("${jfieldName}","${field.jfieldType}",false)/>
+        <#else>
+        <#--其他查询方式-->
+            <@call JavaTemplateFunction.printGetterSetter("${jfieldName}","${field.jfieldType}")/>
+        </#if>
+    </#macro>
+    <#--开始渲染查询字段getter-setter方法-->
+    <#list this.queryFields as id,field>
+        <#if !QueryType.isBetween(field.queryType)>
+            <@queryMethod field></@queryMethod>
+        <#else>
+            <@queryMethod field field.jfieldName+"Start"></@queryMethod>
+            <@queryMethod field field.jfieldName+"End"></@queryMethod>
         </#if>
     </#list>
-</#list>
-<#--开始渲染【多对多级联扩展】字段getter-setter方法-->
-<#list mtmCascadeExtsForQuery as mtmCascadeExt>
-    <#assign cascadeField=mtmCascadeExt.cascadeField>
-    <#if !QueryType.isBetween(cascadeField.queryType)>
-        <@queryMethod cascadeField mtmCascadeExt.alias></@queryMethod>
-    <#else>
-        <@queryMethod cascadeField mtmCascadeExt.alias+"Start"></@queryMethod>
-        <@queryMethod cascadeField mtmCascadeExt.alias+"End"></@queryMethod>
-    </#if>
-</#list>
-
-<#--开始渲染排序字段getter-setter方法-->
-<#list this.listSortFields as id,field>
-    <@call JavaTemplateFunction.printGetterSetter("${field.jfieldName}SortSign","Integer")/>
-</#list>
+    <#--开始渲染【外键级联扩展】字段getter-setter方法-->
+    <#list this.fkFields as id,field>
+        <#list field.cascadeQueryExts! as cascadeExt>
+            <#assign cascadeField=cascadeExt.cascadeField>
+            <#if !QueryType.isBetween(cascadeField.queryType)>
+                <@queryMethod cascadeField cascadeExt.alias></@queryMethod>
+            <#else>
+                <@queryMethod cascadeField cascadeExt.alias+"Start"></@queryMethod>
+                <@queryMethod cascadeField cascadeExt.alias+"End"></@queryMethod>
+            </#if>
+        </#list>
+    </#list>
+    <#--开始渲染【多对多级联扩展】字段getter-setter方法-->
+    <#list mtmCascadeExtsForQuery as mtmCascadeExt>
+        <#assign cascadeField=mtmCascadeExt.cascadeField>
+        <#if !QueryType.isBetween(cascadeField.queryType)>
+            <@queryMethod cascadeField mtmCascadeExt.alias></@queryMethod>
+        <#else>
+            <@queryMethod cascadeField mtmCascadeExt.alias+"Start"></@queryMethod>
+            <@queryMethod cascadeField mtmCascadeExt.alias+"End"></@queryMethod>
+        </#if>
+    </#list>
+    <#--开始渲染排序字段getter-setter方法-->
+    <#list this.listSortFields as id,field>
+        <@call JavaTemplateFunction.printGetterSetter("${field.jfieldName}SortSign","Integer")/>
+    </#list>
+</#if>
 }
 </#assign>
 <#--开始渲染代码-->

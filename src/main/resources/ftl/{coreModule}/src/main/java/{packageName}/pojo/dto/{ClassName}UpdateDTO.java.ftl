@@ -6,6 +6,12 @@
 <@call this.addImport("javax.validation.constraints.NotNull")/>
 <@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("修改【${this.title}】的参数")/>
+<#if this.projectFeature.lombokEnabled>
+    <@call this.addImport("lombok.Data")/>
+    <@call this.addImport("lombok.EqualsAndHashCode")/>
+@Data
+@EqualsAndHashCode(callSuper=true)
+</#if>
 @ApiModel(description = "修改【${this.title}】的参数")
 public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
 
@@ -60,18 +66,20 @@ public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
     </#if>
 </#list>
 
-<@call JavaTemplateFunction.printGetterSetter(this.pk)/>
-<#list this.updateFields as id,field>
-    <@call JavaTemplateFunction.printGetterSetter(field)/>
-</#list>
-<#list this.holds! as otherEntity,mtm>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-    <#if entityFeature.withinEntity>
-        <#assign otherPk=otherEntity.pkField>
-        <#assign othercName=otherEntity.className?uncapFirst>
-        <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
-    </#if>
-</#list>
+<#if !this.projectFeature.lombokEnabled>
+    <@call JavaTemplateFunction.printGetterSetter(this.pk)/>
+    <#list this.updateFields as id,field>
+        <@call JavaTemplateFunction.printGetterSetter(field)/>
+    </#list>
+    <#list this.holds! as otherEntity,mtm>
+        <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+        <#if entityFeature.withinEntity>
+            <#assign otherPk=otherEntity.pkField>
+            <#assign othercName=otherEntity.className?uncapFirst>
+            <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
+        </#if>
+    </#list>
+</#if>
 
 }
 </#assign>

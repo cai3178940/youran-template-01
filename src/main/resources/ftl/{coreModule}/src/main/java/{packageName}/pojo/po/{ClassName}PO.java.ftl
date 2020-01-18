@@ -87,6 +87,12 @@
     <#assign implementsStr=" implements"+implementsStr?removeEnding(",")>
 </#if>
 <@call this.printClassCom("${this.title}" "${this.desc}")/>
+<#if this.projectFeature.lombokEnabled>
+    <@call this.addImport("lombok.Data")/>
+    <@call this.addImport("lombok.EqualsAndHashCode")/>
+@Data
+@EqualsAndHashCode(callSuper=true)
+</#if>
 public class ${this.classNameUpper}PO extends AbstractPO${implementsStr} {
 
 <#list this.fields as id,field>
@@ -106,11 +112,14 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     private List<${otherEntity.className}PO> ${otherEntity.className?uncapFirst}POList;
 
     </#list>
-
-<#list this.fields as id,field>
-    <@call JavaTemplateFunction.printGetterSetterForPO(field)/>
-</#list>
-
+<#if !this.projectFeature.lombokEnabled>
+    <#list this.fields as id,field>
+        <@call JavaTemplateFunction.printGetterSetterForPO(field)/>
+    </#list>
+    <#list this.holds! as otherEntity,mtm>
+        <@call JavaTemplateFunction.printGetterSetterList("${otherEntity.className}PO","${otherEntity.className}PO")/>
+    </#list>
+</#if>
 <#if implementsDeleteSign && this.delField.jfieldName!="deleted">
     @Override
     public Boolean getDeleted() {
@@ -183,9 +192,6 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-    <#list this.holds! as otherEntity,mtm>
-    <@call JavaTemplateFunction.printGetterSetterList("${otherEntity.className}PO","${otherEntity.className}PO")/>
-    </#list>
 
 }
 </#assign>
