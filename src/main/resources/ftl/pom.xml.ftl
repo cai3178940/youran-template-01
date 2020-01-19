@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/usingExcel.ftl">
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,6 +36,7 @@
         <mysql2h2.version>0.2.1</mysql2h2.version>
         <spring-boot-swagger.version><#if this.projectFeature.bootVersion==2>1.9.1.RELEASE<#else>1.6.0.RELEASE</#if></spring-boot-swagger.version>
         <#if this.projectFeature.lombokEnabled><lombok.version>1.18.10</lombok.version></#if>
+        <#if usingExcel><easyexcel.version>2.1.6</easyexcel.version></#if>
     </properties>
 
     <dependencyManagement>
@@ -132,6 +134,14 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${r'$'}{lombok.version}</version>
+            </dependency>
+        </#if>
+        <#if usingExcel>
+            <!-- excel导入导出工具 https://github.com/alibaba/easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${r'$'}{easyexcel.version}</version>
             </dependency>
         </#if>
         </dependencies>

@@ -23,3 +23,12 @@
         <#assign mtmForList += [mtm]>
     </#if>
 </#list>
+<#--判断级联扩展列表字段中是否有标题字段-->
+<#function hasTitleField otherEntity mtmCascadeExts>
+    <#list mtmCascadeExts as cascadeExt>
+        <#if otherEntity.titleField?? && otherEntity.titleField == cascadeExt.cascadeField>
+            <#return true>
+        </#if>
+    </#list>
+    <#return false>
+</#function>

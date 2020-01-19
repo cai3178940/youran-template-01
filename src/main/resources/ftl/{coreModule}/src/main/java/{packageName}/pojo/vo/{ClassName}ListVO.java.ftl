@@ -25,11 +25,19 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
     </#if>
-    @ApiModelProperty(notes = N_${jfieldNameSnakeCase},example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
         <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern = JsonFieldConst.DEFAULT_DATETIME_FORMAT, timezone = "GMT+8")
+        <#if this.entityFeature.excelExport>
+            <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
+    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
+        </#if>
+    </#if>
+    <#if this.entityFeature.excelExport>
+        <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
+    @ExcelProperty("${field.fieldDesc}")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
@@ -50,11 +58,19 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
         </#if>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
-    @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(cascadeField.dicType)}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase}, example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(cascadeField.dicType)}.VALUES_STR</#if>)
         <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
             <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern = JsonFieldConst.DEFAULT_DATETIME_FORMAT, timezone = "GMT+8")
+            <#if this.entityFeature.excelExport>
+                <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
+    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
+            </#if>
+        </#if>
+        <#if this.entityFeature.excelExport>
+            <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
+    @ExcelProperty("${cascadeField.fieldDesc}")
         </#if>
     private ${cascadeField.jfieldType} ${cascadeExt.alias};
 
@@ -66,6 +82,10 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     <#assign otherCName=otherEntity.className/>
     <#assign othercName=otherEntity.className?uncapFirst>
     @ApiModelProperty(notes = "【${otherEntity.title}】列表")
+    <#if this.entityFeature.excelExport>
+        <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
+    @ExcelProperty(value = "${otherEntity.title}", converter = ${otherCName}VO.ExcelConverter.class)
+    </#if>
     private List<${otherCName}VO> ${othercName}List;
 
 </#list>
@@ -102,11 +122,11 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     public static class ${otherCName}VO extends AbstractVO {
 
     <#--主键字段-->
-    <#assign pkField=otherEntity.pkField>
+    <#assign otherPkField=otherEntity.pkField>
     <#--字段名转下划线大写-->
-    <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(pkField.jfieldName,true)>
+    <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(otherPkField.jfieldName,true)>
         @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase},example = ${exampleClass}.E_${pkFieldNameSnakeCase})
-        private ${pkField.jfieldType} ${pkField.jfieldName};
+        private ${otherPkField.jfieldType} ${otherPkField.jfieldName};
 
     <#--多对多级联扩展，列表展示字段-->
     <#list mtmCascadeExts as mtmCascadeExt>
@@ -122,7 +142,7 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
         <#if field.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
             <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-            @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+        @JsonFormat(pattern = JsonFieldConst.DEFAULT_DATETIME_FORMAT, timezone = "GMT+8")
         </#if>
         private ${field.jfieldType} ${field.jfieldName};
 
@@ -130,12 +150,53 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
 
     <#if !this.projectFeature.lombokEnabled>
         <#--主键字段：getter-setter方法-->
-        <@call JavaTemplateFunction.printGetterSetter(pkField,2)/>
+        <@call JavaTemplateFunction.printGetterSetter(otherPkField,2)/>
         <#--多对多级联扩展，列表展示字段：getter-setter方法-->
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field=mtmCascadeExt.cascadeField>
             <@call JavaTemplateFunction.printGetterSetter(field,2)/>
         </#list>
+    </#if>
+    <#if this.entityFeature.excelExport>
+        <@call this.addImport("com.alibaba.excel.converters.Converter")/>
+        <@call this.addImport("com.alibaba.excel.enums.CellDataTypeEnum")/>
+        <@call this.addImport("com.alibaba.excel.metadata.CellData")/>
+        <@call this.addImport("com.alibaba.excel.metadata.GlobalConfiguration")/>
+        <@call this.addImport("com.alibaba.excel.metadata.property.ExcelContentProperty")/>
+        <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
+        <@call this.addImport("java.util.stream.Collectors")/>
+        <#--级联扩展列表字段中，如果有标题字段，则使用标题字段展示，否则直接展示主键字段-->
+        <#if hasTitleField(otherEntity,mtmCascadeExts)>
+            <#assign displayField = otherEntity.titleField>
+        <#else>
+            <#assign displayField = otherPkField>
+        </#if>
+        public static class ExcelConverter implements Converter<List<${otherCName}VO>> {
+
+            @Override
+            public Class supportJavaTypeKey() {
+                return List.class;
+            }
+
+            @Override
+            public CellDataTypeEnum supportExcelTypeKey() {
+                return CellDataTypeEnum.STRING;
+            }
+
+            @Override
+            public List<${otherCName}VO> convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+                return null;
+            }
+
+            @Override
+            public CellData convertToExcelData(List<${otherCName}VO> value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+                String result = "";
+                if(CollectionUtils.isNotEmpty(value)){
+                    result = value.stream().map(${otherCName}VO::get${displayField.jfieldName?capFirst}).collect(Collectors.joining(","));
+                }
+                return new CellData(result);
+            }
+        }
     </#if>
     }
 </#list>

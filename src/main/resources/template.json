@@ -16,6 +16,7 @@
     {"fileName":"mtmCascadeExtsForShow.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"mtmForOpp.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"mybatis.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
+    {"fileName":"usingExcel.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"pom.xml.ftl","fileDir":"/","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"README.md.ftl","fileDir":"/","contextType":1,"abstracted":false,"binary":false},
     {"fileName":".gitignore.ftl","fileDir":"/","contextType":1,"abstracted":false,"binary":false},
