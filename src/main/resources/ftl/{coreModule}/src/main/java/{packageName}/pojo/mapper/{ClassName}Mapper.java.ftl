@@ -10,7 +10,7 @@
         <@call this.addImport("org.mapstruct.Mappings")/>
         <@call this.addImport("org.mapstruct.Mapping")/>
     @Mappings({
-${content}
+${content}<#rt>
     })
     </#if>
 </#macro>
@@ -132,6 +132,14 @@ public interface ${this.classNameUpper}Mapper {
             <#if field.dicType??>
             @Mapping(target = "${field.jfieldName}", expression = "java(${this.getConstFullClassPath(field.dicType)}.valueToDesc(vo.get${field.jfieldName?capFirst}()))"),
             </#if>
+        </#list>
+        <#list this.fkFields as id,field>
+            <#list field.cascadeListExts! as cascadeExt>
+                <#assign cascadeField=cascadeExt.cascadeField>
+                <#if cascadeField.dicType??>
+            @Mapping(target = "${cascadeField.jfieldName}", expression = "java(${this.getConstFullClassPath(cascadeField.dicType)}.valueToDesc(vo.get${cascadeField.jfieldName?capFirst}()))"),
+                </#if>
+            </#list>
         </#list>
     </@wrapMappings>
     ${this.classNameUpper}ExcelVO toExcelVO(${this.classNameUpper}ListVO vo);
