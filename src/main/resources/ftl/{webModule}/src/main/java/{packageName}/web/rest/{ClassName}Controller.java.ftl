@@ -23,6 +23,9 @@
 public class ${this.classNameUpper}Controller extends AbstractController implements ${this.classNameUpper}API {
 
     <@call this.addAutowired("${this.packageName}.service" "${this.classNameUpper}Service")/>
+    <#if this.entityFeature.excelImport>
+        <@call this.addAutowired("javax.validation" "Validator")/>
+    </#if>
     <@call this.printAutowired()/>
 
 <#if this.entityFeature.save>
@@ -198,7 +201,98 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
     </#if>
 </#list>
+<#if this.entityFeature.excelExport>
+    @Override
+    @GetMapping("/export")
+    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    public void exportExcel(@Valid ${this.classNameUpper}QO ${this.className}QO, HttpServletResponse response) throws Exception {
+    <@call this.addImport("java.util.List")/>
+    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <#if this.pageSign>
+        ${this.className}QO.setPageSize(Integer.MAX_VALUE);
+        ${this.className}QO.setPageNo(1);
+        List<${this.classNameUpper}ListVO> list = ${this.className}Service.list(${this.className}QO).getList();
+    <#else>
+        List<${this.classNameUpper}ListVO> list = ${this.className}Service.list(${this.className}QO);
+    </#if>
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        <@call this.addImport("java.net.URLEncoder")/>
+        String fileName = URLEncoder.encode("${this.title}导出", "utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
+        <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ExcelVO")/>
+        EasyExcel.write(response.getOutputStream(), ${this.classNameUpper}ExcelVO.class)
+                .sheet()
+                <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+                .doWrite(${this.classNameUpper}Mapper.INSTANCE.toExcelVOList(list));
+    }
+</#if>
+<#if this.entityFeature.excelImport>
+    @Override
+    @PostMapping("/import")
+    <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
+    public ResponseEntity<Integer> importExcel(@RequestParam(value = "file") MultipartFile file) throws Exception {
+        <@call this.addImport("java.util.List")/>
+        <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
+        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
+        List<${this.classNameUpper}AddDTO> list = EasyExcel.read(file.getInputStream())
+                <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}ExcelDTO")/>
+                .head(${this.classNameUpper}ExcelDTO.class)
+                .sheet()
+                .<${this.classNameUpper}ExcelDTO>doReadSync()
+                .stream()
+                <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+                .map(${this.classNameUpper}Mapper.INSTANCE::fromExcelDTO)
+                .peek(${this.className}AddDTO -> {
+                    // 校验数据
+                    <@call this.addImport("java.util.Set")/>
+                    <@call this.addImport("javax.validation.ConstraintViolation")/>
+                    Set<ConstraintViolation<${this.classNameUpper}AddDTO>> set = validator.validate(${this.className}AddDTO);
+                    if(!set.isEmpty()){
+                        <@call this.addImport("javax.validation.ConstraintViolationException")/>
+                        throw new ConstraintViolationException(set);
+                    }
+                })
+                <@call this.addImport("java.util.stream.Collectors")/>
+                .collect(Collectors.toList());
+        int count = ${this.className}Service.batchSave(list);
+        return ResponseEntity.ok(count);
+    }
 
+    <#assign dicSet = CommonTemplateFunction.createHashSet()>
+    <#list this.insertFields as id,field>
+        <#if field.dicType??>
+            <@justCall dicSet.add(field.dicType)/>
+        </#if>
+    </#list>
+    @Override
+    @GetMapping("/template")
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        <@call this.addImport("java.net.URLEncoder")/>
+        String fileName = URLEncoder.encode("账户导入模板", "utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        <#list dicSet as dic>
+            <@call this.addImport("java.util.Arrays")/>
+            <@call this.addConstImport(dic)/>
+        String[] ${dic?uncapFirst}Constraint = Arrays.stream(${dic}.values()).map(${dic}::getDesc).toArray(String[]::new);
+        </#list>
+        EasyExcel.write(response.getOutputStream(), ${this.classNameUpper}ExcelDTO.class)
+        <#list this.insertFields as id,field>
+            <#if field.dicType??>
+                <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
+                .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 1, 1, ${field?index}, ${field?index}))
+            </#if>
+        </#list>
+                .sheet()
+                .doWrite(Arrays.asList(${this.classNameUpper}ExcelDTO.example()));
+    }
+
+</#if>
 }
 
 </#assign>

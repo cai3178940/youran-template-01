@@ -136,6 +136,19 @@ public class ConvertUtil {
         return Lists.transform(list,SafeUtil::getInteger);
     }
 
+    /**
+     * 逗号分割字符串转换成长整数列表
+     * @param str
+     * @return
+     */
+    public static List<Long> convertLongList(String str) {
+        if(StringUtils.isBlank(str)){
+            return null;
+        }
+        List<String> list = Splitter.on(',').omitEmptyStrings().splitToList(str);
+        return Lists.transform(list,SafeUtil::getLong);
+    }
+
 }
 </#assign>
 <#--开始渲染代码-->

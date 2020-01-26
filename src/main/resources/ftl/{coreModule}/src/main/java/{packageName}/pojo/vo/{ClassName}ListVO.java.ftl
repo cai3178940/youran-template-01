@@ -30,14 +30,6 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
         <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
     @JsonFormat(pattern = JsonFieldConst.DEFAULT_DATETIME_FORMAT, timezone = "GMT+8")
-        <#if this.entityFeature.excelExport>
-            <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
-    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
-        </#if>
-    </#if>
-    <#if this.entityFeature.excelExport>
-        <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
-    @ExcelProperty("${field.fieldDesc}")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
@@ -63,14 +55,6 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
             <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
     @JsonFormat(pattern = JsonFieldConst.DEFAULT_DATETIME_FORMAT, timezone = "GMT+8")
-            <#if this.entityFeature.excelExport>
-                <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
-    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
-            </#if>
-        </#if>
-        <#if this.entityFeature.excelExport>
-            <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
-    @ExcelProperty("${cascadeField.fieldDesc}")
         </#if>
     private ${cascadeField.jfieldType} ${cascadeExt.alias};
 
@@ -82,10 +66,6 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     <#assign otherCName=otherEntity.className/>
     <#assign othercName=otherEntity.className?uncapFirst>
     @ApiModelProperty(notes = "【${otherEntity.title}】列表")
-    <#if this.entityFeature.excelExport>
-        <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
-    @ExcelProperty(value = "${otherEntity.title}", converter = ${otherCName}VO.ExcelConverter.class)
-    </#if>
     private List<${otherCName}VO> ${othercName}List;
 
 </#list>
@@ -156,47 +136,6 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
             <#assign field=mtmCascadeExt.cascadeField>
             <@call JavaTemplateFunction.printGetterSetter(field,2)/>
         </#list>
-    </#if>
-    <#if this.entityFeature.excelExport>
-        <@call this.addImport("com.alibaba.excel.converters.Converter")/>
-        <@call this.addImport("com.alibaba.excel.enums.CellDataTypeEnum")/>
-        <@call this.addImport("com.alibaba.excel.metadata.CellData")/>
-        <@call this.addImport("com.alibaba.excel.metadata.GlobalConfiguration")/>
-        <@call this.addImport("com.alibaba.excel.metadata.property.ExcelContentProperty")/>
-        <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
-        <@call this.addImport("java.util.stream.Collectors")/>
-        <#--级联扩展列表字段中，如果有标题字段，则使用标题字段展示，否则直接展示主键字段-->
-        <#if hasTitleField(otherEntity,mtmCascadeExts)>
-            <#assign displayField = otherEntity.titleField>
-        <#else>
-            <#assign displayField = otherPkField>
-        </#if>
-        public static class ExcelConverter implements Converter<List<${otherCName}VO>> {
-
-            @Override
-            public Class supportJavaTypeKey() {
-                return List.class;
-            }
-
-            @Override
-            public CellDataTypeEnum supportExcelTypeKey() {
-                return CellDataTypeEnum.STRING;
-            }
-
-            @Override
-            public List<${otherCName}VO> convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-                return null;
-            }
-
-            @Override
-            public CellData convertToExcelData(List<${otherCName}VO> value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-                String result = "";
-                if(CollectionUtils.isNotEmpty(value)){
-                    result = value.stream().map(${otherCName}VO::get${displayField.jfieldName?capFirst}).collect(Collectors.joining(","));
-                }
-                return new CellData(result);
-            }
-        }
     </#if>
     }
 </#list>

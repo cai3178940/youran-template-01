@@ -61,6 +61,35 @@ public enum ${this.constNameUpper} {
         return null;
     }
 
+
+    /**
+     * desc映射value
+     *
+     * @param desc
+     * @return
+     */
+    public static Integer descToValue(String desc) {
+        ${this.constNameUpper} theEnum = findByDesc(desc);
+        if (theEnum != null) {
+            return theEnum.getValue();
+        }
+        return null;
+    }
+
+    /**
+     * value映射desc
+     *
+     * @param value
+     * @return
+     */
+    public static String valueToDesc(Integer value) {
+        ${this.constNameUpper} theEnum = find(value);
+        if (theEnum != null) {
+            return theEnum.getDesc();
+        }
+        return null;
+    }
+
     /**
      * 校验有效性
      */

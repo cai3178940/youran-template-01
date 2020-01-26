@@ -127,6 +127,27 @@ public class ${this.classNameUpper}Service {
         return ${this.className};
     }
 
+<#if this.entityFeature.excelImport>
+    /**
+     * 批量新增【${this.title}】
+     *
+     * @param list
+     * @return
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    <@call this.addImport("java.util.List")/>
+    public int batchSave(List<${this.classNameUpper}AddDTO> list) {
+        <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
+        if (CollectionUtils.isEmpty(list)) {
+            return 0;
+        }
+        for (${this.classNameUpper}AddDTO addDTO : list) {
+            this.save(addDTO);
+        }
+        return list.size();
+    }
+
+</#if>
     /**
      * 修改【${this.title}】
      *

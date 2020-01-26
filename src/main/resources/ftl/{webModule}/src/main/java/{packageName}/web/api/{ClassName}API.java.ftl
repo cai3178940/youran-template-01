@@ -170,7 +170,32 @@ public interface ${this.classNameUpper}API {
 
     </#if>
 </#list>
+<#if this.entityFeature.excelExport>
+    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    /**
+     * 导出【${this.title}】excel
+     */
+    @ApiOperation(value="导出【${this.title}】excel")
+    void exportExcel(${this.classNameUpper}QO ${this.className}QO, HttpServletResponse response) throws Exception;
 
+</#if>
+<#if this.entityFeature.excelImport>
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
+    /**
+     * 导入【${this.title}】excel
+     */
+    @ApiOperation(value="导入【${this.title}】excel")
+    ResponseEntity<Integer> importExcel(MultipartFile file) throws Exception;
+
+    /**
+     * 下载【${this.title}】excel模板
+     */
+    @ApiOperation(value="下载【${this.title}】excel模板")
+    void downloadExcelTemplate(HttpServletResponse response) throws Exception;
+
+</#if>
 }
 </#assign>
 <#--开始渲染代码-->

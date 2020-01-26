@@ -43,6 +43,7 @@ public class ${this.classNameUpper}Helper {
             <#assign arg="DateUtil.parseDate(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
             <@call this.addImport("java.math.BigDecimal")/>
+            <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
             <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
         <#else>
             <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>

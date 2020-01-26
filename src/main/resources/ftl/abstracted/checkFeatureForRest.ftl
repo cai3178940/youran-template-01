@@ -6,7 +6,9 @@
                         ||  entity.entityFeature.delete
                         ||  entity.entityFeature.deleteBatch
                         ||  entity.entityFeature.list
-                        ||  entity.entityFeature.show >
+                        ||  entity.entityFeature.show
+                        ||  entity.entityFeature.excelExport
+                        ||  entity.entityFeature.excelImport >
     <#if !genRest>
         <#list entity.holds! as otherEntity,mtm>
             <#assign entityFeature=mtm.getEntityFeature(entity.entityId)>
