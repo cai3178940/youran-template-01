@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/guessDateFormat.ftl">
 <#if !this.entityFeature.excelImport>
     <@call this.skipCurrent()/>
 </#if>
@@ -31,9 +32,8 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
 <#list this.insertFields as id,field>
     @ExcelProperty("${field.fieldDesc}")
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
-        <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
-    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
+    @DateTimeFormat(${guessDateFormat(field)})
     </#if>
     private ${parseJfieldType(field)} ${field.jfieldName};
 

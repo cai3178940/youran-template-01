@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
 <#--定义主体代码-->
 <#assign code>
@@ -45,8 +46,7 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
         <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("java.util.Date")/>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-            <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
         </#if>
     private ${field.jfieldType} ${jfieldName};
     </#if>

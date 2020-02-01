@@ -7,6 +7,7 @@
 [#-- @ftlvariable name="MetaConstType" type="com.youran.generate.constant.MetaConstType.static"--]
 [#-- @ftlvariable name="JFieldType" type="com.youran.generate.constant.JFieldType.static"--]
 [#-- @ftlvariable name="QueryType" type="com.youran.generate.constant.QueryType.static"--]
+[#-- @ftlvariable name="EditType" type="com.youran.generate.constant.EditType.static"--]
 [#-- @ftlvariable name="MetaSpecialField" type="com.youran.generate.constant.MetaSpecialField.static"--]
 [#-- @ftlvariable name="CommonTemplateFunction" type="com.youran.generate.template.function.CommonTemplateFunction.static"--]
 [#-- @ftlvariable name="SqlTemplateFunction" type="com.youran.generate.template.function.SqlTemplateFunction.static"--]

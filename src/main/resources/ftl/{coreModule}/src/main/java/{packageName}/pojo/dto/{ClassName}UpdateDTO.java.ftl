@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/guessDateFormat.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
@@ -49,8 +50,7 @@ public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
         </#if>
     <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-        <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATE_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 

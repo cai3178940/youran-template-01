@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForList.ftl">
 <#if !this.entityFeature.excelExport>
     <@call this.skipCurrent()/>
@@ -32,9 +33,8 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
 <#list this.listFields as id,field>
     @ExcelProperty("${field.fieldDesc}")
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
-        <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
-    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
+    @DateTimeFormat(${guessDateFormat(field)})
     </#if>
     private ${parseJfieldType(field)} ${field.jfieldName};
 
@@ -45,9 +45,8 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
         <#assign cascadeField=cascadeExt.cascadeField>
     @ExcelProperty("${cascadeField.fieldDesc}")
         <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()>
-            <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
             <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
-    @DateTimeFormat(JsonFieldConst.DEFAULT_DATETIME_FORMAT)
+    @DateTimeFormat(${guessDateFormat(cascadeField)})
         </#if>
     private ${parseJfieldType(cascadeField)} ${cascadeExt.alias};
 

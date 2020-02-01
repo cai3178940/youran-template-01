@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#--定义主体代码-->
 <#assign code>
@@ -28,8 +29,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase},example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-        <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
@@ -53,8 +53,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
     @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(cascadeField.dicType)}.VALUES_STR</#if>)
         <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-            <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-    @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+    @JsonFormat(pattern=${guessDateFormat(cascadeField)},timezone="GMT+8")
         </#if>
     private ${cascadeField.jfieldType} ${cascadeExt.alias};
 
@@ -139,8 +138,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
         @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase},example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
         <#if field.jfieldType==JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-            <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
-            @JsonFormat(pattern=JsonFieldConst.DEFAULT_DATETIME_FORMAT,timezone="GMT+8")
+        @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
         </#if>
         private ${field.jfieldType} ${field.jfieldName};
 
