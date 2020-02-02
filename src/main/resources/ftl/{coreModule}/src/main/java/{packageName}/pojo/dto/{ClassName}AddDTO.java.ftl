@@ -1,5 +1,6 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
+<#include "/abstracted/forEntityInsert.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
@@ -42,28 +43,22 @@ public class ${this.classNameUpper}AddDTO extends AbstractDTO {
     private ${field.jfieldType} ${field.jfieldName};
 
 </#list>
-<#list this.holds! as otherEntity,mtm>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-    <#if entityFeature.withinEntity>
-        <#assign otherPk=otherEntity.pkField>
-        <#assign othercName=otherEntity.className?uncapFirst>
-        <@call this.addImport("java.util.List")/>
+<#list withinEntityList as otherEntity>
+    <#assign otherPk=otherEntity.pkField>
+    <#assign othercName=otherEntity.className?uncapFirst>
+    <@call this.addImport("java.util.List")/>
     private List<${otherPk.jfieldType}> ${othercName}List;
 
-    </#if>
 </#list>
 
 <#if !this.projectFeature.lombokEnabled>
     <#list this.insertFields as id,field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
-    <#list this.holds! as otherEntity,mtm>
-        <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-        <#if entityFeature.withinEntity>
-            <#assign otherPk=otherEntity.pkField>
-            <#assign othercName=otherEntity.className?uncapFirst>
-            <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
-        </#if>
+    <#list withinEntityList as otherEntity>
+        <#assign otherPk=otherEntity.pkField>
+        <#assign othercName=otherEntity.className?uncapFirst>
+        <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
     </#list>
 </#if>
 }

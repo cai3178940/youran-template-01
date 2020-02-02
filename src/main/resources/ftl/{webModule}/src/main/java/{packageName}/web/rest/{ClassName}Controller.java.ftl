@@ -1,6 +1,7 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
+<#include "/abstracted/forEntityInsert.ftl">
 <#--判断如果不需要生成当前文件，则直接跳过-->
 <#if !getGenRest(this.metaEntity)>
     <@call this.skipCurrent()/>
@@ -10,8 +11,6 @@
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${this.packageName}.web.api.${this.classNameUpper}API")/>
-<@call this.addImport("org.apache.commons.lang3.ArrayUtils")/>
-<@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("org.springframework.web.bind.annotation.*")/>
@@ -38,7 +37,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<${this.classNameUpper}ShowVO> save(@Valid @RequestBody ${this.classNameUpper}AddDTO ${this.className}AddDTO) throws Exception {
         ${this.classNameUpper}PO ${this.className} = ${this.className}Service.save(${this.className}AddDTO);
-        return ResponseEntity.created(new URI(WebConst.API_PATH +"/${this.className}/" + ${this.className}.get${this.idUpper}()))
+        return ResponseEntity.created(new URI(WebConst.API_PATH + "/${this.className}/" + ${this.className}.get${this.idUpper}()))
             .body(${this.classNameUpper}Mapper.INSTANCE.toShowVO(${this.className}));
     }
 
@@ -115,6 +114,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @Override
     @DeleteMapping
     public ResponseEntity<Integer> deleteBatch(@RequestBody ${this.type}[] id) {
+        <@call this.addImport("org.apache.commons.lang3.ArrayUtils")/>
         if(ArrayUtils.isEmpty(id)){
             throw new BusinessException(ErrorCode.PARAM_IS_NULL);
         }
@@ -228,6 +228,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                 <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
                 .doWrite(${this.classNameUpper}Mapper.INSTANCE.toExcelVOList(list));
     }
+
 </#if>
 <#if this.entityFeature.excelImport>
     @Override
@@ -241,6 +242,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                 <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}ExcelDTO")/>
                 .head(${this.classNameUpper}ExcelDTO.class)
                 .sheet()
+                .headRowNumber(3)
                 .<${this.classNameUpper}ExcelDTO>doReadSync()
                 .stream()
                 <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
@@ -250,7 +252,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                     <@call this.addImport("java.util.Set")/>
                     <@call this.addImport("javax.validation.ConstraintViolation")/>
                     Set<ConstraintViolation<${this.classNameUpper}AddDTO>> set = validator.validate(${this.className}AddDTO);
-                    if(!set.isEmpty()){
+                    if (!set.isEmpty()) {
                         <@call this.addImport("javax.validation.ConstraintViolationException")/>
                         throw new ConstraintViolationException(set);
                     }
@@ -273,23 +275,65 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
+        <@call this.addImport("java.util.Date")/>
+        <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
+        String title = "${this.title}导入模板(" + DateUtil.getDateStr(new Date()) + ")";
         <@call this.addImport("java.net.URLEncoder")/>
-        String fileName = URLEncoder.encode("账户导入模板", "utf-8");
+        String fileName = URLEncoder.encode(title, "utf-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        String[] description = new String[]{
+                "模版前三行标题请勿修改",
+                "带“*”号为必填项",
+        <#if fkFieldsForInsert?hasContent>
+            <#assign fkFieldNames = "">
+            <#list fkFieldsForInsert as fkField>
+                <#assign fkFieldNames += "“${fkField.fieldDesc}”">
+                <#if fkField?hasNext>
+                    <#assign fkFieldNames += "、">
+                </#if>
+            </#list>
+                "${fkFieldNames}请填入id值",
+        </#if>
+        <#if withinEntityList?hasContent>
+            <#assign withinTitles = "">
+            <#list withinEntityList as otherEntity>
+                <#assign withinTitles += "“${otherEntity.title}”">
+                <#if otherEntity?hasNext>
+                    <#assign withinTitles += "、">
+                </#if>
+            </#list>
+                "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
+        </#if>
+        };
         <#list dicSet as dic>
             <@call this.addImport("java.util.Arrays")/>
             <@call this.addConstImport(dic)/>
         String[] ${dic?uncapFirst}Constraint = Arrays.stream(${dic}.values()).map(${dic}::getDesc).toArray(String[]::new);
         </#list>
-        EasyExcel.write(response.getOutputStream(), ${this.classNameUpper}ExcelDTO.class)
+        <@call this.addImport("com.alibaba.excel.ExcelWriter")/>
+        ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream())
         <#list this.insertFields as id,field>
             <#if field.dicType??>
                 <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
-                .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 1, 1, ${field?index}, ${field?index}))
+                .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}))
             </#if>
         </#list>
-                .sheet()
-                .doWrite(Arrays.asList(${this.classNameUpper}ExcelDTO.example()));
+                // 第一行是标题，第二行是说明
+                <@call this.addImport("${this.packageName}.excel.handler.TitleDescriptionWriteHandler")/>
+                .registerWriteHandler(new TitleDescriptionWriteHandler(title, description, ${this.classNameUpper}ExcelDTO.class))
+                // 自定义模板单元格样式
+                <@call this.addImport("${this.packageName}.excel.handler.TemplateCellStyleStrategy")/>
+                .registerWriteHandler(new TemplateCellStyleStrategy())
+                .build();
+        <@call this.addImport("com.alibaba.excel.write.metadata.WriteSheet")/>
+        WriteSheet writeSheet = EasyExcel.writerSheet(0, "Sheet1")
+                .head(${this.classNameUpper}ExcelDTO.class)
+                // 从第三行开始写表头
+                .relativeHeadRowIndex(2)
+                .build();
+        excelWriter.write(Arrays.asList(${this.classNameUpper}ExcelDTO.example()), writeSheet);
+
+        excelWriter.finish();
     }
 
 </#if>

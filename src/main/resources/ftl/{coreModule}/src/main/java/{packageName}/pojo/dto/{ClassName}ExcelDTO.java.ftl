@@ -1,5 +1,6 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
+<#include "/abstracted/forEntityInsert.ftl">
 <#if !this.entityFeature.excelImport>
     <@call this.skipCurrent()/>
 </#if>
@@ -19,6 +20,7 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
+<@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("excel导入【${this.title}】的数据传输对象")/>
 <#if this.projectFeature.lombokEnabled>
@@ -30,22 +32,25 @@
 public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
 
 <#list this.insertFields as id,field>
-    @ExcelProperty("${field.fieldDesc}")
+    @ExcelProperty("${field.fieldDesc}<#if field.notNull>*</#if>")
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(field)})
     </#if>
+    <#if field.columnWidth?? && field.columnWidth &gt; 0>
+    @ColumnWidth(${field.columnWidth/8})
+    <#else>
+    @ColumnWidth(15)
+    </#if>
     private ${parseJfieldType(field)} ${field.jfieldName};
 
 </#list>
-<#list this.holds! as otherEntity,mtm>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-    <#if entityFeature.withinEntity>
-        <#assign othercName=otherEntity.className?uncapFirst>
+<#list withinEntityList as otherEntity>
+    <#assign othercName=otherEntity.className?uncapFirst>
     @ExcelProperty("${otherEntity.title}")
+    @ColumnWidth(15)
     private String ${othercName}List;
 
-    </#if>
 </#list>
 
     /**
@@ -85,12 +90,9 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
     <#list this.insertFields as id,field>
         <@call JavaTemplateFunction.printGetterSetter(field.jfieldName,parseJfieldType(field))/>
     </#list>
-    <#list this.holds! as otherEntity,mtm>
-        <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-        <#if entityFeature.withinEntity>
-            <#assign othercName=otherEntity.className?uncapFirst>
-            <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
-        </#if>
+    <#list withinEntityList as otherEntity>
+        <#assign othercName=otherEntity.className?uncapFirst>
+        <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
     </#list>
 </#if>
 }

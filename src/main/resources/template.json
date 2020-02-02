@@ -8,6 +8,7 @@
   "templateFiles": [
     {"fileName":"checkFeatureForRest.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"common.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
+    {"fileName":"forEntityInsert.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"guessDateFormat.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"guessDefaultJfieldValue.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
     {"fileName":"mtmCascadeExtsForList.ftl","fileDir":"/abstracted","contextType":1,"abstracted":true,"binary":false},
@@ -72,6 +73,8 @@
     {"fileName":"{EnumName}.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/constant","contextType":3,"abstracted":false,"binary":false},
     {"fileName":"{ClassName}DAO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao","contextType":2,"abstracted":false,"binary":false},
     {"fileName":"ConstConstraintHandler.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"abstracted":false,"binary":false},
+    {"fileName":"TemplateCellStyleStrategy.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"abstracted":false,"binary":false},
+    {"fileName":"TitleDescriptionWriteHandler.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"UserLoginDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":1,"abstracted":false,"binary":false},
     {"fileName":"{ClassName}AddDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"abstracted":false,"binary":false},
     {"fileName":"{ClassName}ExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"abstracted":false,"binary":false},
