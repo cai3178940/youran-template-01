@@ -20,6 +20,7 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
+<@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.printClassCom("【${this.title}】excel导出对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -36,6 +37,11 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(field)})
     </#if>
+    <#if field.columnWidth?? && field.columnWidth &gt; 0>
+    @ColumnWidth(${field.columnWidth/8})
+    <#else>
+    @ColumnWidth(15)
+    </#if>
     private ${parseJfieldType(field)} ${field.jfieldName};
 
 </#list>
@@ -48,6 +54,11 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
             <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(cascadeField)})
         </#if>
+        <#if cascadeField.columnWidth?? && cascadeField.columnWidth &gt; 0>
+    @ColumnWidth(${cascadeField.columnWidth/8})
+        <#else>
+    @ColumnWidth(15)
+        </#if>
     private ${parseJfieldType(cascadeField)} ${cascadeExt.alias};
 
     </#list>
@@ -56,6 +67,7 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
 <#list mtmCascadeEntitiesForList as otherEntity>
     <#assign othercName=otherEntity.className?uncapFirst>
     @ExcelProperty("${otherEntity.title}")
+    @ColumnWidth(20)
     private String ${othercName}List;
 
 </#list>
