@@ -331,6 +331,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                 // 从第三行开始写表头
                 .relativeHeadRowIndex(2)
                 .build();
+        <@call this.addImport("java.util.Arrays")/>
         excelWriter.write(Arrays.asList(${this.classNameUpper}ExcelDTO.example()), writeSheet);
 
         excelWriter.finish();
