@@ -11,6 +11,7 @@
 - <a href="https://swagger.io" target="_blank">swagger</a>(API文档自动生成)
 - <a href="http://mapstruct.org" target="_blank">mapstruct</a>(属性映射)
 - 基于<a href="http://www.h2database.com" target="_blank">H2</a>内存数据库的单元测试
+- <a href="https://github.com/alibaba/easyexcel" target="_blank">easyexcel</a>(excel导入导出)
 
 ## 软件架构
 标准的maven模块化结构，包含以下三个模块：
