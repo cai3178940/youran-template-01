@@ -56,12 +56,14 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${r'$'}{org.mapstruct.version}</version>
                         </path>
+                    <#if this.projectFeature.lombokEnabled>
                         <!-- 编译期生成pojo的getter-setter -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${r'$'}{lombok.version}</version>
                         </path>
+                    </#if>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
