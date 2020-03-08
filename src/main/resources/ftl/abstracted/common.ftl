@@ -5,3 +5,16 @@
 
 <#-- 将当前model赋值给this变量 -->
 <#assign this = .dataModel>
+
+<#-- common模块名 -->
+<#assign commonModule = this.projectNameSplit + "-common">
+<#-- core模块名 -->
+<#assign coreModule = this.projectNameSplit + "-core">
+<#-- web模块名 -->
+<#assign webModule = this.projectNameSplit + "-web">
+<#-- common包路径 -->
+<#assign commonPackagePath = this.commonPackage?replace("\\.", "/")>
+<#-- 包路径 -->
+<#assign packageNamePath = this.packageName?replace("\\.", "/")>
+
+
