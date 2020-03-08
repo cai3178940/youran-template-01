@@ -13,8 +13,8 @@
 <#-- web模块名 -->
 <#assign webModule = this.projectNameSplit + "-web">
 <#-- common包路径 -->
-<#assign commonPackagePath = this.commonPackage?replace("\\.", "/")>
+<#assign commonPackagePath = this.commonPackage?replace(".", "/")>
 <#-- 包路径 -->
-<#assign packageNamePath = this.packageName?replace("\\.", "/")>
+<#assign packageNamePath = this.packageName?replace(".", "/")>
 
 
