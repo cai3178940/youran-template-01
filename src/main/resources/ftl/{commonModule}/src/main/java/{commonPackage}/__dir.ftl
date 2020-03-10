@@ -1,3 +1,3 @@
-<#-- 当前文件用于渲染父路径 -->
+<#-- 当前文件用于渲染目录 -->
 <#include "/abstracted/common.ftl">
 ${commonPackagePath}
