@@ -137,7 +137,7 @@
     {"fileName":"{ClassName}Service.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service","contextType":2,"fileType":1},
 
     {"fileName":"messages.properties.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
-    {"fileName":"messages_en_US.properties.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
+    {"fileName":"messages_zh_CN.properties.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
     {"fileName":"mybatis-config.xml.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
 
     {"fileName":"__{project-name}-default.properties.ftl","fileDir":"/{coreModule}/src/main/resources/config","contextType":1,"fileType":5},
