@@ -2,8 +2,8 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.vo.ReplyVO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.UserLoginDTO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.UserLoginVO")/>
+<@call this.addImport("${this.packageName}.system.pojo.dto.UserLoginDTO")/>
+<@call this.addImport("${this.packageName}.system.pojo.vo.UserLoginVO")/>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>

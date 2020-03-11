@@ -98,43 +98,53 @@
     {"fileName":"__{EnumName}.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/constant","contextType":3,"fileType":5},
     {"fileName":"{EnumName}.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/constant","contextType":3,"fileType":1},
 
-    {"fileName":"__{ClassName}DAO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}DAO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}DAO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}DAO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/dao/{module}","contextType":2,"fileType":1},
 
     {"fileName":"ConstConstraintHandler.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"fileType":1},
     {"fileName":"TemplateCellStyleStrategy.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"fileType":1},
     {"fileName":"TitleDescriptionWriteHandler.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"fileType":1},
 
-    {"fileName":"__{ClassName}AddDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":5},
-    {"fileName":"__{ClassName}ExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":5},
-    {"fileName":"__{ClassName}UpdateDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":5},
     {"fileName":"UserLoginDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":1,"fileType":1},
-    {"fileName":"{ClassName}AddDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":1},
-    {"fileName":"{ClassName}ExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":1},
-    {"fileName":"{ClassName}UpdateDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}QO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/qo","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}QO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/qo","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}AddDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":5},
+    {"fileName":"__{ClassName}ExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":5},
+    {"fileName":"__{ClassName}UpdateDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}AddDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":1},
+    {"fileName":"{ClassName}ExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":1},
+    {"fileName":"{ClassName}UpdateDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}Example.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}Example.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}Example.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}Example.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example/{module}","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}PO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}PO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}PO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}PO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po/{module}","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":5},
-    {"fileName":"__{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":5},
-    {"fileName":"__{ClassName}ShowVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":5},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/qo/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}QO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/qo/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}QO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/qo/{module}","contextType":2,"fileType":1},
+
     {"fileName":"UserLoginVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":1,"fileType":1},
-    {"fileName":"{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":1},
-    {"fileName":"{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":1},
-    {"fileName":"{ClassName}ShowVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":2,"fileType":1},
 
-    {"fileName":"__{ClassName}Service.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}Service.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
+    {"fileName":"__{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
+    {"fileName":"__{ClassName}ShowVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":1},
+    {"fileName":"{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":1},
+    {"fileName":"{ClassName}ShowVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":1},
+
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}Service.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}Service.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/service/{module}","contextType":2,"fileType":1},
 
     {"fileName":"messages.properties.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
     {"fileName":"messages_zh_CN.properties.ftl","fileDir":"/{coreModule}/src/main/resources","contextType":1,"fileType":1},
@@ -145,8 +155,9 @@
 
     {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}","contextType":1,"fileType":4},
 
-    {"fileName":"__{ClassName}DAO.xml.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}/dao","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}DAO.xml.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}/dao","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}/dao/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}DAO.xml.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}/dao/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}DAO.xml.ftl","fileDir":"/{coreModule}/src/main/resources/{packageName}/dao/{module}","contextType":2,"fileType":1},
 
     {"fileName":"__dir.ftl","fileDir":"/{webModule}","contextType":1,"fileType":4},
     {"fileName":"pom.xml.ftl","fileDir":"/{webModule}","contextType":1,"fileType":1},
@@ -160,8 +171,9 @@
 
     {"fileName":"ExceptionTranslator.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/advice","contextType":1,"fileType":1},
 
-    {"fileName":"__{ClassName}API.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/api","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}API.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/api","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/api/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}API.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/api/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}API.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/api/{module}","contextType":2,"fileType":1},
 
     {"fileName":"StartLogCommandLineRunner.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/config","contextType":1,"fileType":1},
     {"fileName":"SwaggerConfig.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/config","contextType":1,"fileType":1},
@@ -171,8 +183,9 @@
 
     {"fileName":"WebLoginContext.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/context","contextType":1,"fileType":1},
 
-    {"fileName":"__{ClassName}Controller.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/rest","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}Controller.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/rest","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/rest/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}Controller.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/rest/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}Controller.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/rest/{module}","contextType":2,"fileType":1},
 
     {"fileName":"IpUtil.java.ftl","fileDir":"/{webModule}/src/main/java/{packageName}/web/util","contextType":1,"fileType":1},
 
@@ -185,15 +198,17 @@
     {"fileName":"Main.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}","contextType":1,"fileType":1},
     {"fileName":"TestConfiguration.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}","contextType":1,"fileType":1},
 
-    {"fileName":"__{ClassName}Helper.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/help","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}Helper.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/help","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/help/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}Helper.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/help/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}Helper.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/help/{module}","contextType":2,"fileType":1},
 
     {"fileName":"H2Util.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/util","contextType":1,"fileType":1},
 
     {"fileName":"AbstractWebTest.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web","contextType":1,"fileType":1},
 
-    {"fileName":"__{ClassName}ControllerTest.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web/rest","contextType":2,"fileType":5},
-    {"fileName":"{ClassName}ControllerTest.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web/rest","contextType":2,"fileType":1},
+    {"fileName":"__dir.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web/rest/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ClassName}ControllerTest.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web/rest/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ClassName}ControllerTest.java.ftl","fileDir":"/{webModule}/src/test/java/{packageName}/web/rest/{module}","contextType":2,"fileType":1},
 
     {"fileName":"application-local.yml.ftl","fileDir":"/{webModule}/src/test/resources","contextType":1,"fileType":1},
 

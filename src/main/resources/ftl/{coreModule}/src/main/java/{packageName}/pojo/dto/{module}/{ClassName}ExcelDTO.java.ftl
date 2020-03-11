@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/forEntityInsert.ftl">
 <#if !this.entityFeature.excelImport>
@@ -21,7 +22,7 @@
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
-<@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("excel导入【${this.title}】的数据传输对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -98,7 +99,7 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.dto;
+package ${dtoPackageName};
 
 <@call this.printImport()/>
 

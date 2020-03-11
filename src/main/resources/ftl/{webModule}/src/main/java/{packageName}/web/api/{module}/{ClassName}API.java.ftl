@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#--判断如果不需要生成当前文件，则直接跳过-->
@@ -17,8 +18,8 @@
 public interface ${this.classNameUpper}API {
 
 <#if this.entityFeature.save>
-    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
     /**
      * 新增【${this.title}】
      */
@@ -30,8 +31,8 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.update>
-    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
     /**
      * 修改【${this.title}】
      */
@@ -43,8 +44,8 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.list>
-    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     /**
@@ -74,7 +75,7 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.show>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
     /**
      * 查看【${this.title}】详情
      */
@@ -117,10 +118,10 @@ public interface ${this.classNameUpper}API {
         <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
-            <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+            <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
             <#assign resultType="${otherCName}ListVO">
         <#elseIf index &gt; -1>
-            <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+            <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
             <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
         <#else>
             <#assign resultType=otherPk.jfieldType>
@@ -171,7 +172,7 @@ public interface ${this.classNameUpper}API {
     </#if>
 </#list>
 <#if this.entityFeature.excelExport>
-    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     /**
      * 导出【${this.title}】excel

@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForList.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
@@ -7,13 +8,13 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.constant.ErrorCode")/>
 <@call this.addImport("${this.commonPackage}.exception.BusinessException")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
-<@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+<@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+<@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
+<@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
+<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+<@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.stereotype.Service")/>
 <@call this.addImport("org.springframework.transaction.annotation.Transactional")/>
@@ -22,36 +23,36 @@
 public class ${this.classNameUpper}Service {
 
 <#-- 引入当前实体的DAO -->
-<@call this.addAutowired("${this.packageName}.dao" "${this.classNameUpper}DAO")/>
+<@call this.addAutowired("${daoPackageName}" "${this.classNameUpper}DAO")/>
 <#-- 引入多对多关联实体的DAO（当前持有） -->
 <#list this.holds! as otherEntity,mtm>
     <#assign otherCName=otherEntity.className?capFirst>
-    <@call this.addAutowired("${this.packageName}.dao" "${otherCName}DAO")/>
+    <@call this.addAutowired("${daoPackageName}" "${otherCName}DAO")/>
 </#list>
 <#-- 引入多对多关联实体的DAO（被对方持有） -->
 <#list mtmEntitiesForOpp as otherEntity>
-    <@call this.addAutowired("${this.packageName}.dao" "${otherEntity.className?capFirst}DAO")/>
+    <@call this.addAutowired("${daoPackageName}" "${otherEntity.className?capFirst}DAO")/>
 </#list>
 <#-- 引入外键对应的DAO （插入字段对应的外键）-->
 <#list this.insertFields as id,field>
     <#if field.foreignKey>
-        <@call this.addAutowired("${this.packageName}.dao" "${field.foreignEntity.className?capFirst}DAO")/>
+        <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className?capFirst}DAO")/>
     </#if>
 </#list>
 <#-- 引入外键对应的DAO （更新字段对应的外键）-->
 <#list this.updateFields as id,field>
     <#if field.foreignKey>
-        <@call this.addAutowired("${this.packageName}.dao" "${field.foreignEntity.className?capFirst}DAO")/>
+        <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className?capFirst}DAO")/>
     </#if>
 </#list>
 <#-- 被其他实体外键关联时，引入其他实体DAO -->
 <#list this.foreignEntities! as foreignEntity>
-    <@call this.addAutowired("${this.packageName}.dao" "${foreignEntity.className?capFirst}DAO")/>
+    <@call this.addAutowired("${daoPackageName}" "${foreignEntity.className?capFirst}DAO")/>
 </#list>
 <#-- 当前实体的外键字段存在级联扩展时，引入对应实体的DAO -->
 <#list this.fkFields as id,field>
     <#if field.cascadeListExts?? && field.cascadeListExts?size &gt; 0>
-        <@call this.addAutowired("${this.packageName}.dao" "${field.foreignEntity.className?capFirst}DAO")/>
+        <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className?capFirst}DAO")/>
     </#if>
 </#list>
 <@call this.printAutowired()/>
@@ -201,7 +202,7 @@ public class ${this.classNameUpper}Service {
             <#list mtmCascadeEntitiesForList as otherEntity>
                 <#assign otherCName=otherEntity.className?capFirst>
                 <#assign othercName=otherEntity.className?uncapFirst>
-                <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+                <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
             listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}List(
                     ${othercName}DAO.findBy${this.classNameUpper}(listVO.get${this.idUpper}())));
             </#list>
@@ -224,7 +225,7 @@ public class ${this.classNameUpper}Service {
         <#list mtmCascadeEntitiesForList as otherEntity>
             <#assign otherCName=otherEntity.className?capFirst>
             <#assign othercName=otherEntity.className?uncapFirst>
-            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+            <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
             listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}List(
                     ${othercName}DAO.findBy${this.classNameUpper}(listVO.get${this.idUpper}())));
         </#list>
@@ -310,7 +311,7 @@ public class ${this.classNameUpper}Service {
     <#if field.cascadeShowExts?? && field.cascadeShowExts?size &gt; 0>
         <#assign otherCName=field.foreignEntity.className?capFirst>
         <#assign othercName=field.foreignEntity.className?uncapFirst>
-        <@call this.addImport("${this.packageName}.pojo.po.${otherCName}PO")/>
+        <@call this.addImport("${poPackageName}.${otherCName}PO")/>
         if(${this.className}.get${field.jfieldName?capFirst}()!=null){
             ${otherCName}PO _${othercName}PO = ${othercName}DAO.findById(${this.className}.get${field.jfieldName?capFirst}());
         <#list field.cascadeShowExts as cascadeExt>
@@ -337,7 +338,7 @@ public class ${this.classNameUpper}Service {
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign othercName=otherEntity.className?uncapFirst>
-    <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+    <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
         // 设置【${otherEntity.title}】列表
         showVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(
                 ${othercName}DAO.findBy${this.classNameUpper}(${this.id})));
@@ -490,7 +491,7 @@ public class ${this.classNameUpper}Service {
 
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.service;
+package ${servicePackageName};
 
 <@call this.printImport()/>
 

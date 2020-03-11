@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#--定义主体代码-->
@@ -6,7 +7,7 @@
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
-<@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("【${this.title}】详情展示对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -45,7 +46,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
             <@call this.addConstImport(cascadeField.dicType)/>
         </#if>
         <#if field.foreignEntity!=this.metaEntity>
-            <@call this.addImport("${this.packageName}.pojo.example.${field.foreignEntity.className?capFirst}Example")/>
+            <@call this.addImport("${examplePackageName}.${field.foreignEntity.className?capFirst}Example")/>
             <#assign exampleClass="${field.foreignEntity.className?capFirst}Example.">
         </#if>
         <#--字段名转下划线大写-->
@@ -111,7 +112,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
     <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className?capFirst>
     <#assign exampleClass="${otherEntity.className?capFirst}Example">
-    <@call this.addImport("${this.packageName}.pojo.example.${exampleClass}")/>
+    <@call this.addImport("${examplePackageName}.${exampleClass}")/>
     <#if this.projectFeature.lombokEnabled>
     @Data
     @EqualsAndHashCode(callSuper=true)
@@ -159,7 +160,7 @@ public class ${this.classNameUpper}ShowVO extends AbstractVO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.vo;
+package ${voPackageName};
 
 <@call this.printImport()/>
 

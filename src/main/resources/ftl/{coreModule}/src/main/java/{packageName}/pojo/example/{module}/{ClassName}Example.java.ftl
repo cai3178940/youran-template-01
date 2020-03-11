@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.printClassCom("【${this.title}】参数示例")/>
@@ -13,7 +14,7 @@ public class ${this.classNameUpper}Example {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.example;
+package ${examplePackageName};
 
 <@call this.printImport()/>
 

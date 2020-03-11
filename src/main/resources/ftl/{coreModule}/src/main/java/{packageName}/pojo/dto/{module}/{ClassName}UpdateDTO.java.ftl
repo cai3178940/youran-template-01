@@ -1,11 +1,12 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("javax.validation.constraints.NotNull")/>
-<@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("修改【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -84,7 +85,7 @@ public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.dto;
+package ${dtoPackageName};
 
 <@call this.printImport()/>
 

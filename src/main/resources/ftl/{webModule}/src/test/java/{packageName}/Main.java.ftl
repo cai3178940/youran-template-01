@@ -9,7 +9,11 @@
 @Suite.SuiteClasses({
 <#list this.metaEntities as metaEntity>
     <#if getGenRest(metaEntity)>
-        <@call this.addImport("${this.packageName}.web.rest.*")/>
+        <#if metaEntity.module?hasContent>
+            <@call this.addImport("${this.packageName}.web.rest.${metaEntity.module}.${metaEntity.className}ControllerTest")/>
+        <#else>
+            <@call this.addImport("${this.packageName}.web.rest.${metaEntity.className}ControllerTest")/>
+        </#if>
     ${metaEntity.className}ControllerTest.class,
     </#if>
 </#list>

@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForList.ftl">
 <#if !this.entityFeature.excelExport>
@@ -93,7 +94,7 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.vo;
+package ${voPackageName};
 
 <@call this.printImport()/>
 

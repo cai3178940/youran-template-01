@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
 <#include "/abstracted/forEntityInsert.ftl">
@@ -21,17 +22,17 @@
 @RequestMapping(WebConst.API_PATH + "/${this.className}")
 public class ${this.classNameUpper}Controller extends AbstractController implements ${this.classNameUpper}API {
 
-    <@call this.addAutowired("${this.packageName}.service" "${this.classNameUpper}Service")/>
+    <@call this.addAutowired("${servicePackageName}" "${this.classNameUpper}Service")/>
     <#if this.entityFeature.excelImport>
         <@call this.addAutowired("javax.validation" "Validator")/>
     </#if>
     <@call this.printAutowired()/>
 
 <#if this.entityFeature.save>
-    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
-    <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
-    <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
+    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
+    <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,10 +44,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.update>
-    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
-    <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
-    <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
+    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
+    <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
     @Override
     @PutMapping
     public ResponseEntity<${this.classNameUpper}ShowVO> update(@Valid @RequestBody ${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO) {
@@ -56,8 +57,8 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.list>
-    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     @Override
@@ -90,7 +91,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#if>
 <#if this.entityFeature.show>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
     @Override
     @GetMapping(value = "/{${this.id}}")
     public ResponseEntity<${this.classNameUpper}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
@@ -131,15 +132,15 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${this.packageName}.pojo.po.${otherCName}PO")/>
-        <@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
+        <@call this.addImport("${poPackageName}.${otherCName}PO")/>
+        <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
         <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
-            <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+            <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
             <#assign resultType="${otherCName}ListVO">
         <#elseIf index &gt; -1>
-            <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+            <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
             <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
         <#else>
             <#assign resultType=otherPk.jfieldType>
@@ -158,10 +159,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         ${this.classNameUpper}PO ${this.className} = ${this.className}Service.get${this.classNameUpper}(${this.id}, ${withCode}true);
         List<${otherCName}PO> list = ${this.className}.get${otherCName}POList();
         <#if entityFeature.addRemove>
-            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+            <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
         return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.toListVOList(list));
         <#elseIf index &gt; -1>
-            <@call this.addImport("${this.packageName}.pojo.mapper.${otherCName}Mapper")/>
+            <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
         return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(list));
         <#else>
             <@call this.addImport("java.util.stream.Collectors")/>
@@ -173,7 +174,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
     </#if>
     <#if entityFeature.addRemove>
-        <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+        <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
     @Override
     @PostMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> add${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -204,11 +205,11 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 <#if this.entityFeature.excelExport>
     @Override
     @GetMapping("/export")
-    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
+    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     public void exportExcel(@Valid ${this.classNameUpper}QO ${this.className}QO, HttpServletResponse response) throws Exception {
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     <#if this.pageSign>
         ${this.className}QO.setPageSize(Integer.MAX_VALUE);
         ${this.className}QO.setPageNo(1);
@@ -222,10 +223,10 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         String fileName = URLEncoder.encode("${this.title}导出", "utf-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ExcelVO")/>
+        <@call this.addImport("${voPackageName}.${this.classNameUpper}ExcelVO")/>
         EasyExcel.write(response.getOutputStream(), ${this.classNameUpper}ExcelVO.class)
                 .sheet()
-                <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+                <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
                 .doWrite(${this.classNameUpper}Mapper.INSTANCE.toExcelVOList(list));
     }
 
@@ -236,16 +237,16 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
     public ResponseEntity<Integer> importExcel(@RequestParam(value = "file") MultipartFile file) throws Exception {
         <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
+        <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>
         List<${this.classNameUpper}AddDTO> list = EasyExcel.read(file.getInputStream())
-                <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}ExcelDTO")/>
+                <@call this.addImport("${dtoPackageName}.${this.classNameUpper}ExcelDTO")/>
                 .head(${this.classNameUpper}ExcelDTO.class)
                 .sheet()
                 .headRowNumber(3)
                 .<${this.classNameUpper}ExcelDTO>doReadSync()
                 .stream()
-                <@call this.addImport("${this.packageName}.pojo.mapper.${this.classNameUpper}Mapper")/>
+                <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
                 .map(${this.classNameUpper}Mapper.INSTANCE::fromExcelDTO)
                 .peek(${this.className}AddDTO -> {
                     // 校验数据
@@ -342,7 +343,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.rest;
+package ${restPackageName};
 
 <@call this.printImport()/>
 

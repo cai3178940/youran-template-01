@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.po.AbstractPO")/>
@@ -196,7 +197,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.po;
+package ${poPackageName};
 
 <@call this.printImport()/>
 

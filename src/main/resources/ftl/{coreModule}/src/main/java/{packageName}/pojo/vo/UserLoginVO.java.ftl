@@ -45,7 +45,7 @@ public class UserLoginVO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.vo;
+package ${this.packageName}.system.pojo.vo;
 
 <@call this.printImport()/>
 

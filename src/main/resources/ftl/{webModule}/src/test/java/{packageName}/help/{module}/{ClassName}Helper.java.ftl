@@ -1,14 +1,15 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.pojo.dto.*")/>
-<@call this.addImport("${this.packageName}.pojo.po.*")/>
+<@call this.addImport("${dtoPackageName}.*")/>
+<@call this.addImport("${poPackageName}.*")/>
 <@call this.addImport("org.springframework.stereotype.Component")/>
-<@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
 @Component
 public class ${this.classNameUpper}Helper {
 
-    <@call this.addAutowired("${this.packageName}.service" "${this.classNameUpper}Service")/>
+    <@call this.addAutowired("${servicePackageName}" "${this.classNameUpper}Service")/>
     <@call this.printAutowired()/>
 
     <#--定义外键字段参数串-->

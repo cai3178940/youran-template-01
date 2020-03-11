@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
 <#--定义主体代码-->
@@ -9,7 +10,7 @@
 <#else>
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
 </#if>
-<@call this.addStaticImport("${this.packageName}.pojo.example.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
 <@call this.printClassCom("查询【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -66,7 +67,7 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
     <#if field.cascadeQueryExts?? && field.cascadeQueryExts?size &gt; 0>
         <#assign exampleClass="">
         <#if field.foreignEntity!=this.metaEntity>
-            <@call this.addImport("${this.packageName}.pojo.example.${field.foreignEntity.className?capFirst}Example")/>
+            <@call this.addImport("${examplePackageName}.${field.foreignEntity.className?capFirst}Example")/>
             <#assign exampleClass="${field.foreignEntity.className?capFirst}Example.">
         </#if>
         <#list field.cascadeQueryExts as cascadeExt>
@@ -84,7 +85,7 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
 <#list mtmCascadeExtsForQuery as mtmCascadeExt>
     <#assign cascadeField=mtmCascadeExt.cascadeField>
     <#assign cascadeEntity=mtmCascadeExt.cascadeEntity>
-    <@call this.addImport("${this.packageName}.pojo.example.${cascadeEntity.className?capFirst}Example")/>
+    <@call this.addImport("${examplePackageName}.${cascadeEntity.className?capFirst}Example")/>
     <#assign exampleClass="${cascadeEntity.className?capFirst}Example.">
     <#if !QueryType.isBetween(cascadeField.queryType)>
         <@queryField cascadeField mtmCascadeExt.alias exampleClass></@queryField>
@@ -158,7 +159,7 @@ public class ${this.classNameUpper}QO extends <#if this.pageSign>PageQO<#else>Ab
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.qo;
+package ${qoPackageName};
 
 <@call this.printImport()/>
 

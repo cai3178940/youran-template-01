@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/mybatis.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
@@ -15,7 +16,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${this.packageName}.dao.${this.classNameUpper}DAO">
+<mapper namespace="${daoPackageName}.${this.classNameUpper}DAO">
 
     <#assign wrapTableName=wrapMysqlKeyword(this.tableName)>
     <#assign wrapPkFieldName=wrapMysqlKeyword(this.pk.fieldName)>

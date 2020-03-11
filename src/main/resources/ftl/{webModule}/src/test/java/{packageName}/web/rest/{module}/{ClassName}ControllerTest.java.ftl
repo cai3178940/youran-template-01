@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/checkFeatureForRest.ftl">
 <#--判断如果不需要生成当前文件，则直接跳过-->
 <#if !getGenRest(this.metaEntity)>
@@ -6,9 +7,9 @@
 </#if>
 <@call this.addImport("${this.commonPackage}.util.JsonUtil")/>
 <@call this.addImport("${this.packageName}.help.${this.classNameUpper}Helper")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
+<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
 <@call this.addImport("${this.packageName}.web.AbstractWebTest")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("org.junit.Test")/>
@@ -211,7 +212,7 @@
 </#list>
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.rest;
+package ${restPackageName};
 
 <@call this.printImport()/>
 

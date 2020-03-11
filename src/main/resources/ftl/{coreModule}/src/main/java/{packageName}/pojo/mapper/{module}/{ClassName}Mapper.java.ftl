@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/mtmCascadeExtsForList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
@@ -16,10 +17,10 @@ ${content}<#rt>
 </#macro>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
-<@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ShowVO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+<@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
+<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+<@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
 <@call this.addImport("org.mapstruct.Mapper")/>
 <@call this.addImport("org.mapstruct.MappingTarget")/>
 <@call this.addImport("org.mapstruct.factory.Mappers")/>
@@ -58,7 +59,7 @@ public interface ${this.classNameUpper}Mapper {
 <#list mtmCascadeEntitiesForOppList as otherEntity>
     <#assign otherCName=otherEntity.className?capFirst>
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ListVO")/>
+    <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
     List<${otherCName}ListVO.${this.classNameUpper}VO> to${this.classNameUpper}VOFor${otherCName}List(List<${this.classNameUpper}PO> list);
 
 </#list>
@@ -66,7 +67,7 @@ public interface ${this.classNameUpper}Mapper {
 <#list mtmCascadeEntitiesForOppShow as otherEntity>
     <#assign otherCName=otherEntity.className?capFirst>
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${otherCName}ShowVO")/>
+    <@call this.addImport("${voPackageName}.${otherCName}ShowVO")/>
     List<${otherCName}ShowVO.${this.classNameUpper}VO> to${this.classNameUpper}VOFor${otherCName}Show(List<${this.classNameUpper}PO> list);
 
 </#list>
@@ -77,13 +78,13 @@ public interface ${this.classNameUpper}Mapper {
     <#--对方支持添加删除的情况才需要该服务 -->
     <#if otherEntityFeature.addRemove>
         <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+        <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     List<${this.classNameUpper}ListVO> toListVOList(List<${this.classNameUpper}PO> list);
 
     </#if>
 </#list>
 <#if this.entityFeature.excelImport>
-    <@call this.addImport("${this.packageName}.pojo.dto.${this.classNameUpper}ExcelDTO")/>
+    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}ExcelDTO")/>
     /**
      * excelDTO映射addDTO
      *
@@ -111,8 +112,8 @@ public interface ${this.classNameUpper}Mapper {
 </#if>
 <#if this.entityFeature.excelExport>
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ExcelVO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ExcelVO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     /**
      * listVO列表转excelVO列表
      *
@@ -176,7 +177,7 @@ public interface ${this.classNameUpper}Mapper {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.mapper;
+package ${mapperPackageName};
 
 <@call this.printImport()/>
 

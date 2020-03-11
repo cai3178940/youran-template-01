@@ -1,10 +1,11 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppList.ftl">
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.pojo.po.${this.classNameUpper}PO")/>
+<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
 <@call this.addImport("${this.commonPackage}.dao.DAO")/>
 <@call this.addImport("org.apache.ibatis.annotations.Mapper")/>
 <@call this.addImport("org.springframework.stereotype.Repository")/>
@@ -14,8 +15,8 @@
 public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO> {
 
 <#if !this.pageSign>
-    <@call this.addImport("${this.packageName}.pojo.qo.${this.classNameUpper}QO")/>
-    <@call this.addImport("${this.packageName}.pojo.vo.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
     <@call this.addImport("java.util.List")/>
     /**
      * 根据条件查询【${this.title}】列表
@@ -75,7 +76,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.dao;
+package ${daoPackageName};
 
 <@call this.printImport()/>
 
