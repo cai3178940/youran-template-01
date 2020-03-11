@@ -8,6 +8,7 @@
     <#assign poPackageName = this.packageName+".pojo.po."+this.module>
     <#assign qoPackageName = this.packageName+".pojo.qo."+this.module>
     <#assign voPackageName = this.packageName+".pojo.vo."+this.module>
+    <#assign servicePackageName = this.packageName+".service."+this.module>
     <#assign apiPackageName = this.packageName+".web.api."+this.module>
     <#assign restPackageName = this.packageName+".web.rest."+this.module>
     <#assign helpPackageName = this.packageName+".help."+this.module>
@@ -19,6 +20,7 @@
     <#assign poPackageName = this.packageName+".pojo.po">
     <#assign qoPackageName = this.packageName+".pojo.qo">
     <#assign voPackageName = this.packageName+".pojo.vo">
+    <#assign servicePackageName = this.packageName+".service">
     <#assign apiPackageName = this.packageName+".web.api">
     <#assign restPackageName = this.packageName+".web.rest">
     <#assign helpPackageName = this.packageName+".help">

@@ -12,6 +12,7 @@
 
     {"fileName":"checkFeatureForRest.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"common.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
+    {"fileName":"commonForEntity.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"forEntityInsert.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"guessDateFormat.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"guessDefaultJfieldValue.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},

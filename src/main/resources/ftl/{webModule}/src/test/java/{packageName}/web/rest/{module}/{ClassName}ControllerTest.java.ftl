@@ -6,7 +6,7 @@
     <@call this.skipCurrent()/>
 </#if>
 <@call this.addImport("${this.commonPackage}.util.JsonUtil")/>
-<@call this.addImport("${this.packageName}.help.${this.classNameUpper}Helper")/>
+<@call this.addImport("${helpPackageName}.${this.classNameUpper}Helper")/>
 <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
 <@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
 <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
