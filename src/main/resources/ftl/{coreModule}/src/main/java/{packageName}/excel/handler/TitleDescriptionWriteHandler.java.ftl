@@ -69,10 +69,12 @@ public class TitleDescriptionWriteHandler implements SheetWriteHandler {
             }
         }
         // 合并单元格
-        CellRangeAddress region = new CellRangeAddress(0, 0, 0, lastCol);
-        sheet.addMergedRegion(region);
-        CellRangeAddress region2 = new CellRangeAddress(1, 1, 0, lastCol);
-        sheet.addMergedRegion(region2);
+        if (lastCol > 0) {
+            CellRangeAddress region = new CellRangeAddress(0, 0, 0, lastCol);
+            sheet.addMergedRegion(region);
+            CellRangeAddress region2 = new CellRangeAddress(1, 1, 0, lastCol);
+            sheet.addMergedRegion(region2);
+        }
     }
 
 }
