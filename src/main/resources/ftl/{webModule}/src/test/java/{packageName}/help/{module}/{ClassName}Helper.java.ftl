@@ -83,7 +83,7 @@ public class ${this.classNameUpper}Helper {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.help;
+package ${helpPackageName};
 
 <@call this.printImport()/>
 

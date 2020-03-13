@@ -21,3 +21,12 @@
     </#if>
     <#return genRest>
 </#function>
+<#-- 提供rest服务的模块 -->
+<#assign modulesForRest = CommonTemplateFunction.createHashSet()>
+<#list this.metaEntities as metaEntity>
+    <#if getGenRest(metaEntity)>
+        <#if metaEntity.module?hasContent>
+            <@justCall modulesForRest.add(metaEntity.module)/>
+        </#if>
+    </#if>
+</#list>

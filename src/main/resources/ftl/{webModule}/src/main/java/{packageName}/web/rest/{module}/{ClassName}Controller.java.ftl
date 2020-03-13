@@ -9,7 +9,6 @@
 </#if>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${this.packageName}.web.api.${this.classNameUpper}API")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
@@ -19,7 +18,7 @@
 <@call this.addImport("java.net.URI")/>
 <@call this.printClassCom("【${this.title}】控制器")/>
 @RestController
-@RequestMapping(WebConst.API_PATH + "/${this.className}")
+@RequestMapping(${renderApiPath(this.metaEntity, "")})
 public class ${this.classNameUpper}Controller extends AbstractController implements ${this.classNameUpper}API {
 
     <@call this.addAutowired("${servicePackageName}" "${this.classNameUpper}Service")/>

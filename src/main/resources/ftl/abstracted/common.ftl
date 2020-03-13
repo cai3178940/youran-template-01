@@ -17,4 +17,12 @@
 <#-- 包路径 -->
 <#assign packageNamePath = this.packageName?replace(".", "/")>
 
-
+<#-- 渲染API路径 -->
+<#function  renderApiPath entity suffix>
+    <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
+    <#if entity.module?hasContent>
+        <#return "WebConst.ModulePath.${entity.module?upperCase} + \"/${entity.className?uncapFirst}${suffix}\"" >
+    <#else>
+        <#return "WebConst.API_PATH + \"/${entity.className?uncapFirst}${suffix}\"" >
+    </#if>
+</#function>
