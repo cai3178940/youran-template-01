@@ -1,3 +1,3 @@
 <#-- 当前文件用于渲染文件名 -->
 <#include "/abstracted/common.ftl">
-${this.classNameUpper}ExcelVO.java
+${this.className}ExcelVO.java

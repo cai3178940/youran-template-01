@@ -6,10 +6,10 @@
     <@call this.skipCurrent()/>
 </#if>
 <@call this.addImport("${this.commonPackage}.util.JsonUtil")/>
-<@call this.addImport("${helpPackageName}.${this.classNameUpper}Helper")/>
-<@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+<@call this.addImport("${helpPackageName}.${this.className}Helper")/>
+<@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
+<@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
+<@call this.addImport("${poPackageName}.${this.className}PO")/>
 <@call this.addImport("${this.packageName}.web.AbstractWebTest")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("org.junit.Test")/>
@@ -34,7 +34,7 @@
         ${saveExample}
         </#if>
     </#list>
-        ${this.classNameUpper}AddDTO addDTO = ${this.className}Helper.get${this.classNameUpper}AddDTO(<@call this.printSaveExampleArg(this.metaEntity)/>);
+        ${this.className}AddDTO addDTO = ${this.classNameLower}Helper.get${this.className}AddDTO(<@call this.printSaveExampleArg(this.metaEntity)/>);
         restMockMvc.perform(post(${renderApiPath(this.metaEntity, "")})
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(addDTO)))
@@ -51,7 +51,7 @@
         <#list saveExampleCode as saveExample>
         ${saveExample}
         </#list>
-        ${this.classNameUpper}UpdateDTO updateDTO = ${this.className}Helper.get${this.classNameUpper}UpdateDTO(${this.className});
+        ${this.className}UpdateDTO updateDTO = ${this.classNameLower}Helper.get${this.className}UpdateDTO(${this.classNameLower});
         restMockMvc.perform(put(${renderApiPath(this.metaEntity, "")})
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(updateDTO)))
@@ -106,7 +106,7 @@
     <#list saveExampleCode as saveExample>
         ${saveExample}
     </#list>
-        restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.className}.get${this.idUpper}()))
+        restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.classNameLower}.get${this.idUpper}()))
             .andExpect(status().isOk());
     }
 
@@ -120,7 +120,7 @@
     <#list saveExampleCode as saveExample>
         ${saveExample}
     </#list>
-        restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.className}.get${this.idUpper}()))
+        restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.classNameLower}.get${this.idUpper}()))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
     }
@@ -138,7 +138,7 @@
     </#list>
         restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "")})
             .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(Lists.newArrayList(${this.className}.get${this.idUpper}()))))
+            .content(JsonUtil.toJSONString(Lists.newArrayList(${this.classNameLower}.get${this.idUpper}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
     }
@@ -146,8 +146,8 @@
 </#if>
 <#list this.holds! as otherEntity,mtm>
     <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign otherCName=otherEntity.className>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#--获取保存Example的代码-->
     <#assign saveExampleCode=this.getPrintingSaveExampleForMtm(otherEntity)/>
@@ -164,19 +164,19 @@
         </#list>
         // 先测试添加【${otherEntity.title}】关联
         restMockMvc.perform(post(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.className}.get${this.idUpper}())
+            ${this.classNameLower}.get${this.idUpper}())
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
         // 再测试查询【${otherEntity.title}】关联
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.className}.get${this.idUpper}()))
+            ${this.classNameLower}.get${this.idUpper}()))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.length()").value(is(1)));
         // 最后测试移除【${otherEntity.title}】关联
         restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.className}.get${this.idUpper}())
+            ${this.classNameLower}.get${this.idUpper}())
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
@@ -196,14 +196,14 @@
         </#list>
         // 先测试设置【${otherEntity.title}】关联
         restMockMvc.perform(put(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.className}.get${this.idUpper}())
+            ${this.classNameLower}.get${this.idUpper}())
             .contentType(MediaType.APPLICATION_JSON)
             .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(is(1)));
         // 再测试查询【${otherEntity.title}】关联
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.className}.get${this.idUpper}()))
+            ${this.classNameLower}.get${this.idUpper}()))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.length()").value(is(1)));
     }
@@ -217,7 +217,7 @@ package ${restPackageName};
 <@call this.printImport()/>
 
 <@call this.printClassCom("【${this.title}】单元测试")/>
-public class ${this.classNameUpper}ControllerTest extends AbstractWebTest {
+public class ${this.className}ControllerTest extends AbstractWebTest {
 
 <@call this.printAutowired()/>
 

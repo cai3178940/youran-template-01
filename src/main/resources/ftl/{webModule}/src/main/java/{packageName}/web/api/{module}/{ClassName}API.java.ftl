@@ -15,51 +15,51 @@
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.printClassCom("【${this.title}】API" "swagger接口文档")/>
 @Api(tags = "【${this.title}】API")
-public interface ${this.classNameUpper}API {
+public interface ${this.className}API {
 
 <#if this.entityFeature.save>
-    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     /**
      * 新增【${this.title}】
      */
     @ApiOperation(value="新增【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.className}AddDTO", dataType = "${this.classNameUpper}AddDTO", value = "新增【${this.title}】参数", paramType = "body"),
+        @ApiImplicitParam(name = "${this.classNameLower}AddDTO", dataType = "${this.className}AddDTO", value = "新增【${this.title}】参数", paramType = "body"),
     })
-    ResponseEntity<${this.classNameUpper}ShowVO> save(${this.classNameUpper}AddDTO ${this.className}AddDTO) throws Exception;
+    ResponseEntity<${this.className}ShowVO> save(${this.className}AddDTO ${this.classNameLower}AddDTO) throws Exception;
 
 </#if>
 <#if this.entityFeature.update>
-    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     /**
      * 修改【${this.title}】
      */
     @ApiOperation(value="修改【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.className}UpdateDTO", dataType = "${this.classNameUpper}UpdateDTO", value = "修改【${this.title}】参数", paramType = "body"),
+        @ApiImplicitParam(name = "${this.classNameLower}UpdateDTO", dataType = "${this.className}UpdateDTO", value = "修改【${this.title}】参数", paramType = "body"),
     })
-    ResponseEntity<${this.classNameUpper}ShowVO> update(${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO);
+    ResponseEntity<${this.className}ShowVO> update(${this.className}UpdateDTO ${this.classNameLower}UpdateDTO);
 
 </#if>
 <#if this.entityFeature.list>
-    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.className}QO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     /**
      * 分页查询【${this.title}】
      */
     @ApiOperation(value="分页查询【${this.title}】")
-    ResponseEntity<PageVO<${this.classNameUpper}ListVO>> list(${this.classNameUpper}QO ${this.className}QO);
+    ResponseEntity<PageVO<${this.className}ListVO>> list(${this.className}QO ${this.classNameLower}QO);
     <#else>
         <@call this.addImport("java.util.List")/>
     /**
      * 列表查询【${this.title}】
      */
     @ApiOperation(value="列表查询【${this.title}】")
-    ResponseEntity<List<${this.classNameUpper}ListVO>> list(${this.classNameUpper}QO ${this.className}QO);
+    ResponseEntity<List<${this.className}ListVO>> list(${this.className}QO ${this.classNameLower}QO);
     </#if>
 
 </#if>
@@ -75,7 +75,7 @@ public interface ${this.classNameUpper}API {
 
 </#if>
 <#if this.entityFeature.show>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     /**
      * 查看【${this.title}】详情
      */
@@ -83,7 +83,7 @@ public interface ${this.classNameUpper}API {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
     })
-    ResponseEntity<${this.classNameUpper}ShowVO> show(${this.type} ${this.id});
+    ResponseEntity<${this.className}ShowVO> show(${this.type} ${this.id});
 
 </#if>
 <#if this.entityFeature.delete>
@@ -110,7 +110,7 @@ public interface ${this.classNameUpper}API {
 </#if>
 <#list this.holds! as otherEntity,mtm>
     <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
@@ -121,8 +121,8 @@ public interface ${this.classNameUpper}API {
             <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
             <#assign resultType="${otherCName}ListVO">
         <#elseIf index &gt; -1>
-            <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
-            <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
+            <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+            <#assign resultType="${this.className}ShowVO.${otherCName}VO">
         <#else>
             <#assign resultType=otherPk.jfieldType>
         </#if>
@@ -172,13 +172,13 @@ public interface ${this.classNameUpper}API {
     </#if>
 </#list>
 <#if this.entityFeature.excelExport>
-    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+    <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     /**
      * 导出【${this.title}】excel
      */
     @ApiOperation(value="导出【${this.title}】excel")
-    void exportExcel(${this.classNameUpper}QO ${this.className}QO, HttpServletResponse response) throws Exception;
+    void exportExcel(${this.className}QO ${this.classNameLower}QO, HttpServletResponse response) throws Exception;
 
 </#if>
 <#if this.entityFeature.excelImport>

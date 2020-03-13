@@ -5,25 +5,25 @@
 <#include "/abstracted/mtmCascadeExtsForOppShow.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+<@call this.addImport("${poPackageName}.${this.className}PO")/>
 <@call this.addImport("${this.commonPackage}.dao.DAO")/>
 <@call this.addImport("org.apache.ibatis.annotations.Mapper")/>
 <@call this.addImport("org.springframework.stereotype.Repository")/>
 <@call this.printClassCom("【${this.title}】数据库操作")/>
 @Repository
 @Mapper
-public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO> {
+public interface ${this.className}DAO extends DAO<${this.className}PO> {
 
 <#if !this.pageSign>
-    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.className}QO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
     <@call this.addImport("java.util.List")/>
     /**
      * 根据条件查询【${this.title}】列表
-     * @param ${this.className}QO
+     * @param ${this.classNameLower}QO
      * @return
      */
-    List<${this.classNameUpper}ListVO> findListByQuery(${this.classNameUpper}QO ${this.className}QO);
+    List<${this.className}ListVO> findListByQuery(${this.className}QO ${this.classNameLower}QO);
 
 </#if>
 <#if this.titleField??>
@@ -40,7 +40,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
 <#list this.holds! as otherEntity,mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign theFkId=mtm.getFkAlias(this.entityId,false)>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
@@ -59,7 +59,7 @@ public interface ${this.classNameUpper}DAO extends DAO<${this.classNameUpper}PO>
     <#assign otherCName=otherEntity.className/>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    List<${this.classNameUpper}PO> findBy${otherCName}(${otherType} ${otherFkId});
+    List<${this.className}PO> findBy${otherCName}(${otherType} ${otherFkId});
 
 </#list>
 

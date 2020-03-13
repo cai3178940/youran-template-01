@@ -17,58 +17,58 @@ ${content}<#rt>
 </#macro>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
-<@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
-<@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
-<@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+<@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
+<@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
+<@call this.addImport("${poPackageName}.${this.className}PO")/>
+<@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
 <@call this.addImport("org.mapstruct.Mapper")/>
 <@call this.addImport("org.mapstruct.MappingTarget")/>
 <@call this.addImport("org.mapstruct.factory.Mappers")/>
 <@call this.printClassCom("【${this.title}】映射")/>
 @Mapper
-public interface ${this.classNameUpper}Mapper {
+public interface ${this.className}Mapper {
 
-    ${this.classNameUpper}Mapper INSTANCE = Mappers.getMapper( ${this.classNameUpper}Mapper.class );
+    ${this.className}Mapper INSTANCE = Mappers.getMapper( ${this.className}Mapper.class );
 
     /**
      * addDTO映射po
      *
-     * @param ${this.className}AddDTO
+     * @param ${this.classNameLower}AddDTO
      * @return
      */
-    ${this.classNameUpper}PO fromAddDTO(${this.classNameUpper}AddDTO ${this.className}AddDTO);
+    ${this.className}PO fromAddDTO(${this.className}AddDTO ${this.classNameLower}AddDTO);
 
     /**
      * 将updateDTO中的值设置到po
      *
-     * @param ${this.className}PO
-     * @param ${this.className}UpdateDTO
+     * @param ${this.classNameLower}PO
+     * @param ${this.classNameLower}UpdateDTO
      */
-    void setUpdateDTO(@MappingTarget ${this.classNameUpper}PO ${this.className}PO, ${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO);
+    void setUpdateDTO(@MappingTarget ${this.className}PO ${this.classNameLower}PO, ${this.className}UpdateDTO ${this.classNameLower}UpdateDTO);
 
     /**
      * po映射showVO
      *
-     * @param ${this.className}PO
+     * @param ${this.classNameLower}PO
      * @return
      */
-    ${this.classNameUpper}ShowVO toShowVO(${this.classNameUpper}PO ${this.className}PO);
+    ${this.className}ShowVO toShowVO(${this.className}PO ${this.classNameLower}PO);
 
 
 <#--为被持有的实体提供级联【列表】查询方法-->
 <#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
-    List<${otherCName}ListVO.${this.classNameUpper}VO> to${this.classNameUpper}VOFor${otherCName}List(List<${this.classNameUpper}PO> list);
+    List<${otherCName}ListVO.${this.className}VO> to${this.className}VOFor${otherCName}List(List<${this.className}PO> list);
 
 </#list>
 <#--为被持有的实体提供级联【详情】查询方法-->
 <#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${otherCName}ShowVO")/>
-    List<${otherCName}ShowVO.${this.classNameUpper}VO> to${this.classNameUpper}VOFor${otherCName}Show(List<${this.classNameUpper}PO> list);
+    List<${otherCName}ShowVO.${this.className}VO> to${this.className}VOFor${otherCName}Show(List<${this.className}PO> list);
 
 </#list>
 <#--多对多被对方持有，提供PO列表转ListVO列表 -->
@@ -78,13 +78,13 @@ public interface ${this.classNameUpper}Mapper {
     <#--对方支持添加删除的情况才需要该服务 -->
     <#if otherEntityFeature.addRemove>
         <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
-    List<${this.classNameUpper}ListVO> toListVOList(List<${this.classNameUpper}PO> list);
+        <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
+    List<${this.className}ListVO> toListVOList(List<${this.className}PO> list);
 
     </#if>
 </#list>
 <#if this.entityFeature.excelImport>
-    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}ExcelDTO")/>
+    <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
     /**
      * excelDTO映射addDTO
      *
@@ -101,26 +101,26 @@ public interface ${this.classNameUpper}Mapper {
             <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
             <#assign pkFieldType=otherEntity.pkField.jfieldType>
             <#if entityFeature.withinEntity>
-                <#assign othercName=otherEntity.className?uncapFirst>
-                <#assign otherCName=otherEntity.className?capFirst>
+                <#assign othercName=lowerFirstWord(otherEntity.className)>
+                <#assign otherCName=otherEntity.className>
             @Mapping(target = "${othercName}List", expression = "java(${this.commonPackage}.util.ConvertUtil.convert${pkFieldType}List(dto.get${otherCName}List()))"),
             </#if>
         </#list>
     </@wrapMappings>
-    ${this.classNameUpper}AddDTO fromExcelDTO(${this.classNameUpper}ExcelDTO dto);
+    ${this.className}AddDTO fromExcelDTO(${this.className}ExcelDTO dto);
 
 </#if>
 <#if this.entityFeature.excelExport>
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ExcelVO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
     /**
      * listVO列表转excelVO列表
      *
      * @param list
      * @return
      */
-    List<${this.classNameUpper}ExcelVO> toExcelVOList(List<${this.classNameUpper}ListVO> list);
+    List<${this.className}ExcelVO> toExcelVOList(List<${this.className}ListVO> list);
 
     /**
      * listVO转excelVO
@@ -143,11 +143,11 @@ public interface ${this.classNameUpper}Mapper {
             </#list>
         </#list>
     </@wrapMappings>
-    ${this.classNameUpper}ExcelVO toExcelVO(${this.classNameUpper}ListVO vo);
+    ${this.className}ExcelVO toExcelVO(${this.className}ListVO vo);
 
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
-        <#assign otherCName=otherEntity.className?capFirst>
+        <#assign otherCName=otherEntity.className>
         <#--级联扩展列表字段中，如果有标题字段，则使用标题字段展示，否则直接展示主键字段-->
         <#if hasTitleField(otherEntity,mtmCascadeExts)>
             <#assign displayField = otherEntity.titleField>
@@ -160,12 +160,12 @@ public interface ${this.classNameUpper}Mapper {
      * @param list
      * @return
      */
-    default String convert${otherCName}List(List<${this.classNameUpper}ListVO.${otherCName}VO> list) {
+    default String convert${otherCName}List(List<${this.className}ListVO.${otherCName}VO> list) {
         String result = "";
         <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
         if (CollectionUtils.isNotEmpty(list)) {
             result = list.stream()
-                    .map(${this.classNameUpper}ListVO.${otherCName}VO::get${displayField.jfieldName?capFirst})
+                    .map(${this.className}ListVO.${otherCName}VO::get${displayField.jfieldName?capFirst})
                     <@call this.addImport("java.util.stream.Collectors")/>
                     .collect(Collectors.joining(","));
         }

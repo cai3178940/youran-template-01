@@ -29,7 +29,7 @@
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.classNameUpper}ExcelVO extends AbstractVO {
+public class ${this.className}ExcelVO extends AbstractVO {
 
 <#--当前实体列表展示字段-->
 <#list this.listFields as id,field>
@@ -66,7 +66,7 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
 </#list>
 <#--多对多级联扩展列表展示-->
 <#list mtmCascadeEntitiesForList as otherEntity>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     @ExcelProperty("${otherEntity.title}")
     @ColumnWidth(20)
     private String ${othercName}List;
@@ -86,7 +86,7 @@ public class ${this.classNameUpper}ExcelVO extends AbstractVO {
     </#list>
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
-        <#assign othercName=otherEntity.className?uncapFirst>
+        <#assign othercName=lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
     </#list>
 </#if>

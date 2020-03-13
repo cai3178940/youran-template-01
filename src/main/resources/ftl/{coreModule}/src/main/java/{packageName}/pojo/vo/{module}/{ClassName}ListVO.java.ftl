@@ -7,7 +7,7 @@
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
-<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("【${this.title}】列表展示对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -16,7 +16,7 @@
 @EqualsAndHashCode(callSuper=true)
 </#if>
 @ApiModel(description = "【${this.title}】列表展示对象")
-public class ${this.classNameUpper}ListVO extends AbstractVO {
+public class ${this.className}ListVO extends AbstractVO {
 
 <#--当前实体列表展示字段-->
 <#list this.listFields as id,field>
@@ -46,8 +46,8 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
             <@call this.addConstImport(cascadeField.dicType)/>
         </#if>
         <#if field.foreignEntity!=this.metaEntity>
-            <@call this.addImport("${examplePackageName}.${field.foreignEntity.className?capFirst}Example")/>
-            <#assign exampleClass="${field.foreignEntity.className?capFirst}Example.">
+            <@call this.addImport("${examplePackageName}.${field.foreignEntity.className}Example")/>
+            <#assign exampleClass="${field.foreignEntity.className}Example.">
         </#if>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
@@ -64,7 +64,7 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
 <#list mtmCascadeEntitiesForList as otherEntity>
     <@call this.addImport("java.util.List")/>
     <#assign otherCName=otherEntity.className/>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     @ApiModelProperty(notes = "【${otherEntity.title}】列表")
     private List<${otherCName}VO> ${othercName}List;
 
@@ -84,7 +84,7 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign otherCName=otherEntity.className/>
-        <#assign othercName=otherEntity.className?uncapFirst>
+        <#assign othercName=lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
     </#list>
 </#if>
@@ -92,8 +92,8 @@ public class ${this.classNameUpper}ListVO extends AbstractVO {
 <#--多对多列表展示【静态内部类】-->
 <#list mtmCascadeEntitiesForList as otherEntity>
     <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign exampleClass="${otherEntity.className?capFirst}Example">
+    <#assign otherCName=otherEntity.className>
+    <#assign exampleClass="${otherEntity.className}Example">
     <@call this.addImport("${examplePackageName}.${exampleClass}")/>
     <#if this.projectFeature.lombokEnabled>
     @Data

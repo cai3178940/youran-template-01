@@ -22,7 +22,7 @@
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
-<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("excel导入【${this.title}】的数据传输对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -30,7 +30,7 @@
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
+public class ${this.className}ExcelDTO extends AbstractDTO {
 
 <#list this.insertFields as id,field>
     @ExcelProperty("${field.fieldDesc}<#if field.notNull>*</#if>")
@@ -47,7 +47,7 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
 
 </#list>
 <#list withinEntityList as otherEntity>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     @ExcelProperty("${otherEntity.title}")
     @ColumnWidth(15)
     private String ${othercName}List;
@@ -59,8 +59,8 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
      *
      * @return
      */
-    public static ${this.classNameUpper}ExcelDTO example() {
-        ${this.classNameUpper}ExcelDTO example = new ${this.classNameUpper}ExcelDTO();
+    public static ${this.className}ExcelDTO example() {
+        ${this.className}ExcelDTO example = new ${this.className}ExcelDTO();
 <#list this.insertFields as id,field>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
@@ -92,7 +92,7 @@ public class ${this.classNameUpper}ExcelDTO extends AbstractDTO {
         <@call JavaTemplateFunction.printGetterSetter(field.jfieldName,parseJfieldType(field))/>
     </#list>
     <#list withinEntityList as otherEntity>
-        <#assign othercName=otherEntity.className?uncapFirst>
+        <#assign othercName=lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
     </#list>
 </#if>

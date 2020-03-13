@@ -6,6 +6,11 @@
 <#-- 将当前model赋值给this变量 -->
 <#assign this = .dataModel>
 
+<#-- 首个单词转小写 -->
+<#function lowerFirstWord value>
+    <#return "${CommonTemplateFunction.lowerFirstWord(value)}" >
+</#function>
+
 <#-- common模块名 -->
 <#assign commonModule = this.projectNameSplit + "-common">
 <#-- core模块名 -->
@@ -17,12 +22,14 @@
 <#-- 包路径 -->
 <#assign packageNamePath = this.packageName?replace(".", "/")>
 
+
+
 <#-- 渲染API路径 -->
 <#function  renderApiPath entity suffix>
     <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
     <#if entity.module?hasContent>
-        <#return "WebConst.ModulePath.${entity.module?upperCase} + \"/${entity.className?uncapFirst}${suffix}\"" >
+        <#return "WebConst.ModulePath.${entity.module?upperCase} + \"/${lowerFirstWord(entity.className)}${suffix}\"" >
     <#else>
-        <#return "WebConst.API_PATH + \"/${entity.className?uncapFirst}${suffix}\"" >
+        <#return "WebConst.API_PATH + \"/${lowerFirstWord(entity.className)}${suffix}\"" >
     </#if>
 </#function>

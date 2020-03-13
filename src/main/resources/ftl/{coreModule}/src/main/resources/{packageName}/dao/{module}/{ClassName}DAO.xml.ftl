@@ -16,7 +16,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${daoPackageName}.${this.classNameUpper}DAO">
+<mapper namespace="${daoPackageName}.${this.className}DAO">
 
     <#assign wrapTableName=wrapMysqlKeyword(this.tableName)>
     <#assign wrapPkFieldName=wrapMysqlKeyword(this.pk.fieldName)>
@@ -24,16 +24,16 @@
         <#assign wrapDelFieldName=wrapMysqlKeyword(this.delField.fieldName)>
     </#if>
 
-    <sql id="${this.className}Columns">
+    <sql id="${this.classNameLower}Columns">
         <#list this.fields as id,field>
         ${getSelectFieldWithAlias(field,"${r'$'}{alias}","")}<#if id?hasNext>,</#if>
         </#list>
     </sql>
 
 
-    <select id="findById" resultType="${this.classNameUpper}PO">
+    <select id="findById" resultType="${this.className}PO">
         select
-            <include refid="${this.className}Columns"><property name="alias" value="t"/></include>
+            <include refid="${this.classNameLower}Columns"><property name="alias" value="t"/></include>
         from ${wrapTableName} t
         <where>
         <#if delField??>
@@ -54,7 +54,7 @@
         </where>
     </select>
 
-    <insert id="_save" <#if this.pk.autoIncrement>useGeneratedKeys="true" </#if>keyProperty="${this.id}" parameterType="${this.classNameUpper}PO">
+    <insert id="_save" <#if this.pk.autoIncrement>useGeneratedKeys="true" </#if>keyProperty="${this.id}" parameterType="${this.className}PO">
         insert into ${wrapTableName}(
     <#list this.fields as id,field>
         ${wrapMysqlKeyword(field.fieldName)}<#if id?hasNext>,</#if>
@@ -67,7 +67,7 @@
     </insert>
 
 
-    <update id="_update" parameterType="${this.classNameUpper}PO">
+    <update id="_update" parameterType="${this.className}PO">
         update ${wrapTableName} set
         <#assign set_field_arr=[]>
         <#--过滤出需要设值的字段-->
@@ -278,7 +278,7 @@
         </#if>
     </sql>
 
-    <select id="findCountByQuery" parameterType="${this.classNameUpper}QO" resultType="int">
+    <select id="findCountByQuery" parameterType="${this.className}QO" resultType="int">
         select count(1) from ${wrapTableName} t
         <where>
         <#if delField??>
@@ -288,9 +288,9 @@
         </where>
     </select>
 
-    <select id="findListByQuery" parameterType="${this.classNameUpper}QO" resultType="${this.classNameUpper}ListVO">
+    <select id="findListByQuery" parameterType="${this.className}QO" resultType="${this.className}ListVO">
         select
-            <include refid="${this.className}Columns"><property name="alias" value="t"/></include>
+            <include refid="${this.classNameLower}Columns"><property name="alias" value="t"/></include>
         <#assign cascadeIndex=0>
         <#list this.fkFields as id,field>
             <#if field.cascadeListExts?? && field.cascadeListExts?size &gt; 0>
@@ -369,7 +369,7 @@
 
 </#list>
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#assign theFkId=mtm.getFkAlias(this.entityId,false)>
@@ -416,14 +416,14 @@
 </#list>
 <#list mtmEntitiesForOpp as otherEntity>
     <#assign mtm=mtmsForOpp[otherEntity?index]/>
-    <#assign otherCName=otherEntity.className?capFirst>
+    <#assign otherCName=otherEntity.className>
     <#assign otherType=otherEntity.pkField.jfieldType>
     <#assign other_fk_id=mtm.getFkAlias(otherEntity.entityId,true)>
     <#assign the_fk_id=mtm.getFkAlias(this.entityId,true)>
     <#assign wrapMtmTableName=wrapMysqlKeyword(mtm.tableName)>
-    <select id="findBy${otherCName}" parameterType="${otherType}" resultType="${this.classNameUpper}PO">
+    <select id="findBy${otherCName}" parameterType="${otherType}" resultType="${this.className}PO">
         select
-            <include refid="${this.className}Columns"><property name="alias" value="t"/></include>
+            <include refid="${this.classNameLower}Columns"><property name="alias" value="t"/></include>
         from ${wrapTableName} t
         inner join ${wrapMtmTableName} r
             on t.${wrapPkFieldName}=r.${the_fk_id}

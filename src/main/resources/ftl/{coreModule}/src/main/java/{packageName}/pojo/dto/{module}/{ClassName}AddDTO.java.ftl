@@ -6,7 +6,7 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
-<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("新增【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -15,7 +15,7 @@
 @EqualsAndHashCode(callSuper=true)
 </#if>
 @ApiModel(description = "新增【${this.title}】的参数")
-public class ${this.classNameUpper}AddDTO extends AbstractDTO {
+public class ${this.className}AddDTO extends AbstractDTO {
 
 <#list this.insertFields as id,field>
     <#--import字段类型-->
@@ -46,7 +46,7 @@ public class ${this.classNameUpper}AddDTO extends AbstractDTO {
 </#list>
 <#list withinEntityList as otherEntity>
     <#assign otherPk=otherEntity.pkField>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     <@call this.addImport("java.util.List")/>
     private List<${otherPk.jfieldType}> ${othercName}List;
 
@@ -58,7 +58,7 @@ public class ${this.classNameUpper}AddDTO extends AbstractDTO {
     </#list>
     <#list withinEntityList as otherEntity>
         <#assign otherPk=otherEntity.pkField>
-        <#assign othercName=otherEntity.className?uncapFirst>
+        <#assign othercName=lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
     </#list>
 </#if>

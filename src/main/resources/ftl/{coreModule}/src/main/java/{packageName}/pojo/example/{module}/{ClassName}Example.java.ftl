@@ -3,7 +3,7 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.printClassCom("【${this.title}】参数示例")/>
-public class ${this.classNameUpper}Example {
+public class ${this.className}Example {
 
 <#list this.fields as id,field>
     <#--字段名转下划线大写-->

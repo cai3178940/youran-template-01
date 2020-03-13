@@ -94,7 +94,7 @@
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.classNameUpper}PO extends AbstractPO${implementsStr} {
+public class ${this.className}PO extends AbstractPO${implementsStr} {
 
 <#list this.fields as id,field>
     <#--import字段类型-->
@@ -110,7 +110,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
 </#list>
     <#list this.holds! as otherEntity,mtm>
         <@call this.addImport("java.util.List")/>
-    private List<${otherEntity.className}PO> ${otherEntity.className?uncapFirst}POList;
+    private List<${otherEntity.className}PO> ${lowerFirstWord(otherEntity.className)}POList;
 
     </#list>
 <#if !this.projectFeature.lombokEnabled>

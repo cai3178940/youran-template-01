@@ -6,7 +6,7 @@
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("javax.validation.constraints.NotNull")/>
-<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("修改【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -15,7 +15,7 @@
 @EqualsAndHashCode(callSuper=true)
 </#if>
 @ApiModel(description = "修改【${this.title}】的参数")
-public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
+public class ${this.className}UpdateDTO extends AbstractDTO {
 
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
@@ -60,7 +60,7 @@ public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         <#assign otherPk=otherEntity.pkField>
-        <#assign othercName=otherEntity.className?uncapFirst>
+        <#assign othercName=lowerFirstWord(otherEntity.className)>
         <@call this.addImport("java.util.List")/>
     private List<${otherPk.jfieldType}> ${othercName}List;
 
@@ -76,7 +76,7 @@ public class ${this.classNameUpper}UpdateDTO extends AbstractDTO {
         <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
         <#if entityFeature.withinEntity>
             <#assign otherPk=otherEntity.pkField>
-            <#assign othercName=otherEntity.className?uncapFirst>
+            <#assign othercName=lowerFirstWord(otherEntity.className)>
             <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
         </#if>
     </#list>

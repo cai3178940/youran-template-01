@@ -10,7 +10,7 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
-<@call this.addImport("${this.packageName}.web.api.${this.classNameUpper}API")/>
+<@call this.addImport("${this.packageName}.web.api.${this.className}API")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("org.springframework.web.bind.annotation.*")/>
@@ -19,59 +19,59 @@
 <@call this.printClassCom("【${this.title}】控制器")/>
 @RestController
 @RequestMapping(${renderApiPath(this.metaEntity, "")})
-public class ${this.classNameUpper}Controller extends AbstractController implements ${this.classNameUpper}API {
+public class ${this.className}Controller extends AbstractController implements ${this.className}API {
 
-    <@call this.addAutowired("${servicePackageName}" "${this.classNameUpper}Service")/>
+    <@call this.addAutowired("${servicePackageName}" "${this.className}Service")/>
     <#if this.entityFeature.excelImport>
         <@call this.addAutowired("javax.validation" "Validator")/>
     </#if>
     <@call this.printAutowired()/>
 
 <#if this.entityFeature.save>
-    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
-    <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
-    <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+    <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+    <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
+    <@call this.addImport("${poPackageName}.${this.className}PO")/>
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<${this.classNameUpper}ShowVO> save(@Valid @RequestBody ${this.classNameUpper}AddDTO ${this.className}AddDTO) throws Exception {
-        ${this.classNameUpper}PO ${this.className} = ${this.className}Service.save(${this.className}AddDTO);
-        return ResponseEntity.created(new URI(WebConst.API_PATH + "/${this.className}/" + ${this.className}.get${this.idUpper}()))
-            .body(${this.classNameUpper}Mapper.INSTANCE.toShowVO(${this.className}));
+    public ResponseEntity<${this.className}ShowVO> save(@Valid @RequestBody ${this.className}AddDTO ${this.classNameLower}AddDTO) throws Exception {
+        ${this.className}PO ${this.classNameLower} = ${this.classNameLower}Service.save(${this.classNameLower}AddDTO);
+        return ResponseEntity.created(new URI(WebConst.API_PATH + "/${this.classNameLower}/" + ${this.classNameLower}.get${this.idUpper}()))
+            .body(${this.className}Mapper.INSTANCE.toShowVO(${this.classNameLower}));
     }
 
 </#if>
 <#if this.entityFeature.update>
-    <@call this.addImport("${dtoPackageName}.${this.classNameUpper}UpdateDTO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
-    <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
-    <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+    <@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+    <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
+    <@call this.addImport("${poPackageName}.${this.className}PO")/>
     @Override
     @PutMapping
-    public ResponseEntity<${this.classNameUpper}ShowVO> update(@Valid @RequestBody ${this.classNameUpper}UpdateDTO ${this.className}UpdateDTO) {
-        ${this.classNameUpper}PO ${this.className} = ${this.className}Service.update(${this.className}UpdateDTO);
-        return ResponseEntity.ok(${this.classNameUpper}Mapper.INSTANCE.toShowVO(${this.className}));
+    public ResponseEntity<${this.className}ShowVO> update(@Valid @RequestBody ${this.className}UpdateDTO ${this.classNameLower}UpdateDTO) {
+        ${this.className}PO ${this.classNameLower} = ${this.classNameLower}Service.update(${this.classNameLower}UpdateDTO);
+        return ResponseEntity.ok(${this.className}Mapper.INSTANCE.toShowVO(${this.classNameLower}));
     }
 
 </#if>
 <#if this.entityFeature.list>
-    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${qoPackageName}.${this.className}QO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     @Override
     @GetMapping
-    public ResponseEntity<PageVO<${this.classNameUpper}ListVO>> list(@Valid ${this.classNameUpper}QO ${this.className}QO) {
-        PageVO<${this.classNameUpper}ListVO> page = ${this.className}Service.list(${this.className}QO);
+    public ResponseEntity<PageVO<${this.className}ListVO>> list(@Valid ${this.className}QO ${this.classNameLower}QO) {
+        PageVO<${this.className}ListVO> page = ${this.classNameLower}Service.list(${this.classNameLower}QO);
         return ResponseEntity.ok(page);
     }
     <#else>
         <@call this.addImport("java.util.List")/>
     @Override
     @GetMapping
-    public ResponseEntity<List<${this.classNameUpper}ListVO>> list(@Valid ${this.classNameUpper}QO ${this.className}QO) {
-        List<${this.classNameUpper}ListVO> list = ${this.className}Service.list(${this.className}QO);
+    public ResponseEntity<List<${this.className}ListVO>> list(@Valid ${this.className}QO ${this.classNameLower}QO) {
+        List<${this.className}ListVO> list = ${this.classNameLower}Service.list(${this.classNameLower}QO);
         return ResponseEntity.ok(list);
     }
     </#if>
@@ -84,18 +84,18 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @Override
     @GetMapping(value = "/options")
     public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo) {
-        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.className}Service.findOptions(qo);
+        List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> options = ${this.classNameLower}Service.findOptions(qo);
         return ResponseEntity.ok(options);
     }
 
 </#if>
 <#if this.entityFeature.show>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     @Override
     @GetMapping(value = "/{${this.id}}")
-    public ResponseEntity<${this.classNameUpper}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
-        ${this.classNameUpper}ShowVO ${this.className}ShowVO = ${this.className}Service.show(${this.id});
-        return ResponseEntity.ok(${this.className}ShowVO);
+    public ResponseEntity<${this.className}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
+        ${this.className}ShowVO ${this.classNameLower}ShowVO = ${this.classNameLower}Service.show(${this.id});
+        return ResponseEntity.ok(${this.classNameLower}ShowVO);
     }
 
 </#if>
@@ -103,7 +103,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @Override
     @DeleteMapping(value = "/{${this.id}}")
     public ResponseEntity<Integer> delete(@PathVariable ${this.type} ${this.id}) {
-        int count = ${this.className}Service.delete(${this.id});
+        int count = ${this.classNameLower}Service.delete(${this.id});
         return ResponseEntity.ok(count);
     }
 
@@ -118,29 +118,29 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         if(ArrayUtils.isEmpty(id)){
             throw new BusinessException(ErrorCode.PARAM_IS_NULL);
         }
-        int count = ${this.className}Service.delete(id);
+        int count = ${this.classNameLower}Service.delete(id);
         return ResponseEntity.ok(count);
     }
 
 </#if>
 <#list this.holds! as otherEntity,mtm>
     <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className?capFirst>
-    <#assign othercName=otherEntity.className?uncapFirst>
+    <#assign otherCName=otherEntity.className>
+    <#assign othercName=lowerFirstWord(otherEntity.className)>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${poPackageName}.${otherCName}PO")/>
-        <@call this.addImport("${poPackageName}.${this.classNameUpper}PO")/>
+        <@call this.addImport("${poPackageName}.${this.className}PO")/>
         <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
             <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
             <#assign resultType="${otherCName}ListVO">
         <#elseIf index &gt; -1>
-            <@call this.addImport("${voPackageName}.${this.classNameUpper}ShowVO")/>
-            <#assign resultType="${this.classNameUpper}ShowVO.${otherCName}VO">
+            <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+            <#assign resultType="${this.className}ShowVO.${otherCName}VO">
         <#else>
             <#assign resultType=otherPk.jfieldType>
         </#if>
@@ -155,14 +155,14 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                 <#assign withCode=withFalseCode+"false, ">
             </#if>
         </#list>
-        ${this.classNameUpper}PO ${this.className} = ${this.className}Service.get${this.classNameUpper}(${this.id}, ${withCode}true);
-        List<${otherCName}PO> list = ${this.className}.get${otherCName}POList();
+        ${this.className}PO ${this.classNameLower} = ${this.classNameLower}Service.get${this.className}(${this.id}, ${withCode}true);
+        List<${otherCName}PO> list = ${this.classNameLower}.get${otherCName}POList();
         <#if entityFeature.addRemove>
             <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
         return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.toListVOList(list));
         <#elseIf index &gt; -1>
             <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
-        return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.classNameUpper}Show(list));
+        return ResponseEntity.ok(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.className}Show(list));
         <#else>
             <@call this.addImport("java.util.stream.Collectors")/>
         return ResponseEntity.ok(list.stream()
@@ -178,7 +178,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @PostMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> add${otherCName}(@PathVariable ${this.type} ${this.id},
                         @RequestBody ${otherPk.jfieldType}[] ${otherFkId}) {
-        int count = ${this.className}Service.add${otherCName}(${this.id}, ${otherFkId});
+        int count = ${this.classNameLower}Service.add${otherCName}(${this.id}, ${otherFkId});
         return ResponseEntity.ok(count);
     }
 
@@ -186,7 +186,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @DeleteMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> remove${otherCName}(@PathVariable ${this.type} ${this.id},
                         @RequestBody ${otherPk.jfieldType}[] ${otherFkId}) {
-        int count = ${this.className}Service.remove${otherCName}(${this.id}, ${otherFkId});
+        int count = ${this.classNameLower}Service.remove${otherCName}(${this.id}, ${otherFkId});
         return ResponseEntity.ok(count);
     }
 
@@ -195,7 +195,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     @PutMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> set${otherCName}(@PathVariable ${this.type} ${this.id},
         @RequestBody ${otherPk.jfieldType}[] ${otherFkId}) {
-        int count = ${this.className}Service.set${otherCName}(${this.id}, ${otherFkId});
+        int count = ${this.classNameLower}Service.set${otherCName}(${this.id}, ${otherFkId});
         return ResponseEntity.ok(count);
     }
 
@@ -204,17 +204,17 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
 <#if this.entityFeature.excelExport>
     @Override
     @GetMapping("/export")
-    <@call this.addImport("${qoPackageName}.${this.classNameUpper}QO")/>
+    <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
-    public void exportExcel(@Valid ${this.classNameUpper}QO ${this.className}QO, HttpServletResponse response) throws Exception {
+    public void exportExcel(@Valid ${this.className}QO ${this.classNameLower}QO, HttpServletResponse response) throws Exception {
     <@call this.addImport("java.util.List")/>
-    <@call this.addImport("${voPackageName}.${this.classNameUpper}ListVO")/>
+    <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
     <#if this.pageSign>
-        ${this.className}QO.setPageSize(Integer.MAX_VALUE);
-        ${this.className}QO.setPageNo(1);
-        List<${this.classNameUpper}ListVO> list = ${this.className}Service.list(${this.className}QO).getList();
+        ${this.classNameLower}QO.setPageSize(Integer.MAX_VALUE);
+        ${this.classNameLower}QO.setPageNo(1);
+        List<${this.className}ListVO> list = ${this.classNameLower}Service.list(${this.classNameLower}QO).getList();
     <#else>
-        List<${this.classNameUpper}ListVO> list = ${this.className}Service.list(${this.className}QO);
+        List<${this.className}ListVO> list = ${this.classNameLower}Service.list(${this.classNameLower}QO);
     </#if>
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -222,11 +222,11 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         String fileName = URLEncoder.encode("${this.title}导出", "utf-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${voPackageName}.${this.classNameUpper}ExcelVO")/>
-        EasyExcel.write(response.getOutputStream(), ${this.classNameUpper}ExcelVO.class)
+        <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
+        EasyExcel.write(response.getOutputStream(), ${this.className}ExcelVO.class)
                 .sheet()
-                <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
-                .doWrite(${this.classNameUpper}Mapper.INSTANCE.toExcelVOList(list));
+                <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
+                .doWrite(${this.className}Mapper.INSTANCE.toExcelVOList(list));
     }
 
 </#if>
@@ -236,22 +236,22 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
     public ResponseEntity<Integer> importExcel(@RequestParam(value = "file") MultipartFile file) throws Exception {
         <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${dtoPackageName}.${this.classNameUpper}AddDTO")/>
+        <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        List<${this.classNameUpper}AddDTO> list = EasyExcel.read(file.getInputStream())
-                <@call this.addImport("${dtoPackageName}.${this.classNameUpper}ExcelDTO")/>
-                .head(${this.classNameUpper}ExcelDTO.class)
+        List<${this.className}AddDTO> list = EasyExcel.read(file.getInputStream())
+                <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
+                .head(${this.className}ExcelDTO.class)
                 .sheet()
                 .headRowNumber(3)
-                .<${this.classNameUpper}ExcelDTO>doReadSync()
+                .<${this.className}ExcelDTO>doReadSync()
                 .stream()
-                <@call this.addImport("${mapperPackageName}.${this.classNameUpper}Mapper")/>
-                .map(${this.classNameUpper}Mapper.INSTANCE::fromExcelDTO)
-                .peek(${this.className}AddDTO -> {
+                <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
+                .map(${this.className}Mapper.INSTANCE::fromExcelDTO)
+                .peek(${this.classNameLower}AddDTO -> {
                     // 校验数据
                     <@call this.addImport("java.util.Set")/>
                     <@call this.addImport("javax.validation.ConstraintViolation")/>
-                    Set<ConstraintViolation<${this.classNameUpper}AddDTO>> set = validator.validate(${this.className}AddDTO);
+                    Set<ConstraintViolation<${this.className}AddDTO>> set = validator.validate(${this.classNameLower}AddDTO);
                     if (!set.isEmpty()) {
                         <@call this.addImport("javax.validation.ConstraintViolationException")/>
                         throw new ConstraintViolationException(set);
@@ -259,7 +259,7 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
                 })
                 <@call this.addImport("java.util.stream.Collectors")/>
                 .collect(Collectors.toList());
-        int count = ${this.className}Service.batchSave(list);
+        int count = ${this.classNameLower}Service.batchSave(list);
         return ResponseEntity.ok(count);
     }
 
@@ -320,19 +320,19 @@ public class ${this.classNameUpper}Controller extends AbstractController impleme
         </#list>
                 // 第一行是标题，第二行是说明
                 <@call this.addImport("${this.packageName}.excel.handler.TitleDescriptionWriteHandler")/>
-                .registerWriteHandler(new TitleDescriptionWriteHandler(title, description, ${this.classNameUpper}ExcelDTO.class))
+                .registerWriteHandler(new TitleDescriptionWriteHandler(title, description, ${this.className}ExcelDTO.class))
                 // 自定义模板单元格样式
                 <@call this.addImport("${this.packageName}.excel.handler.TemplateCellStyleStrategy")/>
                 .registerWriteHandler(new TemplateCellStyleStrategy())
                 .build();
         <@call this.addImport("com.alibaba.excel.write.metadata.WriteSheet")/>
         WriteSheet writeSheet = EasyExcel.writerSheet(0, "Sheet1")
-                .head(${this.classNameUpper}ExcelDTO.class)
+                .head(${this.className}ExcelDTO.class)
                 // 从第三行开始写表头
                 .relativeHeadRowIndex(2)
                 .build();
         <@call this.addImport("java.util.Arrays")/>
-        excelWriter.write(Arrays.asList(${this.classNameUpper}ExcelDTO.example()), writeSheet);
+        excelWriter.write(Arrays.asList(${this.className}ExcelDTO.example()), writeSheet);
 
         excelWriter.finish();
     }

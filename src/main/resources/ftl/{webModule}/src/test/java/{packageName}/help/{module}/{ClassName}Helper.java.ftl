@@ -5,11 +5,11 @@
 <@call this.addImport("${dtoPackageName}.*")/>
 <@call this.addImport("${poPackageName}.*")/>
 <@call this.addImport("org.springframework.stereotype.Component")/>
-<@call this.addStaticImport("${examplePackageName}.${this.classNameUpper}Example.*")/>
+<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 @Component
-public class ${this.classNameUpper}Helper {
+public class ${this.className}Helper {
 
-    <@call this.addAutowired("${servicePackageName}" "${this.classNameUpper}Service")/>
+    <@call this.addAutowired("${servicePackageName}" "${this.className}Service")/>
     <@call this.printAutowired()/>
 
     <#--定义外键字段参数串-->
@@ -29,8 +29,8 @@ public class ${this.classNameUpper}Helper {
      * 生成add测试数据
      * @return
      */
-    public ${this.classNameUpper}AddDTO get${this.classNameUpper}AddDTO(${foreignArg}){
-        ${this.classNameUpper}AddDTO dto = new ${this.classNameUpper}AddDTO();
+    public ${this.className}AddDTO get${this.className}AddDTO(${foreignArg}){
+        ${this.className}AddDTO dto = new ${this.className}AddDTO();
     <#list this.insertFields as id,field>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
@@ -60,11 +60,11 @@ public class ${this.classNameUpper}Helper {
      * 生成update测试数据
      * @return
      */
-    public ${this.classNameUpper}UpdateDTO get${this.classNameUpper}UpdateDTO(${this.classNameUpper}PO ${this.className}){
-        ${this.classNameUpper}UpdateDTO dto = new ${this.classNameUpper}UpdateDTO();
-        dto.set${this.idUpper}(${this.className}.get${this.idUpper}());
+    public ${this.className}UpdateDTO get${this.className}UpdateDTO(${this.className}PO ${this.classNameLower}){
+        ${this.className}UpdateDTO dto = new ${this.className}UpdateDTO();
+        dto.set${this.idUpper}(${this.classNameLower}.get${this.idUpper}());
         <#list this.updateFields as id,field>
-        dto.set${field.jfieldName?capFirst}(${this.className}.get${field.jfieldName?capFirst}());
+        dto.set${field.jfieldName?capFirst}(${this.classNameLower}.get${field.jfieldName?capFirst}());
         </#list>
         return dto;
     }
@@ -73,9 +73,9 @@ public class ${this.classNameUpper}Helper {
      * 保存示例
      * @return
      */
-    public ${this.classNameUpper}PO save${this.classNameUpper}Example(${foreignArg}){
-        ${this.classNameUpper}AddDTO addDTO = this.get${this.classNameUpper}AddDTO(${foreignArg2});
-        return ${this.className}Service.save(addDTO);
+    public ${this.className}PO save${this.className}Example(${foreignArg}){
+        ${this.className}AddDTO addDTO = this.get${this.className}AddDTO(${foreignArg2});
+        return ${this.classNameLower}Service.save(addDTO);
     }
 
 
