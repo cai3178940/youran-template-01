@@ -38,6 +38,50 @@ public class DateUtil {
     }
 
     /**
+     * 获取日期字符串yyyy-MM-dd
+     * @param date
+     * @return
+     */
+    public static String getLocalDateStr(LocalDate date) {
+        return getLocalDateStr(date,DATE_FORMAT_1);
+    }
+
+    /**
+     * 获取指定格式的日期字符串
+     * @param date
+     * @param dateFormat
+     * @return
+     */
+    public static String getLocalDateStr(LocalDate date, String dateFormat) {
+        if(date==null || StringUtils.isBlank(dateFormat)){
+            return "";
+        }
+        return date.format(DateTimeFormatter.ofPattern(dateFormat));
+    }
+
+    /**
+     * 获取日期字符串yyyy-MM-dd HH:mm:ss
+     * @param dateTime
+     * @return
+     */
+    public static String getLocalDateTimeStr(LocalDateTime dateTime) {
+        return getLocalDateTimeStr(dateTime,DATE_FORMAT_2);
+    }
+
+    /**
+     * 获取指定格式的日期字符串
+     * @param dateTime
+     * @param dateFormat
+     * @return
+     */
+    public static String getLocalDateTimeStr(LocalDateTime dateTime, String dateFormat) {
+        if(dateTime==null || StringUtils.isBlank(dateFormat)){
+            return "";
+        }
+        return dateTime.format(DateTimeFormatter.ofPattern(dateFormat));
+    }
+
+    /**
      * 解析日期字符串
      * @param datetime
      * @param dateFormat
