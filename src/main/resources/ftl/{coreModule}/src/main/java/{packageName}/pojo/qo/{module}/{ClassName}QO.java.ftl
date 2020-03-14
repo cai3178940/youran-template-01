@@ -31,6 +31,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#else>
         <#assign jfieldName=field.jfieldName>
     </#if>
+    <#--import字段类型-->
+    <@call this.addFieldTypeImport(field)/>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
     <#--查询方式：IN-->
@@ -44,7 +46,9 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         <#if field.jfieldType==JFieldType.STRING.getJavaType()>
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
     @Length(max = ${field.fieldLength},message = "${jfieldName}最大长度不能超过{max}")
-        <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
+        <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("java.util.Date")/>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")

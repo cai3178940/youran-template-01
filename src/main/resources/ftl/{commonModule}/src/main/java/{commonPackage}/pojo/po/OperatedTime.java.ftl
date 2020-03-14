@@ -2,7 +2,7 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("java.util.Date")/>
-<@call this.printClassCom("操作日期接口")/>
+<@call this.printClassCom("操作时间接口")/>
 public interface OperatedTime {
 
     Date getOperatedTime();

@@ -14,6 +14,12 @@
 <#assign implementsOperated=false>
 <#assign implementsCreatedOperatedDeleted=false>
 <#assign implementsCreatedOperatedDeletedVersion=false>
+<#assign implementsJsr310CreatedTime=false>
+<#assign implementsJsr310OperatedTime=false>
+<#assign implementsJsr310Created=false>
+<#assign implementsJsr310Operated=false>
+<#assign implementsJsr310CreatedOperatedDeleted=false>
+<#assign implementsJsr310CreatedOperatedDeletedVersion=false>
 <#--判断是否继承单一接口-->
 <#if this.delField??>
     <#assign implementsDeleteSign=true>
@@ -22,13 +28,21 @@
     <#assign implementsCreatedBy=true>
 </#if>
 <#if this.createdTimeField??>
-    <#assign implementsCreatedTime=true>
+    <#if this.createdTimeField.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
+        <#assign implementsJsr310CreatedTime=true>
+    <#else>
+        <#assign implementsCreatedTime=true>
+    </#if>
 </#if>
 <#if this.operatedByField??>
     <#assign implementsOperatedBy=true>
 </#if>
 <#if this.operatedTimeField??>
-    <#assign implementsOperatedTime=true>
+    <#if this.operatedTimeField.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
+        <#assign implementsJsr310OperatedTime=true>
+    <#else>
+        <#assign implementsOperatedTime=true>
+    </#if>
 </#if>
 <#if this.versionField??>
     <#assign implementsVersion=true>
@@ -46,34 +60,65 @@
 <#if implementsCreated && implementsOperated && implementsDeleteSign && implementsVersion>
     <#assign implementsCreatedOperatedDeletedVersion=true>
 </#if>
+<#--判断是否继承合并接口-jsr310-->
+<#if implementsCreatedBy && implementsJsr310CreatedTime>
+    <#assign implementsJsr310Created=true>
+</#if>
+<#if implementsOperatedBy && implementsJsr310OperatedTime>
+    <#assign implementsJsr310Operated=true>
+</#if>
+<#if implementsJsr310Created && implementsJsr310Operated && implementsDeleteSign>
+    <#assign implementsJsr310CreatedOperatedDeleted=true>
+</#if>
+<#if implementsJsr310Created && implementsJsr310Operated && implementsDeleteSign && implementsVersion>
+    <#assign implementsJsr310CreatedOperatedDeletedVersion=true>
+</#if>
 <#--构建继承串-->
 <#assign implementsStr="">
 <#if implementsCreatedOperatedDeletedVersion>
     <#assign implementsStr+=" CreatedOperatedDeletedVersion,">
     <@call this.addImport("${this.commonPackage}.pojo.po.CreatedOperatedDeletedVersion")/>
+<#elseIf implementsJsr310CreatedOperatedDeletedVersion>
+    <#assign implementsStr+=" Jsr310CreatedOperatedDeletedVersion,">
+    <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310CreatedOperatedDeletedVersion")/>
 <#elseIf implementsCreatedOperatedDeleted>
     <#assign implementsStr+=" CreatedOperatedDeleted,">
     <@call this.addImport("${this.commonPackage}.pojo.po.CreatedOperatedDeleted")/>
+<#elseIf implementsJsr310CreatedOperatedDeleted>
+    <#assign implementsStr+=" Jsr310CreatedOperatedDeleted,">
+    <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310CreatedOperatedDeleted")/>
 <#else>
     <#if implementsCreated>
         <#assign implementsStr+=" Created,">
         <@call this.addImport("${this.commonPackage}.pojo.po.Created")/>
+    <#elseIf implementsJsr310Created>
+        <#assign implementsStr+=" Jsr310Created,">
+        <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310Created")/>
     <#elseIf implementsCreatedBy>
         <#assign implementsStr+=" CreatedBy,">
         <@call this.addImport("${this.commonPackage}.pojo.po.CreatedBy")/>
     <#elseIf implementsCreatedTime>
         <#assign implementsStr+=" CreatedTime,">
         <@call this.addImport("${this.commonPackage}.pojo.po.CreatedTime")/>
+    <#elseIf implementsJsr310CreatedTime>
+        <#assign implementsStr+=" Jsr310CreatedTime,">
+        <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310CreatedTime")/>
     </#if>
     <#if implementsOperated>
         <#assign implementsStr+=" Operated,">
         <@call this.addImport("${this.commonPackage}.pojo.po.Operated")/>
+    <#elseIf implementsJsr310Operated>
+        <#assign implementsStr+=" Jsr310Operated,">
+        <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310Operated")/>
     <#elseIf implementsOperatedBy>
         <#assign implementsStr+=" OperatedBy,">
         <@call this.addImport("${this.commonPackage}.pojo.po.OperatedBy")/>
     <#elseIf implementsOperatedTime>
         <#assign implementsStr+=" OperatedTime,">
         <@call this.addImport("${this.commonPackage}.pojo.po.OperatedTime")/>
+    <#elseIf implementsJsr310OperatedTime>
+        <#assign implementsStr+=" Jsr310OperatedTime,">
+        <@call this.addImport("${this.commonPackage}.pojo.po.Jsr310OperatedTime")/>
     </#if>
     <#if implementsDeleteSign>
         <#assign implementsStr+=" Deleted,">
@@ -157,6 +202,18 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
+<#if implementsJsr310CreatedTime && this.createdTimeField.jfieldName!="createdTime">
+    @Override
+    public LocalDateTime getCreatedTime() {
+        return this.${this.createdTimeField.jfieldName};
+    }
+
+    @Override
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.${this.createdTimeField.jfieldName} = createdTime;
+    }
+
+</#if>
 <#if implementsOperatedBy && this.operatedByField.jfieldName!="operatedBy">
     @Override
     public String getOperatedBy() {
@@ -177,6 +234,18 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
 
     @Override
     public void setOperatedTime(Date createdTime) {
+        this.${this.operatedTimeField.jfieldName} = createdTime;
+    }
+
+</#if>
+<#if implementsJsr310OperatedTime && this.operatedTimeField.jfieldName!="operatedTime">
+    @Override
+    public LocalDateTime getOperatedTime() {
+        return this.${this.operatedTimeField.jfieldName};
+    }
+
+    @Override
+    public void setOperatedTime(LocalDateTime createdTime) {
         this.${this.operatedTimeField.jfieldName} = createdTime;
     }
 

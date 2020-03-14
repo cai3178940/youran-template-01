@@ -37,7 +37,9 @@ public class ${this.className}AddDTO extends AbstractDTO {
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
     @Length(max = ${field.fieldLength})
         </#if>
-    <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
     </#if>

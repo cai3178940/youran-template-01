@@ -7,6 +7,7 @@
 <@call this.addImport("com.fasterxml.jackson.databind.JavaType")/>
 <@call this.addImport("com.fasterxml.jackson.databind.JsonMappingException")/>
 <@call this.addImport("com.fasterxml.jackson.databind.ObjectMapper")/>
+<@call this.addImport("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule")/>
 <@call this.addImport("org.apache.commons.lang3.StringUtils")/>
 <@call this.addImport("org.slf4j.Logger")/>
 <@call this.addImport("org.slf4j.LoggerFactory")/>
@@ -23,6 +24,7 @@ public class JsonUtil {
     static{
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(new JavaTimeModule());
     }
 
 

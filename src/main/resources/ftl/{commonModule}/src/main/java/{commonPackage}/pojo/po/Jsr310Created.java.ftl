@@ -1,8 +1,8 @@
 <#include "/abstracted/common.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.printClassCom("操作人&操作时间")/>
-public interface Operated extends OperatedBy, OperatedTime {
+<@call this.printClassCom("创建人&创建时间-jsr310时间API")/>
+public interface Jsr310Created extends CreatedBy, Jsr310CreatedTime {
 }
 </#assign>
 <#--开始渲染代码-->

@@ -74,6 +74,12 @@ public class ${this.className}ExcelDTO extends AbstractDTO {
     <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#assign arg="DateUtil.parseDate(E_${jfieldNameSnakeCase})">
+    <#elseIf field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+        <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
+        <#assign arg="DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
+    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
+        <#assign arg="DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
     <#elseIf field.jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
         <@call this.addImport("java.math.BigDecimal")/>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>

@@ -5,6 +5,9 @@
 <@call this.addImport("org.apache.commons.lang3.time.DateFormatUtils")/>
 <@call this.addImport("org.apache.commons.lang3.time.DateUtils")/>
 <@call this.addImport("java.text.ParseException")/>
+<@call this.addImport("java.time.LocalDate")/>
+<@call this.addImport("java.time.LocalDateTime")/>
+<@call this.addImport("java.time.format.DateTimeFormatter")/>
 <@call this.addImport("java.util.Date")/>
 <@call this.printClassCom("日期工具")/>
 public class DateUtil {
@@ -68,6 +71,73 @@ public class DateUtil {
             throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
         }
         return parseDate(datetime,dateFormat);
+    }
+
+
+    /**
+     * 解析日期字符串
+     * @param datetime
+     * @return
+     */
+    public static LocalDate parseLocalDate(String datetime){
+        if(StringUtils.isBlank(datetime)){
+            return null;
+        }
+        String dateFormat;
+        if(datetime.length()==DATE_FORMAT_1.length()){
+            dateFormat = DATE_FORMAT_1;
+        }else if(datetime.length()==DATE_FORMAT_2.length()){
+            dateFormat = DATE_FORMAT_2;
+        }else{
+            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
+        }
+        return parseLocalDate(datetime,dateFormat);
+    }
+
+    /**
+     * 解析日期字符串
+     * @param datetime
+     * @param dateFormat
+     * @return
+     */
+    public static LocalDate parseLocalDate(String datetime, String dateFormat){
+        if(StringUtils.isBlank(datetime)){
+            return null;
+        }
+        return LocalDate.parse(datetime, DateTimeFormatter.ofPattern(dateFormat));
+    }
+
+    /**
+     * 解析日期字符串
+     * @param datetime
+     * @return
+     */
+    public static LocalDateTime parseLocalDateTime(String datetime){
+        if(StringUtils.isBlank(datetime)){
+            return null;
+        }
+        String dateFormat;
+        if(datetime.length()==DATE_FORMAT_1.length()){
+            dateFormat = DATE_FORMAT_1;
+        }else if(datetime.length()==DATE_FORMAT_2.length()){
+            dateFormat = DATE_FORMAT_2;
+        }else{
+            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
+        }
+        return parseLocalDateTime(datetime,dateFormat);
+    }
+
+    /**
+     * 解析日期字符串
+     * @param datetime
+     * @param dateFormat
+     * @return
+     */
+    public static LocalDateTime parseLocalDateTime(String datetime, String dateFormat){
+        if(StringUtils.isBlank(datetime)){
+            return null;
+        }
+        return LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern(dateFormat));
     }
 
 }

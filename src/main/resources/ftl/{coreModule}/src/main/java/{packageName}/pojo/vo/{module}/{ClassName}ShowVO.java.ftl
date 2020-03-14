@@ -28,7 +28,9 @@ public class ${this.className}ShowVO extends AbstractVO {
         <@call this.addConstImport(field.dicType)/>
     </#if>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase},example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
-    <#if field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#if field.jfieldType==JFieldType.DATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
     </#if>
@@ -52,7 +54,9 @@ public class ${this.className}ShowVO extends AbstractVO {
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
     @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(cascadeField.dicType)}.VALUES_STR</#if>)
-        <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()>
+        <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()
+            || cascadeField.jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || cascadeField.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(cascadeField)},timezone="GMT+8")
         </#if>
@@ -137,7 +141,9 @@ public class ${this.className}ShowVO extends AbstractVO {
             <@call this.addConstImport(field.dicType)/>
         </#if>
         @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase},example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
-        <#if field.jfieldType==JFieldType.DATE.getJavaType()>
+        <#if field.jfieldType==JFieldType.DATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
         @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
         </#if>
