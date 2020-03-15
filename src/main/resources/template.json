@@ -36,6 +36,8 @@
     {"fileName":"LoginContext.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/context","contextType":1,"fileType":1},
 
     {"fileName":"MyCustomDateEditor.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/convert","contextType":1,"fileType":1},
+    {"fileName":"MyCustomLocalDateEditor.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/convert","contextType":1,"fileType":1},
+    {"fileName":"MyCustomLocalDateTimeEditor.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/convert","contextType":1,"fileType":1},
 
     {"fileName":"DAO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/dao","contextType":1,"fileType":1},
 
