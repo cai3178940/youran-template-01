@@ -33,7 +33,15 @@
 public class ${this.className}ExcelDTO extends AbstractDTO {
 
 <#list this.insertFields as id,field>
+    <#if field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+        <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
+    @ExcelProperty(value = "${field.fieldDesc}<#if field.notNull>*</#if>", converter = LocalDateConverter.class)
+    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <@call this.addImport("${this.packageName}.excel.converter.LocalDateTimeConverter")/>
+    @ExcelProperty(value = "${field.fieldDesc}<#if field.notNull>*</#if>", converter = LocalDateTimeConverter.class)
+    <#else>
     @ExcelProperty("${field.fieldDesc}<#if field.notNull>*</#if>")
+    </#if>
     <#if field.jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(field)})
