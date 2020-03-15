@@ -104,10 +104,21 @@ public class ${this.className}Service {
         // 唯一性校验
         this.checkUnique(${this.classNameLower},false);
 </#if>
-<#-- addDTO中没有并且不能为空的非主键字段，赋初始值 -->
+<#-- addDTO中不存在并且不能为空的字段，赋初始值 -->
 <#list this.fields as id,field>
-    <#if !field.insert && field.notNull && !field.primaryKey && field.specialField?default("")?length == 0>
+    <#if !field.insert && field.notNull && field.specialField?default("")?length == 0>
+        <#if !field.primaryKey>
         ${this.classNameLower}.set${field.jfieldName?capFirst}(${guessDefaultJfieldValue(field.jfieldType)});
+        <#elseIf field.pkStrategy == PrimaryKeyStrategy.UUID_16.getValue()>
+            <@call this.addImport("${this.commonPackage}.util.UUIDUtil")/>
+        ${this.classNameLower}.set${field.jfieldName?capFirst}(UUIDUtil.getUUID16());
+        <#elseIf field.pkStrategy == PrimaryKeyStrategy.UUID_32.getValue()>
+            <@call this.addImport("${this.commonPackage}.util.UUIDUtil")/>
+        ${this.classNameLower}.set${field.jfieldName?capFirst}(UUIDUtil.getUUID());
+        <#elseIf field.pkStrategy == PrimaryKeyStrategy.NONE.getValue()>
+        // TODO 请手动给主键赋值
+        // ${this.classNameLower}.set${field.jfieldName?capFirst}();
+        </#if>
     </#if>
 </#list>
         ${this.classNameLower}DAO.save(${this.classNameLower});

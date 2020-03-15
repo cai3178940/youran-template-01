@@ -54,7 +54,7 @@
         </where>
     </select>
 
-    <insert id="_save" <#if this.pk.autoIncrement>useGeneratedKeys="true" </#if>keyProperty="${this.id}" parameterType="${this.className}PO">
+    <insert id="_save" <#if this.pk.pkStrategy == PrimaryKeyStrategy.AUTO_INCREMENT.getValue()>useGeneratedKeys="true" </#if>keyProperty="${this.id}" parameterType="${this.className}PO">
         insert into ${wrapTableName}(
     <#list this.fields as id,field>
         ${wrapMysqlKeyword(field.fieldName)}<#if id?hasNext>,</#if>
