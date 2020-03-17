@@ -68,7 +68,7 @@ public class ${this.className}Service {
         <#assign suffix=(index?index==0)?string('',''+index?index)>
         <#assign params=''>
         <#list index.fields as field>
-            <#assign params+=this.className+'.get'+field.jfieldName?capFirst+'(), '>
+            <#assign params+=this.classNameLower+'.get'+field.jfieldName?capFirst+'(), '>
         </#list>
         if(${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate?${this.classNameLower}.get${this.idUpper}():null)){
             throw new BusinessException(ErrorCode.DUPLICATE_KEY);
