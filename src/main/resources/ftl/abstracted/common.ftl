@@ -33,3 +33,12 @@
         <#return "WebConst.API_PATH + \"/${lowerFirstWord(entity.className)}${suffix}\"" >
     </#if>
 </#function>
+<#-- 渲染API路径 -->
+<#function  renderApiPathForChart chart suffix>
+    <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
+    <#if chart.module?hasContent>
+        <#return "WebConst.ModulePath.${chart.module?upperCase} + \"/${lowerFirstWord(chart.chartName)}${suffix}\"" >
+    <#else>
+        <#return "WebConst.API_PATH + \"/${lowerFirstWord(chart.chartName)}${suffix}\"" >
+    </#if>
+</#function>

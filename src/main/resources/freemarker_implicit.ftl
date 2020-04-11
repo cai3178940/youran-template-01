@@ -4,6 +4,7 @@
 [#-- @ftlvariable name=".dataModel" type="com.youran.generate.template.context.BaseContext"--]
 [#-- @ftlvariable name=".dataModel" type="com.youran.generate.template.context.ConstContext"--]
 [#-- @ftlvariable name=".dataModel" type="com.youran.generate.template.context.EntityContext"--]
+[#-- @ftlvariable name=".dataModel" type="com.youran.generate.template.context.ChartContext"--]
 [#-- @ftlvariable name="MetaConstType" type="com.youran.generate.constant.MetaConstType.static"--]
 [#-- @ftlvariable name="JFieldType" type="com.youran.generate.constant.JFieldType.static"--]
 [#-- @ftlvariable name="QueryType" type="com.youran.generate.constant.QueryType.static"--]
