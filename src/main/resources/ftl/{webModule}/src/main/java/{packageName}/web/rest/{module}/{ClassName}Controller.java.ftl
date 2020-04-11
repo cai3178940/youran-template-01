@@ -10,7 +10,7 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
-<@call this.addImport("${this.packageName}.web.api.${this.className}API")/>
+<@call this.addImport("${apiPackageName}.${this.className}API")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("org.springframework.web.bind.annotation.*")/>

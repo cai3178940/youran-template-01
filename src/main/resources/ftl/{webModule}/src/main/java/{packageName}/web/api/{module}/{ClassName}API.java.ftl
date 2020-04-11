@@ -200,7 +200,7 @@ public interface ${this.className}API {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.api;
+package ${apiPackageName};
 
 <@call this.printImport()/>
 

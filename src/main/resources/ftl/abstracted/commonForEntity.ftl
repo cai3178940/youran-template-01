@@ -12,7 +12,6 @@
     <#assign apiPackageName = this.packageName+".web.api."+this.module>
     <#assign restPackageName = this.packageName+".web.rest."+this.module>
     <#assign helpPackageName = this.packageName+".help."+this.module>
-    <#assign apiPath = this.packageName+".help."+this.module>
 <#else>
     <#assign daoPackageName = this.packageName+".dao">
     <#assign dtoPackageName = this.packageName+".pojo.dto">
