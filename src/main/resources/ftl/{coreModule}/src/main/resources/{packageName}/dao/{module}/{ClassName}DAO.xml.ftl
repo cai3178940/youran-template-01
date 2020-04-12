@@ -3,15 +3,6 @@
 <#include "/abstracted/mybatis.ftl">
 <#include "/abstracted/mtmForOpp.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
-<#function getSelectFieldWithAlias field tableAlias fieldAlias>
-    <#if fieldAlias?hasContent>
-        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(fieldAlias)}">
-    <#elseIf field.fieldName?capitalize!=field.jfieldName?capitalize>
-        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
-    <#else>
-        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)}">
-    </#if>
-</#function>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"

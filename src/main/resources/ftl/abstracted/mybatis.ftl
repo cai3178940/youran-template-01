@@ -18,3 +18,14 @@
 <#function wrapMysqlKeyword fieldName>
     <#return "${SqlTemplateFunction.wrapMysqlKeyword(fieldName)}" >
 </#function>
+
+<#-- 获取select列名，支持别名 -->
+<#function getSelectFieldWithAlias field tableAlias fieldAlias>
+    <#if fieldAlias?hasContent>
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(fieldAlias)}">
+    <#elseIf field.fieldName?capitalize!=field.jfieldName?capitalize>
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
+    <#else>
+        <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)}">
+    </#if>
+</#function>

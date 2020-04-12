@@ -4,7 +4,7 @@
 <#assign code>
 import com.cbb.common.pojo.qo.PageQO;
 <@call this.addImport("io.swagger.annotations.ApiParam")/>
-<#if this.pageSign>
+<#if isChartType(ChartType.DETAIL_LIST)>
     <@call this.addImport("${this.commonPackage}.pojo.qo.PageQO")/>
 <#else>
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
@@ -16,7 +16,7 @@ import com.cbb.common.pojo.qo.PageQO;
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.chartName}QO extends <#if this.pageSign>PageQO<#else>AbstractQO</#if> {
+public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)>PageQO<#else>AbstractQO</#if> {
 
     <#-- TODO -->
 }
