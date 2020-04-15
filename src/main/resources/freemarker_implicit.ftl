@@ -13,6 +13,7 @@
 [#-- @ftlvariable name="QueryType" type="com.youran.generate.constant.QueryType.static"--]
 [#-- @ftlvariable name="EditType" type="com.youran.generate.constant.EditType.static"--]
 [#-- @ftlvariable name="ChartType" type="com.youran.generate.constant.ChartType.static"--]
+[#-- @ftlvariable name="FilterOperator" type="com.youran.generate.constant.FilterOperator.static"--]
 [#-- @ftlvariable name="MetaSpecialField" type="com.youran.generate.constant.MetaSpecialField.static"--]
 [#-- @ftlvariable name="PrimaryKeyStrategy" type="com.youran.generate.constant.PrimaryKeyStrategy.static"--]
 [#-- @ftlvariable name="CommonTemplateFunction" type="com.youran.generate.template.function.CommonTemplateFunction.static"--]

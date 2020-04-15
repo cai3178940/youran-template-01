@@ -22,12 +22,42 @@
 </#if>
     </sql>
 
-
+<#list this.chartSource.whereMap>
     <sql id="queryCondition">
-        and t.sex = #{fixedParam1}
-        and t.reg_time &lt; #{fixedParam2}
+    <#items as itemId,whereItem>
+        <#if whereItem.custom>
+        and ${sourceItem.customContent}
+        <#else>
+            <#assign field=whereItem.field>
+            <#--is null 、is not null查询-->
+            <#if FilterOperator.IS_NULL.getValue() == whereItem.filterOperator
+                || FilterOperator.NOT_NULL.getValue() == whereItem.filterOperator>
+        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)}
+            <#--in、not in查询-->
+            <#elseIf FilterOperator.CONTAIN.getValue() == whereItem.filterOperator
+                || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
+        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)}
+            <foreach collection="fixedParam${itemId?counter}" item="_value" open="(" separator="," close=")">
+                ${r'#'}{_value}
+            </foreach>
+            <#--like查询-->
+            <#elseIf FilterOperator.LIKE.getValue() == whereItem.filterOperator>
+            <bind name="fixedParam${itemId?counter}_pattern" value="'%' + fixedParam${itemId?counter} + '%'" />
+        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{fixedParam${itemId?counter}_pattern}
+            <#--between查询-->
+            <#elseIf FilterOperator.BETWEEN.getValue() == whereItem.filterOperator
+                || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
+                || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
+                || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
+        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{fixedParam${itemId?counter}Start} and ${r'#'}{fixedParam${itemId?counter}End}
+            <#else>
+        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{fixedParam${itemId?counter}}
+            </#if>
+        </#if>
+    </#items>
     </sql>
 
+</#list>
     <sql id="orderCondition">
         order by
             t.created_time desc
