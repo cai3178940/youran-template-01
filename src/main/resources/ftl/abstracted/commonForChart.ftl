@@ -1,4 +1,8 @@
 <#include "/abstracted/common.ftl">
+<#-- 定义变量——主实体 -->
+<#assign mainEntity=this.chartSource.entity>
+<#-- 定义变量——join关联 -->
+<#assign joins=this.chartSource.joins>
 <#-- 带模块名的包路径 -->
 <#if this.module?hasContent>
     <#assign daoPackageName = this.packageName+".dao."+this.module>
@@ -20,40 +24,3 @@
 <#function isChartType chartTypeEnum>
     <#return this.chartType == chartTypeEnum.getValue()>
 </#function>
-
-<#-- 映射过滤运算符 -->
-<#function mapperOperatorSymbol operator>
-    <#if FilterOperator.EQUAL.getValue()==operator>
-        <#return "=">
-    <#elseIf FilterOperator.NOT_EQUAL.getValue()==operator>
-        <#return "!=">
-    <#elseIf FilterOperator.GT.getValue()==operator>
-        <#return ">">
-    <#elseIf FilterOperator.GE.getValue()==operator>
-        <#return ">=">
-    <#elseIf FilterOperator.LT.getValue()==operator>
-        <#return "&lt;">
-    <#elseIf FilterOperator.LE.getValue()==operator>
-        <#return "&lt;=">
-    <#elseIf FilterOperator.BETWEEN.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.CONTAIN.getValue()==operator>
-        <#return "in">
-    <#elseIf FilterOperator.NOT_CONTAIN.getValue()==operator>
-        <#return "not in">
-    <#elseIf FilterOperator.IS_NULL.getValue()==operator>
-        <#return "is null">
-    <#elseIf FilterOperator.NOT_NULL.getValue()==operator>
-        <#return "is not null">
-    <#elseIf FilterOperator.LIKE.getValue()==operator>
-        <#return "like">
-    <#elseIf FilterOperator.IS_NOW.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.BEFORE_TIME.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.AFTER_TIME.getValue()==operator>
-        <#return "between">
-    </#if>
-</#function>
-
-

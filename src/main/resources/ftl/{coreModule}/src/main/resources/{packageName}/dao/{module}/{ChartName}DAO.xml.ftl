@@ -1,6 +1,58 @@
 <#include "/abstracted/common.ftl">
 <#include "/abstracted/commonForChart.ftl">
 <#include "/abstracted/mybatis.ftl">
+<#-- 映射过滤运算符 -->
+<#function mapperOperatorSymbol operator>
+    <#if FilterOperator.EQUAL.getValue()==operator>
+        <#return "=">
+    <#elseIf FilterOperator.NOT_EQUAL.getValue()==operator>
+        <#return "!=">
+    <#elseIf FilterOperator.GT.getValue()==operator>
+        <#return ">">
+    <#elseIf FilterOperator.GE.getValue()==operator>
+        <#return ">=">
+    <#elseIf FilterOperator.LT.getValue()==operator>
+        <#return "&lt;">
+    <#elseIf FilterOperator.LE.getValue()==operator>
+        <#return "&lt;=">
+    <#elseIf FilterOperator.BETWEEN.getValue()==operator>
+        <#return "between">
+    <#elseIf FilterOperator.CONTAIN.getValue()==operator>
+        <#return "in">
+    <#elseIf FilterOperator.NOT_CONTAIN.getValue()==operator>
+        <#return "not in">
+    <#elseIf FilterOperator.IS_NULL.getValue()==operator>
+        <#return "is null">
+    <#elseIf FilterOperator.NOT_NULL.getValue()==operator>
+        <#return "is not null">
+    <#elseIf FilterOperator.LIKE.getValue()==operator>
+        <#return "like">
+    <#elseIf FilterOperator.IS_NOW.getValue()==operator>
+        <#return "between">
+    <#elseIf FilterOperator.BEFORE_TIME.getValue()==operator>
+        <#return "between">
+    <#elseIf FilterOperator.AFTER_TIME.getValue()==operator>
+        <#return "between">
+    </#if>
+</#function>
+<#-- 映射排序运算符 -->
+<#function mapperOrderBySymbol sortType>
+    <#if SortType.ASC.getValue()==sortType>
+        <#return "asc">
+    <#else>
+        <#return "desc">
+    </#if>
+</#function>
+<#-- 映射排序运算符 -->
+<#function mapperJoinSymbol joinType>
+    <#if JoinType.RIGHT_JOIN.getValue()==joinType>
+        <#return "right join">
+    <#elseIf JoinType.LEFT_JOIN.getValue()==joinType>
+        <#return "left join">
+    <#else>
+        <#return "inner join">
+    </#if>
+</#function>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -58,33 +110,74 @@
     </sql>
 
 </#list>
+<#if isChartType(ChartType.DETAIL_LIST)>
+    <#list this.chartSource.detailOrderMap>
     <sql id="orderCondition">
         order by
-            t.created_time desc
+        <#items as itemId,detailOrderItem>
+            <#assign detailListItem=detailOrderItem.parent>
+            <#if detailListItem.custom>
+        ${detailListItem.customContent} ${mapperOrderBySymbol(detailOrderItem.sortType)}<#if itemId?hasNext>,</#if>
+            <#else>
+                <#assign field=detailListItem.field>
+        ${getSelectFieldWithAlias(field,"t${detailListItem.joinIndex}",detailListItem.alias)} ${mapperOrderBySymbol(detailOrderItem.sortType)}<#if itemId?hasNext>,</#if>
+            </#if>
+        </#items>
     </sql>
 
-    <select id="selectCount" parameterType="ThreeTableQO" resultType="int">
+    </#list>
+</#if>
+<#-- join右边的表名 -->
+<#function joinRightTableName join>
+    <#if join.rightEntity!>
+        <#return wrapMysqlKeyword(join.rightEntity.tableName)>
+    <#else>
+        <#return wrapMysqlKeyword(join.rightMtm.tableName)>
+    </#if>
+</#function>
+<#-- join右边的字段名 -->
+<#function joinRightFieldName join>
+    <#if join.rightField!>
+        <#return wrapMysqlKeyword(join.rightField.fieldName)>
+    <#else>
+        <#return wrapMysqlKeyword(join.rightMtmField)>
+    </#if>
+</#function>
+<#-- join左边的字段名 -->
+<#function joinLeftFieldName join>
+    <#if join.leftField!>
+        <#return wrapMysqlKeyword(join.leftField.fieldName)>
+    <#else>
+        <#return wrapMysqlKeyword(join.leftMtmField)>
+    </#if>
+</#function>
+<#if isChartType(ChartType.DETAIL_LIST)>
+    <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
         select count(1)
-        from `user` t
-        inner join dept t2
-            on t.dept_id = t2.id
+        from ${wrapMysqlKeyword(mainEntity.tableName)} t0
+    <#list joins as join>
+        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
+            on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
+    </#list>
         <where>
             <include refid="queryCondition"/>
         </where>
     </select>
 
-    <select id="selectList" parameterType="ThreeTableQO" resultType="ThreeTableVO">
+    <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
         select
         <include refid="columns"></include>
-        from `user` t
-        inner join dept t2
-            on t.dept_id = t2.id
+        from ${wrapMysqlKeyword(mainEntity.tableName)} t0
+    <#list joins as join>
+        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
+            on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
+    </#list>
         <where>
             <include refid="queryCondition"/>
         </where>
         <include refid="orderCondition"/>
-        limit #{startIndex},#{pageSize}
+        limit ${r'#'}{startIndex},${r'#'}{pageSize}
     </select>
-
+</#if>
 
 </mapper>
