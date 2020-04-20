@@ -4,10 +4,37 @@
 <#assign code>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${apiPackageName}.${this.chartName}API")/>
+<@call this.addImport("org.springframework.web.bind.annotation.*")/>
+<@call this.addImport("org.springframework.http.ResponseEntity")/>
+<@call this.addImport("${qoPackageName}.${this.chartName}QO")/>
+<@call this.addImport("${voPackageName}.${this.chartName}VO")/>
+<@call this.addImport("javax.validation.Valid")/>
 <@call this.printClassCom("【${this.title}】图表控制器")/>
 @RestController
 @RequestMapping(${renderApiPathForChart(this.chart, "")})
 public class ${this.chartName}Controller extends AbstractController implements ${this.chartName}API {
+
+    @Autowired
+    private ${this.chartName}Service ${this.chartNameLower}Service;
+
+<#if isChartType(ChartType.DETAIL_LIST)>
+    @Override
+    @GetMapping
+    <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
+    public ResponseEntity<PageVO<${this.chartName}VO>> findDetailList(@Valid ${this.chartName}QO qo) {
+        PageVO<${this.chartName}VO> page = ${this.chartNameLower}Service.findDetailList(qo);
+        return ResponseEntity.ok(page);
+    }
+<#else>
+    @Override
+    @GetMapping
+    <@call this.addImport("java.util.List")/>
+    public ResponseEntity<List<${this.chartName}VO>> findChartData(@Valid ${this.chartName}QO qo) {
+        List<${this.chartName}VO> list = ${this.chartNameLower}Service.findChartData(qo);
+        return ResponseEntity.ok(list);
+    }
+</#if>
+
 }
 
 </#assign>

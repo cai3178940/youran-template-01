@@ -5,6 +5,7 @@
 <@call this.addImport("org.apache.ibatis.annotations.Mapper")/>
 <@call this.addImport("org.springframework.stereotype.Repository")/>
 <@call this.addImport("${qoPackageName}.${this.chartName}QO")/>
+<@call this.addImport("${voPackageName}.${this.chartName}VO")/>
 <@call this.addImport("java.util.List")/>
 <@call this.printClassCom("【${this.title}】数据库操作")/>
 @Repository
