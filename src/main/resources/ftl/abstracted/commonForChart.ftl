@@ -24,3 +24,24 @@
 <#function isChartType chartTypeEnum>
     <#return this.chartType == chartTypeEnum.getValue()>
 </#function>
+
+
+<#-- 映射图表自定义字段类型 -->
+<#function convertCustomFieldType type>
+    <#if CustomFieldType.STRING.getValue() == type>
+        <#return "String">
+    <#elseIf CustomFieldType.INT.getValue() == type>
+        <#return "Integer">
+    <#elseIf CustomFieldType.DOUBLE.getValue() == type>
+        <#return "Double">
+    <#elseIf CustomFieldType.DATE.getValue() == type>
+        <@call this.addImport("java.util.Date")/>
+        <#return "Date">
+    <#elseIf CustomFieldType.DATE_TIME.getValue() == type>
+        <@call this.addImport("java.util.Date")/>
+        <#return "Date">
+    <#else>
+        <#return "String">
+    </#if>
+</#function>
+
