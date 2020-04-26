@@ -16,23 +16,32 @@
 @ApiModel(description = "【${this.title}】图表展示对象")
 public class ${this.chartName}VO extends AbstractVO {
 
-
+<#-- 定义getterSetter代码 -->
+<#assign getterSetterCode = "">
 <#if isChartType(ChartType.DETAIL_LIST)>
     <#list this.columnList as column>
         <#assign sourceItem=column.sourceItem>
         <#if sourceItem.custom>
-    @ApiModelProperty(notes = "${column.titleAlias}")
-    private ${convertCustomFieldType(sourceItem.customFieldType)} ${sourceItem.alias};
+            <#--字段类型-->
+            <#assign type=convertCustomFieldType(sourceItem.customFieldType)>
+            <#--字段名-->
+            <#assign name=sourceItem.alias>
+            <#--字段标题-->
+            <#assign label=column.titleAlias>
         <#else>
             <#assign field=sourceItem.field>
             <#--import字段类型-->
             <@call this.addFieldTypeImport(field)/>
-            <#--字段名转下划线大写-->
-            <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
-            <#if column.titleAlias?hasContent>
-    @ApiModelProperty(notes = "${column.titleAlias}")
+            <#assign type=field.jfieldType>
+            <#if sourceItem.alias?hasContent>
+                <#assign name=sourceItem.alias>
             <#else>
-    @ApiModelProperty(notes = "${field.fetchComment()?replace('\"','\\"')?replace('\n','\\n')}")
+                <#assign name=field.jfieldName>
+            </#if>
+            <#if column.titleAlias?hasContent>
+                <#assign label=column.titleAlias>
+            <#else>
+                <#assign label=field.fetchComment()?replace('\"','\\"')?replace('\n','\\n')>
             </#if>
             <#if field.jfieldType==JFieldType.DATE.getJavaType()
                 || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
@@ -40,15 +49,16 @@ public class ${this.chartName}VO extends AbstractVO {
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
             </#if>
-            <#if sourceItem.alias?hasContent>
-    private ${field.jfieldType} ${sourceItem.alias};
-            <#else>
-    private ${field.jfieldType} ${field.jfieldName};
-            </#if>
         </#if>
+    @ApiModelProperty(notes = "${label}")
+    private ${type} ${name};
+        <#assign getterSetterCode += genGetterSetter(type,name)>
+
     </#list>
 <#else>
 </#if>
+
+<#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
 
 }
 </#assign>

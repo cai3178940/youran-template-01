@@ -22,7 +22,29 @@
 <#-- 包路径 -->
 <#assign packageNamePath = this.packageName?replace(".", "/")>
 
-
+<#-- 生成getter setter -->
+<#function genGetterSetter type name override=false indent=1>
+    <#local code = "">
+    <#local cap = name?capFirst>
+    <#local uncap = name?uncapFirst>
+    <#local indentPrefix = "">
+    <#list 1..indent as t>
+        <#local indentPrefix += "    ">
+    </#list>
+    <#if override>
+        <#local code += indentPrefix + "@Override\n">
+    </#if>
+    <#local code += indentPrefix + "public " + type + " get" + cap + "() {\n">
+    <#local code += indentPrefix + "    return this." + uncap + ";\n">
+    <#local code += indentPrefix + "}\n\n">
+    <#if override>
+        <#local code += indentPrefix + "@Override\n">
+    </#if>
+    <#local code += indentPrefix + "public void set" + cap + "(" + type + " " + uncap + ") {\n">
+    <#local code += indentPrefix + "    this." + uncap + " = " + uncap + ";\n">
+    <#local code += indentPrefix + "}\n\n">
+    <#return code >
+</#function>
 
 <#-- 渲染API路径 -->
 <#function  renderApiPath entity suffix>
