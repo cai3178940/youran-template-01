@@ -37,7 +37,7 @@ public class ${this.className}Controller extends AbstractController implements $
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<${this.className}ShowVO> save(@Valid @RequestBody ${this.className}AddDTO ${this.classNameLower}AddDTO) throws Exception {
         ${this.className}PO ${this.classNameLower} = ${this.classNameLower}Service.save(${this.classNameLower}AddDTO);
-        return ResponseEntity.created(new URI(WebConst.API_PATH + "/${this.classNameLower}/" + ${this.classNameLower}.get${this.idUpper}()))
+        return ResponseEntity.created(new URI(${renderApiPath(this.metaEntity, "/")} + ${this.classNameLower}.get${this.idUpper}()))
             .body(${this.className}Mapper.INSTANCE.toShowVO(${this.classNameLower}));
     }
 
