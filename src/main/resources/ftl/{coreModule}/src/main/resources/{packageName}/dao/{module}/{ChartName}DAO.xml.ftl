@@ -129,7 +129,7 @@
 </#if>
 <#-- join右边的表名 -->
 <#function joinRightTableName join>
-    <#if join.rightEntity!>
+    <#if join.rightEntity??>
         <#return wrapMysqlKeyword(join.rightEntity.tableName)>
     <#else>
         <#return wrapMysqlKeyword(join.rightMtm.tableName)>
@@ -137,7 +137,7 @@
 </#function>
 <#-- join右边的字段名 -->
 <#function joinRightFieldName join>
-    <#if join.rightField!>
+    <#if join.rightField??>
         <#return wrapMysqlKeyword(join.rightField.fieldName)>
     <#else>
         <#return wrapMysqlKeyword(join.rightMtmField)>
@@ -145,7 +145,7 @@
 </#function>
 <#-- join左边的字段名 -->
 <#function joinLeftFieldName join>
-    <#if join.leftField!>
+    <#if join.leftField??>
         <#return wrapMysqlKeyword(join.leftField.fieldName)>
     <#else>
         <#return wrapMysqlKeyword(join.leftMtmField)>
@@ -159,9 +159,11 @@
         ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
             on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
     </#list>
+    <#if this.chartSource.whereMap?hasContent>
         <where>
             <include refid="queryCondition"/>
         </where>
+    </#if>
     </select>
 
     <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
@@ -172,10 +174,15 @@
         ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
             on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
     </#list>
+    <#if this.chartSource.whereMap?hasContent>
         <where>
             <include refid="queryCondition"/>
         </where>
+    </#if>
+    <#if isChartType(ChartType.DETAIL_LIST)
+            && this.chartSource.detailOrderMap?hasContent>
         <include refid="orderCondition"/>
+    </#if>
         limit ${r'#'}{startIndex},${r'#'}{pageSize}
     </select>
 </#if>

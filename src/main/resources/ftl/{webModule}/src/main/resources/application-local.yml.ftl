@@ -6,3 +6,7 @@ spring:
         password: root
 swagger:
     enabled: true
+
+logging:
+    level:
+        ${this.packageName}: debug

@@ -6,7 +6,6 @@
         <#assign fkFieldsForInsert += [field]>
     </#if>
 </#list>
-
 <#assign withinEntityList = []>
 <#list this.holds! as otherEntity,mtm>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>

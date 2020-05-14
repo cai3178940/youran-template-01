@@ -4,6 +4,8 @@
 <#assign code>
 <@call this.addImport("${this.packageName}.web.AbstractController")/>
 <@call this.addImport("${apiPackageName}.${this.chartName}API")/>
+<@call this.addImport("${servicePackageName}.${this.chartName}Service")/>
+<@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.web.bind.annotation.*")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("${qoPackageName}.${this.chartName}QO")/>

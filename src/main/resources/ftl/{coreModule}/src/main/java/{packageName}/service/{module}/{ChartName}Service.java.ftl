@@ -86,7 +86,6 @@ public class ${this.chartName}Service {
      * @param qo
      */
     private void initFixedParam(${this.chartName}QO qo) {
-        qo.setFixedParam2(LocalDate.now());
 <#list this.chartSource.whereMap as itemId,whereItem>
     <#if !whereItem.custom>
         <#if FilterOperator.IS_NULL.getValue() == whereItem.filterOperator

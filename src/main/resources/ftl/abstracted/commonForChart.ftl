@@ -19,13 +19,10 @@
     <#assign apiPackageName = this.packageName+".web.api">
     <#assign restPackageName = this.packageName+".web.rest">
 </#if>
-
 <#-- 判断当前图表的类型 -->
 <#function isChartType chartTypeEnum>
     <#return this.chartType == chartTypeEnum.getValue()>
 </#function>
-
-
 <#-- 映射图表自定义字段类型 -->
 <#function convertCustomFieldType type>
     <#if CustomFieldType.STRING.getValue() == type>
@@ -44,4 +41,3 @@
         <#return "String">
     </#if>
 </#function>
-
