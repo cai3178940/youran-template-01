@@ -43,7 +43,7 @@ public class ConvertUtil {
      * @param str
      * @return
      */
-    public static List<String> convertStringToList(String str){
+    public static List<String> convertStringList(String str){
         if(StringUtils.isBlank(str)){
             return null;
         }
