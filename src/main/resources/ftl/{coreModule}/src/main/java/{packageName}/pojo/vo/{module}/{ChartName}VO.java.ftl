@@ -25,7 +25,7 @@ public class ${this.chartName}VO extends AbstractVO {
             <#--字段类型-->
             <#assign type=convertCustomFieldType(sourceItem.customFieldType)>
             <#--字段名-->
-            <#assign name=sourceItem.alias>
+            <#assign name=column.alias>
             <#--字段标题-->
             <#assign label=column.titleAlias>
         <#else>
@@ -33,8 +33,8 @@ public class ${this.chartName}VO extends AbstractVO {
             <#--import字段类型-->
             <@call this.addFieldTypeImport(field)/>
             <#assign type=field.jfieldType>
-            <#if sourceItem.alias?hasContent>
-                <#assign name=sourceItem.alias>
+            <#if column.alias?hasContent>
+                <#assign name=column.alias>
             <#else>
                 <#assign name=field.jfieldName>
             </#if>

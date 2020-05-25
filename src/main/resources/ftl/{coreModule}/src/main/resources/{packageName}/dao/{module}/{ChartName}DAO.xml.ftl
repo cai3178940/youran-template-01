@@ -64,10 +64,10 @@
     <#list this.columnList as column>
         <#assign sourceItem=column.sourceItem>
         <#if sourceItem.custom>
-        ${sourceItem.customContent} as ${wrapMysqlKeyword(sourceItem.alias)}<#if column?hasNext>,</#if>
+        ${sourceItem.customContent} as ${wrapMysqlKeyword(column.alias)}<#if column?hasNext>,</#if>
         <#else>
             <#assign field=sourceItem.field>
-        ${getSelectFieldWithAlias(field,"t${sourceItem.joinIndex}",sourceItem.alias)}<#if column?hasNext>,</#if>
+        ${getSelectFieldWithAlias(field,"t${sourceItem.joinIndex}",column.alias)}<#if column?hasNext>,</#if>
         </#if>
     </#list>
 <#else>
@@ -120,7 +120,7 @@
         ${detailListItem.customContent} ${mapperOrderBySymbol(detailOrderItem.sortType)}<#if itemId?hasNext>,</#if>
             <#else>
                 <#assign field=detailListItem.field>
-        ${getSelectFieldWithAlias(field,"t${detailListItem.joinIndex}",detailListItem.alias)} ${mapperOrderBySymbol(detailOrderItem.sortType)}<#if itemId?hasNext>,</#if>
+        t${detailListItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOrderBySymbol(detailOrderItem.sortType)}<#if itemId?hasNext>,</#if>
             </#if>
         </#items>
     </sql>
@@ -156,8 +156,8 @@
         select count(1)
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
     <#list joins as join>
-        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
-            on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
+        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinLeftFieldName(join)} = t${join.right.joinIndex}.${joinRightFieldName(join)}
     </#list>
     <#if this.chartSource.whereMap?hasContent>
         <where>
@@ -171,8 +171,8 @@
         <include refid="columns"></include>
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
     <#list joins as join>
-        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.rightIndex}
-            on t${join.leftIndex}.${joinLeftFieldName(join)} = t${join.rightIndex}.${joinRightFieldName(join)}
+        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinLeftFieldName(join)} = t${join.right.joinIndex}.${joinRightFieldName(join)}
     </#list>
     <#if this.chartSource.whereMap?hasContent>
         <where>
