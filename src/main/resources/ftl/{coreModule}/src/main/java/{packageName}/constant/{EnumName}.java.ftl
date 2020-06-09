@@ -68,7 +68,7 @@ public enum ${this.constNameUpper} {
      * @param desc
      * @return
      */
-    public static Integer descToValue(String desc) {
+    public static ${this.constTypeStr} descToValue(String desc) {
         ${this.constNameUpper} theEnum = findByDesc(desc);
         if (theEnum != null) {
             return theEnum.getValue();
@@ -82,7 +82,7 @@ public enum ${this.constNameUpper} {
      * @param value
      * @return
      */
-    public static String valueToDesc(Integer value) {
+    public static String valueToDesc(${this.constTypeStr} value) {
         ${this.constNameUpper} theEnum = find(value);
         if (theEnum != null) {
             return theEnum.getDesc();
