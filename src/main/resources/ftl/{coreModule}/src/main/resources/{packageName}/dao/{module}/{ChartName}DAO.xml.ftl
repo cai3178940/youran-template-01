@@ -78,7 +78,7 @@
     <sql id="queryCondition">
     <#items as itemId,whereItem>
         <#if whereItem.custom>
-        and ${sourceItem.customContent}
+        and ${whereItem.customContent}
         <#else>
             <#assign field=whereItem.field>
             <#--is null 、is not null查询-->
@@ -127,28 +127,20 @@
 
     </#list>
 </#if>
-<#-- join右边的表名 -->
-<#function joinRightTableName join>
-    <#if join.rightEntity??>
-        <#return wrapMysqlKeyword(join.rightEntity.tableName)>
+<#-- join的表名 -->
+<#function joinTableName joinPart>
+    <#if joinPart.joinPartType == "entity">
+        <#return wrapMysqlKeyword(joinPart.entity.tableName)>
     <#else>
-        <#return wrapMysqlKeyword(join.rightMtm.tableName)>
+        <#return wrapMysqlKeyword(joinPart.mtm.tableName)>
     </#if>
 </#function>
-<#-- join右边的字段名 -->
-<#function joinRightFieldName join>
-    <#if join.rightField??>
-        <#return wrapMysqlKeyword(join.rightField.fieldName)>
+<#-- join的字段名 -->
+<#function joinFieldName joinPart>
+    <#if joinPart.joinPartType == "entity">
+        <#return wrapMysqlKeyword(joinPart.field.fieldName)>
     <#else>
-        <#return wrapMysqlKeyword(join.rightMtmField)>
-    </#if>
-</#function>
-<#-- join左边的字段名 -->
-<#function joinLeftFieldName join>
-    <#if join.leftField??>
-        <#return wrapMysqlKeyword(join.leftField.fieldName)>
-    <#else>
-        <#return wrapMysqlKeyword(join.leftMtmField)>
+        <#return wrapMysqlKeyword(joinPart.mtmField)>
     </#if>
 </#function>
 <#if isChartType(ChartType.DETAIL_LIST)>
@@ -156,8 +148,8 @@
         select count(1)
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
     <#list joins as join>
-        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.right.joinIndex}
-            on t${join.left.joinIndex}.${joinLeftFieldName(join)} = t${join.right.joinIndex}.${joinRightFieldName(join)}
+        ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
     </#list>
     <#if this.chartSource.whereMap?hasContent>
         <where>
@@ -171,8 +163,8 @@
         <include refid="columns"></include>
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
     <#list joins as join>
-        ${mapperJoinSymbol(join.joinType)} ${joinRightTableName(join)} t${join.right.joinIndex}
-            on t${join.left.joinIndex}.${joinLeftFieldName(join)} = t${join.right.joinIndex}.${joinRightFieldName(join)}
+        ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
     </#list>
     <#if this.chartSource.whereMap?hasContent>
         <where>
