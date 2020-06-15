@@ -16,7 +16,7 @@ import com.cbb.common.pojo.qo.PageQO;
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)>PageQO<#else>AbstractQO</#if> {
+public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>PageQO<#else>AbstractQO</#if> {
 
 <#list this.chartSource.whereMap as itemId,whereItem>
     <#if !whereItem.custom>

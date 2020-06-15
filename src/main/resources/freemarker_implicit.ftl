@@ -17,6 +17,7 @@
 [#-- @ftlvariable name="FilterOperator" type="com.youran.generate.constant.FilterOperator.static"--]
 [#-- @ftlvariable name="SortType" type="com.youran.generate.constant.SortType.static"--]
 [#-- @ftlvariable name="JoinType" type="com.youran.generate.constant.JoinType.static"--]
+[#-- @ftlvariable name="Granularity" type="com.youran.generate.constant.Granularity.static"--]
 [#-- @ftlvariable name="MetaSpecialField" type="com.youran.generate.constant.MetaSpecialField.static"--]
 [#-- @ftlvariable name="PrimaryKeyStrategy" type="com.youran.generate.constant.PrimaryKeyStrategy.static"--]
 [#-- @ftlvariable name="CommonTemplateFunction" type="com.youran.generate.template.function.CommonTemplateFunction.static"--]

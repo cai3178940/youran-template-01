@@ -12,7 +12,7 @@
 @Mapper
 public interface ${this.chartName}DAO {
 
-<#if isChartType(ChartType.DETAIL_LIST)>
+<#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     /**
      * 根据条件查询【${this.title}】明细条数
      *

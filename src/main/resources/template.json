@@ -24,6 +24,7 @@
     {"fileName":"mtmCascadeExtsForShow.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"mtmForOpp.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"mybatis.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
+    {"fileName":"mybatisForChart.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"usingExcel.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
 
     {"fileName":"__dir.ftl","fileDir":"/{commonModule}","contextType":1,"fileType":4},

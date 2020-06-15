@@ -15,7 +15,7 @@ public class ${this.chartName}Service {
     @Autowired
     private ${this.chartName}DAO ${this.chartNameLower}DAO;
 
-<#if isChartType(ChartType.DETAIL_LIST)>
+<#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     /**
      * 查询明细表
      *

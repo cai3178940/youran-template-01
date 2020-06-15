@@ -1,58 +1,5 @@
-<#include "/abstracted/common.ftl">
 <#include "/abstracted/commonForChart.ftl">
-<#include "/abstracted/mybatis.ftl">
-<#-- 映射过滤运算符 -->
-<#function mapperOperatorSymbol operator>
-    <#if FilterOperator.EQUAL.getValue()==operator>
-        <#return "=">
-    <#elseIf FilterOperator.NOT_EQUAL.getValue()==operator>
-        <#return "!=">
-    <#elseIf FilterOperator.GT.getValue()==operator>
-        <#return ">">
-    <#elseIf FilterOperator.GE.getValue()==operator>
-        <#return ">=">
-    <#elseIf FilterOperator.LT.getValue()==operator>
-        <#return "&lt;">
-    <#elseIf FilterOperator.LE.getValue()==operator>
-        <#return "&lt;=">
-    <#elseIf FilterOperator.BETWEEN.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.CONTAIN.getValue()==operator>
-        <#return "in">
-    <#elseIf FilterOperator.NOT_CONTAIN.getValue()==operator>
-        <#return "not in">
-    <#elseIf FilterOperator.IS_NULL.getValue()==operator>
-        <#return "is null">
-    <#elseIf FilterOperator.NOT_NULL.getValue()==operator>
-        <#return "is not null">
-    <#elseIf FilterOperator.LIKE.getValue()==operator>
-        <#return "like">
-    <#elseIf FilterOperator.IS_NOW.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.BEFORE_TIME.getValue()==operator>
-        <#return "between">
-    <#elseIf FilterOperator.AFTER_TIME.getValue()==operator>
-        <#return "between">
-    </#if>
-</#function>
-<#-- 映射排序运算符 -->
-<#function mapperOrderBySymbol sortType>
-    <#if SortType.ASC.getValue()==sortType>
-        <#return "asc">
-    <#else>
-        <#return "desc">
-    </#if>
-</#function>
-<#-- 映射排序运算符 -->
-<#function mapperJoinSymbol joinType>
-    <#if JoinType.RIGHT_JOIN.getValue()==joinType>
-        <#return "right join">
-    <#elseIf JoinType.LEFT_JOIN.getValue()==joinType>
-        <#return "left join">
-    <#else>
-        <#return "inner join">
-    </#if>
-</#function>
+<#include "/abstracted/mybatisForChart.ftl">
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -127,22 +74,7 @@
 
     </#list>
 </#if>
-<#-- join的表名 -->
-<#function joinTableName joinPart>
-    <#if joinPart.joinPartType == "entity">
-        <#return wrapMysqlKeyword(joinPart.entity.tableName)>
-    <#else>
-        <#return wrapMysqlKeyword(joinPart.mtm.tableName)>
-    </#if>
-</#function>
-<#-- join的字段名 -->
-<#function joinFieldName joinPart>
-    <#if joinPart.joinPartType == "entity">
-        <#return wrapMysqlKeyword(joinPart.field.fieldName)>
-    <#else>
-        <#return wrapMysqlKeyword(joinPart.mtmField)>
-    </#if>
-</#function>
+
 <#if isChartType(ChartType.DETAIL_LIST)>
     <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
         select count(1)
@@ -171,9 +103,71 @@
             <include refid="queryCondition"/>
         </where>
     </#if>
-    <#if isChartType(ChartType.DETAIL_LIST)
-            && this.chartSource.detailOrderMap?hasContent>
+    <#if this.chartSource.detailOrderMap?hasContent>
         <include refid="orderCondition"/>
+    </#if>
+        limit ${r'#'}{startIndex},${r'#'}{pageSize}
+    </select>
+<#elseIf isChartType(ChartType.AGG_TABLE)>
+    <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
+        select count(1) from (
+            select 1
+            from ${wrapMysqlKeyword(mainEntity.tableName)} t0
+        <#list joins as join>
+            ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
+                on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
+        </#list>
+        <#if this.chartSource.whereMap?hasContent>
+            <where>
+                <include refid="queryCondition"/>
+            </where>
+        </#if>
+            group by
+        <#list this.chartSource.dimensionMap as dimension>
+                ${renderDimension(dimension)}<#if dimension?hasNext>,</#if>
+        </#list>
+        <#if this.chartSource.havingMap?hasContent>
+            having
+            <#list this.chartSource.havingMap as having>
+                <#if !having?isFirst>and </#if>${renderHaving(having)}
+            </#list>
+        </#if>
+        ) tmp
+    </select>
+
+    <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
+        select
+    <#list this.chartSource.dimensionMap as dimension>
+            ${renderDimension(dimension)}<#if dimension?hasNext || this.chartSource.metricsMap?hasContent>,</#if>
+    </#list>
+    <#list this.chartSource.metricsMap as metrics>
+            ${renderMetrics(metrics)}<#if metrics?hasNext>,</#if>
+    </#list>
+        from ${wrapMysqlKeyword(mainEntity.tableName)} t0
+    <#list joins as join>
+        ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
+    </#list>
+    <#if this.chartSource.whereMap?hasContent>
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </#if>
+        group by
+    <#list this.chartSource.dimensionMap as dimension>
+            ${renderDimension(dimension)}<#if dimension?hasNext>,</#if>
+    </#list>
+    <#if this.chartSource.havingMap?hasContent>
+        having
+        <#list this.chartSource.havingMap as having>
+            <#if !having?isFirst>and </#if>${renderHaving(having)}
+        </#list>
+    </#if>
+    <#if this.chartSource.aggOrderMap?hasContent>
+        order by
+        <#list this.chartSource.aggOrderMap as aggOrder>
+            ${renderAggOrder(aggOrder)}<#if aggOrder?hasNext>,</#if>
+        </#list>
     </#if>
         limit ${r'#'}{startIndex},${r'#'}{pageSize}
     </select>
