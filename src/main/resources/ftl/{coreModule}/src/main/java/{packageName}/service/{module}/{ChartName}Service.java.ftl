@@ -24,7 +24,7 @@ public class ${this.chartName}Service {
      */
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     public PageVO<${this.chartName}VO> findDetailList(${this.chartName}QO qo) {
-        this.initFixedParam(qo);
+        this.initWhereParam(qo);
         List<${this.chartName}VO> list;
         int count = ${this.chartNameLower}DAO.selectCount(qo);
         if (count > 0) {
@@ -44,7 +44,7 @@ public class ${this.chartName}Service {
      * @return
      */
     public List<${this.chartName}VO> findChartData(${this.chartName}QO qo) {
-        this.initFixedParam(qo);
+        this.initWhereParam(qo);
         List<${this.chartName}VO> list = ${this.chartNameLower}DAO.findChartData(qo);
         return list;
     }
@@ -85,7 +85,7 @@ public class ${this.chartName}Service {
      *
      * @param qo
      */
-    private void initFixedParam(${this.chartName}QO qo) {
+    private void initWhereParam(${this.chartName}QO qo) {
 <#list this.chartSource.whereMap as itemId,whereItem>
     <#if !whereItem.custom>
         <#if FilterOperator.IS_NULL.getValue() == whereItem.filterOperator
@@ -96,7 +96,7 @@ public class ${this.chartName}Service {
         <#if FilterOperator.CONTAIN.getValue() == whereItem.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
             <@call this.addImport("com.google.common.collect.Lists")/>
-        qo.setFixedParam${itemId?counter}(Lists.newArrayList(
+        qo.setWhereParam${itemId?counter}(Lists.newArrayList(
             <#list whereItem.filterValue as filterValue>
                 ${printFilterValue(field,filterValue)}<#if filterValue?hasNext>,</#if>
             </#list>
@@ -105,10 +105,10 @@ public class ${this.chartName}Service {
         || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
-        qo.setFixedParam${itemId?counter}Start(${printFilterValue(field,whereItem.filterValue[0])});
-        qo.setFixedParam${itemId?counter}End(${printFilterValue(field,whereItem.filterValue[1])});
+        qo.setWhereParam${itemId?counter}Start(${printFilterValue(field,whereItem.filterValue[0])});
+        qo.setWhereParam${itemId?counter}End(${printFilterValue(field,whereItem.filterValue[1])});
         <#else>
-        qo.setFixedParam${itemId?counter}(${printFilterValue(field,whereItem.filterValue[0])});
+        qo.setWhereParam${itemId?counter}(${printFilterValue(field,whereItem.filterValue[0])});
         </#if>
     </#if>
 </#list>

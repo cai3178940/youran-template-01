@@ -10,6 +10,7 @@
     {"fileName":"pom.xml.ftl","fileDir":"/","contextType":1,"fileType":1},
     {"fileName":"README.md.ftl","fileDir":"/","contextType":1,"fileType":1},
 
+    {"fileName":"chartItemMap.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"checkFeatureForRest.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"common.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},
     {"fileName":"commonForChart.ftl","fileDir":"/abstracted","contextType":1,"fileType":2},

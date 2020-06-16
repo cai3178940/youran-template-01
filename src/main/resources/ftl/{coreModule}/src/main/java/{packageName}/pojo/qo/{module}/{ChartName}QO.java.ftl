@@ -29,21 +29,21 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
             <@call this.addImport("java.util.List")/>
     @ApiParam(hidden = true)
-    private List<${field.jfieldType}> fixedParam${itemId?counter};
+    private List<${field.jfieldType}> whereParam${itemId?counter};
 
         <#elseIf FilterOperator.BETWEEN.getValue() == whereItem.filterOperator
         || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
     @ApiParam(hidden = true)
-    private ${field.jfieldType} fixedParam${itemId?counter}Start;
+    private ${field.jfieldType} whereParam${itemId?counter}Start;
 
     @ApiParam(hidden = true)
-    private ${field.jfieldType} fixedParam${itemId?counter}End;
+    private ${field.jfieldType} whereParam${itemId?counter}End;
 
         <#else>
     @ApiParam(hidden = true)
-    private ${field.jfieldType} fixedParam${itemId?counter};
+    private ${field.jfieldType} whereParam${itemId?counter};
 
         </#if>
     </#if>
@@ -59,15 +59,15 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
             <#assign field=whereItem.field>
             <#if FilterOperator.CONTAIN.getValue() == whereItem.filterOperator
             || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
-                <@call JavaTemplateFunction.printGetterSetterList("fixedParam${itemId?counter}","${field.jfieldType}",false)/>
+                <@call JavaTemplateFunction.printGetterSetterList("whereParam${itemId?counter}","${field.jfieldType}",false)/>
             <#elseIf FilterOperator.BETWEEN.getValue() == whereItem.filterOperator
             || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
             || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
             || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
-                <@call JavaTemplateFunction.printGetterSetter("fixedParam${itemId?counter}Start","${field.jfieldType}")/>
-                <@call JavaTemplateFunction.printGetterSetter("fixedParam${itemId?counter}End","${field.jfieldType}")/>
+                <@call JavaTemplateFunction.printGetterSetter("whereParam${itemId?counter}Start","${field.jfieldType}")/>
+                <@call JavaTemplateFunction.printGetterSetter("whereParam${itemId?counter}End","${field.jfieldType}")/>
             <#else>
-                <@call JavaTemplateFunction.printGetterSetter("fixedParam${itemId?counter}","${field.jfieldType}")/>
+                <@call JavaTemplateFunction.printGetterSetter("whereParam${itemId?counter}","${field.jfieldType}")/>
             </#if>
         </#if>
     </#list>
