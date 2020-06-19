@@ -1,5 +1,5 @@
-<#include "/abstracted/common.ftl">
 <#include "/abstracted/commonForChart.ftl">
+<#include "/abstracted/chartItemMap.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("java.util.List")/>
@@ -24,7 +24,9 @@ public class ${this.chartName}Service {
      */
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     public PageVO<${this.chartName}VO> findDetailList(${this.chartName}QO qo) {
+    <#if this.chartSource.whereMap?hasContent>
         this.initWhereParam(qo);
+    </#if>
         List<${this.chartName}VO> list;
         int count = ${this.chartNameLower}DAO.selectCount(qo);
         if (count > 0) {
@@ -44,7 +46,9 @@ public class ${this.chartName}Service {
      * @return
      */
     public List<${this.chartName}VO> findChartData(${this.chartName}QO qo) {
+    <#if this.chartSource.whereMap?hasContent>
         this.initWhereParam(qo);
+    </#if>
         List<${this.chartName}VO> list = ${this.chartNameLower}DAO.findChartData(qo);
         return list;
     }
@@ -80,40 +84,35 @@ public class ${this.chartName}Service {
         <#return "DateUtil.parseLocalDateTime(\"${value}\")">
     </#if>
 </#function>
+<#if this.chartSource.whereMap?hasContent>
     /**
      * 初始化固定查询参数
      *
      * @param qo
      */
     private void initWhereParam(${this.chartName}QO qo) {
-<#list this.chartSource.whereMap as itemId,whereItem>
-    <#if !whereItem.custom>
-        <#if FilterOperator.IS_NULL.getValue() == whereItem.filterOperator
-                || FilterOperator.NOT_NULL.getValue() == whereItem.filterOperator>
-            <#continue>
-        </#if>
-        <#assign field=whereItem.field>
-        <#if FilterOperator.CONTAIN.getValue() == whereItem.filterOperator
-        || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
+    <#list paramedWhere as where>
+        <#assign field=where.field>
+        <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
+        || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
             <@call this.addImport("com.google.common.collect.Lists")/>
-        qo.setWhereParam${itemId?counter}(Lists.newArrayList(
-            <#list whereItem.filterValue as filterValue>
+        qo.setWhereParam${where?counter}(Lists.newArrayList(
+            <#list where.filterValue as filterValue>
                 ${printFilterValue(field,filterValue)}<#if filterValue?hasNext>,</#if>
             </#list>
         ));
-        <#elseIf FilterOperator.BETWEEN.getValue() == whereItem.filterOperator
-        || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
-        || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
-        || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
-        qo.setWhereParam${itemId?counter}Start(${printFilterValue(field,whereItem.filterValue[0])});
-        qo.setWhereParam${itemId?counter}End(${printFilterValue(field,whereItem.filterValue[1])});
+        <#elseIf FilterOperator.BETWEEN.getValue() == where.filterOperator
+        || FilterOperator.IS_NOW.getValue() == where.filterOperator
+        || FilterOperator.BEFORE_TIME.getValue() == where.filterOperator
+        || FilterOperator.AFTER_TIME.getValue() == where.filterOperator>
+        qo.setWhereParam${where?counter}Start(${printFilterValue(field,where.filterValue[0])});
+        qo.setWhereParam${where?counter}End(${printFilterValue(field,where.filterValue[1])});
         <#else>
-        qo.setWhereParam${itemId?counter}(${printFilterValue(field,whereItem.filterValue[0])});
+        qo.setWhereParam${where?counter}(${printFilterValue(field,where.filterValue[0])});
         </#if>
-    </#if>
-</#list>
+    </#list>
     }
-
+</#if>
 }
 
 </#assign>

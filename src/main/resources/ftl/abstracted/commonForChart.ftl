@@ -41,3 +41,17 @@
         <#return "String">
     </#if>
 </#function>
+<#-- 映射指标字段类型 -->
+<#function convertMetricsFieldType metrics>
+    <#if metrics.custom>
+        <#return convertCustomFieldType(metrics.customFieldType)>
+    <#else>
+        <#if AggFunction.COUNT == metrics.aggFunction
+            || AggFunction.COUNT_DISTINCT == metrics.aggFunction>
+            <#return "Integer">
+        <#else>
+            <#local field = metrics.field>
+            <#return field.jfieldType>
+        </#if>
+    </#if>
+</#function>

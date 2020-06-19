@@ -69,10 +69,6 @@
         <#return wrapMysqlKeyword(joinPart.mtmField)>
     </#if>
 </#function>
-<#-- 渲染别名 -->
-<#function renderAlias chartItem>
-
-</#function>
 <#-- 渲染维度 -->
 <#function renderDimension dimension>
     <#local fieldName = "t${dimension.joinIndex}.${wrapMysqlKeyword(dimension.field.fieldName)}">
@@ -122,7 +118,4 @@
             <#return "COUNT(DISTINCT ${fieldName})">
         </#if>
     </#if>
-</#function>
-<#-- 渲染指标排序 -->
-<#function renderAggOrder aggOrder>
 </#function>

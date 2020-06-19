@@ -1,6 +1,11 @@
 <#include "/abstracted/commonForChart.ftl">
 <#include "/abstracted/mybatisForChart.ftl">
 <#include "/abstracted/chartItemMap.ftl">
+<#-- 渲染别名 -->
+<#function renderAlias sourceItem>
+    <#local chartItem = chartItemMap.get(sourceItem.sourceItemId)>
+    <#return wrapMysqlKeyword(chartItem.alias)>
+</#function>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -22,42 +27,43 @@
 </#if>
     </sql>
 
-<#list this.chartSource.whereMap>
+<#if this.chartSource.whereMap?hasContent>
     <sql id="queryCondition">
-    <#items as itemId,whereItem>
-        <#if whereItem.custom>
-        and ${whereItem.customContent}
-        <#else>
-            <#assign field=whereItem.field>
-            <#--is null 、is not null查询-->
-            <#if FilterOperator.IS_NULL.getValue() == whereItem.filterOperator
-                || FilterOperator.NOT_NULL.getValue() == whereItem.filterOperator>
-        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)}
-            <#--in、not in查询-->
-            <#elseIf FilterOperator.CONTAIN.getValue() == whereItem.filterOperator
-                || FilterOperator.NOT_CONTAIN.getValue() == whereItem.filterOperator>
-        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)}
-            <foreach collection="whereParam${itemId?counter}" item="_value" open="(" separator="," close=")">
+    <#list paramedWhere as where>
+        <#assign field=where.field>
+        <#--in、not in查询-->
+        <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
+            || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
+        and t${where.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(where.filterOperator)}
+            <foreach collection="whereParam${where?counter}" item="_value" open="(" separator="," close=")">
                 ${r'#'}{_value}
             </foreach>
-            <#--like查询-->
-            <#elseIf FilterOperator.LIKE.getValue() == whereItem.filterOperator>
-            <bind name="whereParam${itemId?counter}_pattern" value="'%' + whereParam${itemId?counter} + '%'" />
-        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{whereParam${itemId?counter}_pattern}
-            <#--between查询-->
-            <#elseIf FilterOperator.BETWEEN.getValue() == whereItem.filterOperator
-                || FilterOperator.IS_NOW.getValue() == whereItem.filterOperator
-                || FilterOperator.BEFORE_TIME.getValue() == whereItem.filterOperator
-                || FilterOperator.AFTER_TIME.getValue() == whereItem.filterOperator>
-        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{whereParam${itemId?counter}Start} and ${r'#'}{whereParam${itemId?counter}End}
-            <#else>
-        and t${whereItem.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(whereItem.filterOperator)} ${r'#'}{whereParam${itemId?counter}}
-            </#if>
+        <#--like查询-->
+        <#elseIf FilterOperator.LIKE.getValue() == where.filterOperator>
+            <bind name="whereParam${where?counter}_pattern" value="'%' + whereParam${where?counter} + '%'" />
+        and t${where.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(where.filterOperator)} ${r'#'}{whereParam${where?counter}_pattern}
+        <#--between查询-->
+        <#elseIf FilterOperator.BETWEEN.getValue() == where.filterOperator
+            || FilterOperator.IS_NOW.getValue() == where.filterOperator
+            || FilterOperator.BEFORE_TIME.getValue() == where.filterOperator
+            || FilterOperator.AFTER_TIME.getValue() == where.filterOperator>
+        and t${where.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(where.filterOperator)} ${r'#'}{whereParam${where?counter}Start} and ${r'#'}{whereParam${where?counter}End}
+        <#else>
+        and t${where.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(where.filterOperator)} ${r'#'}{whereParam${where?counter}}
         </#if>
-    </#items>
+    </#list>
+    <#list unparamedWhere as where>
+        <#if where.custom>
+        and ${where.customContent}
+        <#else>
+            <#--is null 、is not null查询-->
+            <#assign field=where.field>
+        and t${where.joinIndex}.${wrapMysqlKeyword(field.fieldName)} ${mapperOperatorSymbol(where.filterOperator)}
+        </#if>
+    </#list>
     </sql>
 
-</#list>
+</#if>
 <#list filteredHaving>
     <sql id="havingCondition">
         having
@@ -150,11 +156,11 @@
     <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
         select count(1) from (
             select
-        <#list this.chartSource.dimensionMap as dimension>
-                ${renderDimension(dimension)}<#if dimension?hasNext || this.chartSource.metricsMap?hasContent>,</#if>
+        <#list filteredDimension as dimension>
+                ${renderDimension(dimension)} as ${renderAlias(dimension)}<#if dimension?hasNext || filteredMetrics?hasContent>,</#if>
         </#list>
-        <#list this.chartSource.metricsMap as metrics>
-                ${renderMetrics(metrics)}<#if metrics?hasNext>,</#if>
+        <#list filteredMetrics as metrics>
+                ${renderMetrics(metrics)} as ${renderAlias(metrics)}<#if metrics?hasNext>,</#if>
         </#list>
             from ${wrapMysqlKeyword(mainEntity.tableName)} t0
         <#list joins as join>
@@ -167,8 +173,8 @@
             </where>
         </#if>
             group by
-        <#list this.chartSource.dimensionMap as dimension>
-                ${renderDimension(dimension)}<#if dimension?hasNext>,</#if>
+        <#list filteredDimension as dimension>
+                ${renderAlias(dimension)}<#if dimension?hasNext>,</#if>
         </#list>
         <#if filteredHaving?hasContent>
             <include refid="havingCondition"/>
@@ -178,10 +184,10 @@
 
     <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
         select
-    <#list this.chartSource.dimensionMap as dimension>
-            ${renderDimension(dimension)}<#if dimension?hasNext || this.chartSource.metricsMap?hasContent>,</#if>
+    <#list filteredDimension as dimension>
+            ${renderDimension(dimension)}<#if dimension?hasNext || filteredMetrics?hasContent>,</#if>
     </#list>
-    <#list this.chartSource.metricsMap as metrics>
+    <#list filteredMetrics as metrics>
             ${renderMetrics(metrics)}<#if metrics?hasNext>,</#if>
     </#list>
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
@@ -195,16 +201,16 @@
         </where>
     </#if>
         group by
-    <#list this.chartSource.dimensionMap as dimension>
-            ${renderDimension(dimension)}<#if dimension?hasNext>,</#if>
+    <#list filteredDimension as dimension>
+            ${renderAlias(dimension)}<#if dimension?hasNext>,</#if>
     </#list>
     <#if filteredHaving?hasContent>
         <include refid="havingCondition"/>
     </#if>
-    <#if this.chartSource.aggOrderMap?hasContent>
+    <#if filteredAggOrder?hasContent>
         order by
-        <#list this.chartSource.aggOrderMap as aggOrder>
-            ${renderAggOrder(aggOrder)}<#if aggOrder?hasNext>,</#if>
+        <#list filteredAggOrder as aggOrder>
+            ${renderAlias(aggOrder.parent)} ${mapperOrderBySymbol(aggOrder.sortType)}<#if aggOrder?hasNext>,</#if>
         </#list>
     </#if>
         limit ${r'#'}{startIndex},${r'#'}{pageSize}

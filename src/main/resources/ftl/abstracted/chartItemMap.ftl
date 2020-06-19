@@ -22,13 +22,6 @@
 <#function isSourceItemUsed sourceItem>
     <#return chartItemMap.containsKey(sourceItem.sourceItemId)>
 </#function>
-<#-- 过滤有效的明细列 -->
-<#assign filteredDetailColumn = []>
-<#list this.chartSource.detailColumnMap as detailColumn>
-    <#if isSourceItemUsed(detailColumn)>
-        <#assign filteredDetailColumn += [detailColumn]>
-    </#if>
-</#list>
 <#-- 过滤有效的dimension -->
 <#assign filteredDimension = []>
 <#list this.chartSource.dimensionMap as dimension>
@@ -55,5 +48,21 @@
 <#list this.chartSource.aggOrderMap as aggOrder>
     <#if isSourceItemUsed(aggOrder.parent)>
         <#assign filteredAggOrder += [aggOrder]>
+    </#if>
+</#list>
+<#-- 需要传入参数的where条件 -->
+<#assign paramedWhere = []>
+<#-- 不需要传入参数的where条件 -->
+<#assign unparamedWhere = []>
+<#list this.chartSource.whereMap as where>
+    <#if where.custom>
+        <#assign unparamedWhere += [where]>
+    <#else>
+        <#if FilterOperator.IS_NULL.getValue() == where.filterOperator
+        || FilterOperator.NOT_NULL.getValue() == where.filterOperator>
+            <#assign unparamedWhere += [where]>
+        <#else>
+            <#assign paramedWhere += [where]>
+        </#if>
     </#if>
 </#list>
