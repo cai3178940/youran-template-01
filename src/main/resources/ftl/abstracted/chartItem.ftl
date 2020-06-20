@@ -13,7 +13,10 @@
     <@buildChartItemMap this.dimensionList/>
     <@buildChartItemMap this.metricsList/>
 <#elseif isChartType(ChartType.BAR_LINE)>
-    <@buildChartItemMap [this.axisX, this.axisX2]/>
+    <@buildChartItemMap [this.axisX]/>
+    <#if this.axisX2??>
+        <@buildChartItemMap [this.axisX2]/>
+    </#if>
     <@buildChartItemMap this.axisYList/>
 <#elseif isChartType(ChartType.PIE)>
     <@buildChartItemMap [this.dimension, this.metrics]/>

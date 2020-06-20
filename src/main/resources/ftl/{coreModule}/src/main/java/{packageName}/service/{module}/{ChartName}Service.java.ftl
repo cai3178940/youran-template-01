@@ -46,8 +46,8 @@ public class ${this.chartName}Service {
      * @return
      */
     public List<${this.chartName}VO> findChartData(${this.chartName}QO qo) {
-    <#if this.chartSource.whereMap?hasContent>
-        this.initWhereParam(qo);
+    <#if paramedWhere?hasContent || filteredHaving?hasContent>
+        this.initQueryParam(qo);
     </#if>
         List<${this.chartName}VO> list = ${this.chartNameLower}DAO.findChartData(qo);
         return list;
