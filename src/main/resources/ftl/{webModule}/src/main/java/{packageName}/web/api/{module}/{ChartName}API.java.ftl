@@ -11,13 +11,13 @@
 @Api(tags = "【${this.title}】图表API")
 public interface ${this.chartName}API {
 
-<#if isChartType(ChartType.DETAIL_LIST)>
+<#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     /**
      * 查询明细表
      */
     @ApiOperation(value="查询明细表")
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
-    ResponseEntity<PageVO<${this.chartName}VO>> findDetailList(${this.chartName}QO qo);
+    ResponseEntity<PageVO<${this.chartName}VO>> findList(${this.chartName}QO qo);
 <#else>
     /**
      * 查询图表数据

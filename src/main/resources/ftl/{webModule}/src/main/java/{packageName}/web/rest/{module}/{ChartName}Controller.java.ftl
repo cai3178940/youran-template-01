@@ -19,12 +19,12 @@ public class ${this.chartName}Controller extends AbstractController implements $
     @Autowired
     private ${this.chartName}Service ${this.chartNameLower}Service;
 
-<#if isChartType(ChartType.DETAIL_LIST)>
+<#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     @Override
     @GetMapping
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
-    public ResponseEntity<PageVO<${this.chartName}VO>> findDetailList(@Valid ${this.chartName}QO qo) {
-        PageVO<${this.chartName}VO> page = ${this.chartNameLower}Service.findDetailList(qo);
+    public ResponseEntity<PageVO<${this.chartName}VO>> findList(@Valid ${this.chartName}QO qo) {
+        PageVO<${this.chartName}VO> page = ${this.chartNameLower}Service.findList(qo);
         return ResponseEntity.ok(page);
     }
 <#else>

@@ -23,9 +23,9 @@ public class ${this.chartName}Service {
      * @return
      */
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
-    public PageVO<${this.chartName}VO> findDetailList(${this.chartName}QO qo) {
-    <#if this.chartSource.whereMap?hasContent>
-        this.initWhereParam(qo);
+    public PageVO<${this.chartName}VO> findList(${this.chartName}QO qo) {
+    <#if paramedWhere?hasContent || filteredHaving?hasContent>
+        this.initQueryParam(qo);
     </#if>
         List<${this.chartName}VO> list;
         int count = ${this.chartNameLower}DAO.selectCount(qo);
@@ -55,31 +55,31 @@ public class ${this.chartName}Service {
 
 </#if>
 <#-- 打印字段过滤值 -->
-<#function printFilterValue field value>
-    <#if field.jfieldType==JFieldType.STRING.getJavaType()>
+<#function printFilterValue jfieldType value>
+    <#if jfieldType==JFieldType.STRING.getJavaType()>
         <#return "\"${value}\"">
-    <#elseIf field.jfieldType==JFieldType.BOOLEAN.getJavaType()>
+    <#elseIf jfieldType==JFieldType.BOOLEAN.getJavaType()>
         <#return "${value}">
-    <#elseIf field.jfieldType==JFieldType.INTEGER.getJavaType()>
+    <#elseIf jfieldType==JFieldType.INTEGER.getJavaType()>
         <#return "${value}">
-    <#elseIf field.jfieldType==JFieldType.SHORT.getJavaType()>
+    <#elseIf jfieldType==JFieldType.SHORT.getJavaType()>
         <#return "${value}">
-    <#elseIf field.jfieldType==JFieldType.LONG.getJavaType()>
+    <#elseIf jfieldType==JFieldType.LONG.getJavaType()>
         <#return "${value}L">
-    <#elseIf field.jfieldType==JFieldType.DOUBLE.getJavaType()>
+    <#elseIf jfieldType==JFieldType.DOUBLE.getJavaType()>
         <#return "${value}d">
-    <#elseIf field.jfieldType==JFieldType.FLOAT.getJavaType()>
+    <#elseIf jfieldType==JFieldType.FLOAT.getJavaType()>
         <#return "${value}f">
-    <#elseIf field.jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
+    <#elseIf jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
         <@call this.addImport("java.math.BigDecimal")/>
         <#return "new BigDecimal(\"${value}\")">
-    <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#elseIf jfieldType==JFieldType.DATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseDate(\"${value}\")">
-    <#elseIf field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+    <#elseIf jfieldType==JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseLocalDate(\"${value}\")">
-    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseLocalDateTime(\"${value}\")">
     </#if>
@@ -90,25 +90,45 @@ public class ${this.chartName}Service {
      *
      * @param qo
      */
-    private void initWhereParam(${this.chartName}QO qo) {
+    private void initQueryParam(${this.chartName}QO qo) {
     <#list paramedWhere as where>
-        <#assign field=where.field>
+        <#assign jfieldType=where.field.jfieldType>
         <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
             <@call this.addImport("com.google.common.collect.Lists")/>
         qo.setWhereParam${where?counter}(Lists.newArrayList(
             <#list where.filterValue as filterValue>
-                ${printFilterValue(field,filterValue)}<#if filterValue?hasNext>,</#if>
+                ${printFilterValue(jfieldType,filterValue)}<#if filterValue?hasNext>,</#if>
             </#list>
         ));
         <#elseIf FilterOperator.BETWEEN.getValue() == where.filterOperator
         || FilterOperator.IS_NOW.getValue() == where.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == where.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == where.filterOperator>
-        qo.setWhereParam${where?counter}Start(${printFilterValue(field,where.filterValue[0])});
-        qo.setWhereParam${where?counter}End(${printFilterValue(field,where.filterValue[1])});
+        qo.setWhereParam${where?counter}Start(${printFilterValue(jfieldType,where.filterValue[0])});
+        qo.setWhereParam${where?counter}End(${printFilterValue(jfieldType,where.filterValue[1])});
         <#else>
-        qo.setWhereParam${where?counter}(${printFilterValue(field,where.filterValue[0])});
+        qo.setWhereParam${where?counter}(${printFilterValue(jfieldType,where.filterValue[0])});
+        </#if>
+    </#list>
+    <#list filteredHaving as having>
+        <#assign jfieldType=convertMetricsFieldType(having.parent)>
+        <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
+        || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
+            <@call this.addImport("com.google.common.collect.Lists")/>
+        qo.setHavingParam${having?counter}(Lists.newArrayList(
+            <#list having.filterValue as filterValue>
+                ${printFilterValue(jfieldType,filterValue)}<#if filterValue?hasNext>,</#if>
+            </#list>
+        ));
+        <#elseIf FilterOperator.BETWEEN.getValue() == having.filterOperator
+        || FilterOperator.IS_NOW.getValue() == having.filterOperator
+        || FilterOperator.BEFORE_TIME.getValue() == having.filterOperator
+        || FilterOperator.AFTER_TIME.getValue() == having.filterOperator>
+        qo.setHavingParam${having?counter}Start(${printFilterValue(jfieldType,having.filterValue[0])});
+        qo.setHavingParam${having?counter}End(${printFilterValue(jfieldType,having.filterValue[1])});
+        <#else>
+        qo.setHavingParam${having?counter}(${printFilterValue(jfieldType,having.filterValue[0])});
         </#if>
     </#list>
     }

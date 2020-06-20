@@ -3,7 +3,7 @@
 <#include "/abstracted/chartItemMap.ftl">
 <#-- 渲染别名 -->
 <#function renderAlias sourceItem>
-    <#local chartItem = chartItemMap.get(sourceItem.sourceItemId)>
+    <#local chartItem = chartItemMapWrapper.get(sourceItem.sourceItemId)>
     <#return wrapMysqlKeyword(chartItem.alias)>
 </#function>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -67,10 +67,7 @@
 <#list filteredHaving>
     <sql id="havingCondition">
         having
-    <#items as itemId,having>
-        <#if having.custom>
-            <#if !having?isFirst>and </#if>${having.customContent}
-        <#else>
+    <#items as having>
         <#assign metricsAlias = renderAlias(having.parent)>
         <#--is null 、is not null查询-->
         <#if FilterOperator.IS_NULL.getValue() == having.filterOperator
@@ -95,7 +92,6 @@
             <#if !having?isFirst>and </#if>${metricsAlias} ${mapperOperatorSymbol(having.filterOperator)} ${r'#'}{havingParam${having?counter}Start} and ${r'#'}{havingParam${having?counter}End}
         <#else>
             <#if !having?isFirst>and </#if>${metricsAlias} ${mapperOperatorSymbol(having.filterOperator)} ${r'#'}{havingParam${having?counter}}
-        </#if>
         </#if>
     </#items>
     </sql>

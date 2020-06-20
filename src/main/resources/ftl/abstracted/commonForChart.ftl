@@ -46,8 +46,8 @@
     <#if metrics.custom>
         <#return convertCustomFieldType(metrics.customFieldType)>
     <#else>
-        <#if AggFunction.COUNT == metrics.aggFunction
-            || AggFunction.COUNT_DISTINCT == metrics.aggFunction>
+        <#if AggFunction.COUNT.getValue() == metrics.aggFunction
+            || AggFunction.COUNT_DISTINCT.getValue() == metrics.aggFunction>
             <#return "Integer">
         <#else>
             <#local field = metrics.field>
