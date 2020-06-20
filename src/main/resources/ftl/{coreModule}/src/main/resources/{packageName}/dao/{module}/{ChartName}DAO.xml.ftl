@@ -1,6 +1,6 @@
 <#include "/abstracted/commonForChart.ftl">
 <#include "/abstracted/mybatisForChart.ftl">
-<#include "/abstracted/chartItemMap.ftl">
+<#include "/abstracted/chartItem.ftl">
 <#-- 渲染别名 -->
 <#function renderAlias sourceItem>
     <#local chartItem = chartItemMapWrapper.get(sourceItem.sourceItemId)>
@@ -181,10 +181,10 @@
     <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
         select
     <#list filteredDimension as dimension>
-            ${renderDimension(dimension)}<#if dimension?hasNext || filteredMetrics?hasContent>,</#if>
+            ${renderDimension(dimension)} as ${renderAlias(dimension)}<#if dimension?hasNext || filteredMetrics?hasContent>,</#if>
     </#list>
     <#list filteredMetrics as metrics>
-            ${renderMetrics(metrics)}<#if metrics?hasNext>,</#if>
+            ${renderMetrics(metrics)} as ${renderAlias(metrics)}<#if metrics?hasNext>,</#if>
     </#list>
         from ${wrapMysqlKeyword(mainEntity.tableName)} t0
     <#list joins as join>

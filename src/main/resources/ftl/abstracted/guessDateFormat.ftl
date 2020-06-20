@@ -12,3 +12,11 @@
         <#return "JsonFieldConst.DEFAULT_DATETIME_FORMAT" >
     </#if>
 </#function>
+<#function  guessDateFormatForCustom customFieldType>
+    <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
+    <#if customFieldType==CustomFieldType.DATE.getValue()>
+        <#return "JsonFieldConst.DEFAULT_DATE_FORMAT" >
+    <#else>
+        <#return "JsonFieldConst.DEFAULT_DATETIME_FORMAT" >
+    </#if>
+</#function>

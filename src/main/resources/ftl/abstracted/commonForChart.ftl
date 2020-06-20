@@ -41,6 +41,24 @@
         <#return "String">
     </#if>
 </#function>
+<#-- 映射维度字段类型 -->
+<#function convertDimensionFieldType dimension>
+    <#-- 时间聚合全部返回String类型 -->
+    <#if Granularity.MINUTE.getValue() == dimension.granularity
+        || Granularity.HOUR.getValue() == dimension.granularity
+        || Granularity.DAY.getValue() == dimension.granularity
+        || Granularity.WEEK.getValue() == dimension.granularity
+        || Granularity.MONTH.getValue() == dimension.granularity
+        || Granularity.QUARTER.getValue() == dimension.granularity
+        || Granularity.YEAR.getValue() == dimension.granularity>
+        <#return "String">
+    <#else>
+        <#local field = dimension.field>
+        <#--import字段类型-->
+        <@call this.addFieldTypeImport(field)/>
+        <#return field.jfieldType>
+    </#if>
+</#function>
 <#-- 映射指标字段类型 -->
 <#function convertMetricsFieldType metrics>
     <#if metrics.custom>
@@ -51,6 +69,8 @@
             <#return "Integer">
         <#else>
             <#local field = metrics.field>
+            <#--import字段类型-->
+            <@call this.addFieldTypeImport(field)/>
             <#return field.jfieldType>
         </#if>
     </#if>

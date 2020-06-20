@@ -1,5 +1,5 @@
 <#include "/abstracted/commonForChart.ftl">
-<#include "/abstracted/chartItemMap.ftl">
+<#include "/abstracted/chartItem.ftl">
 <#--定义主体代码-->
 <#assign code>
 import com.cbb.common.pojo.qo.PageQO;
