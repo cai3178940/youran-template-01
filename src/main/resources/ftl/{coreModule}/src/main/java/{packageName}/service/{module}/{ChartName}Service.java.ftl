@@ -49,7 +49,7 @@ public class ${this.chartName}Service {
     <#if paramedWhere?hasContent || filteredHaving?hasContent>
         this.initQueryParam(qo);
     </#if>
-        List<${this.chartName}VO> list = ${this.chartNameLower}DAO.findChartData(qo);
+        List<${this.chartName}VO> list = ${this.chartNameLower}DAO.selectList(qo);
         return list;
     }
 
@@ -134,7 +134,6 @@ public class ${this.chartName}Service {
     }
 </#if>
 }
-
 </#assign>
 <#--开始渲染代码-->
 package ${servicePackageName};

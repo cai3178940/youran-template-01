@@ -14,29 +14,21 @@ public interface ${this.chartName}DAO {
 
 <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     /**
-     * 根据条件查询【${this.title}】明细条数
+     * 根据条件查询【${this.title}】记录数
      *
      * @param qo
      * @return
      */
     int selectCount(${this.chartName}QO qo);
 
+</#if>
     /**
-     * 根据条件查询【${this.title}】明细列表
+     * 根据条件查询【${this.title}】列表数据
      *
      * @param qo
      * @return
      */
     List<${this.chartName}VO> selectList(${this.chartName}QO qo);
-<#else>
-    /**
-     * 根据条件查询【${this.title}】图表数据
-     *
-     * @param qo
-     * @return
-     */
-    List<${this.chartName}VO> findChartData(${this.chartName}QO qo);
-</#if>
 
 }
 </#assign>

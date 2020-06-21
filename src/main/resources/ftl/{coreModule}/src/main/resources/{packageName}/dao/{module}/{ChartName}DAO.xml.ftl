@@ -12,8 +12,9 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${daoPackageName}.${this.chartName}DAO">
 
-    <sql id="columns">
+<#-- 明细列sql片段 -->
 <#if isChartType(ChartType.DETAIL_LIST)>
+    <sql id="columns">
     <#list this.columnList as column>
         <#assign sourceItem=column.sourceItem>
         <#if sourceItem.custom>
@@ -23,10 +24,10 @@
         ${getSelectFieldWithAlias(field,"t${sourceItem.joinIndex}",column.alias)}<#if column?hasNext>,</#if>
         </#if>
     </#list>
-<#else>
-</#if>
     </sql>
+</#if>
 
+<#-- 过滤条件where -->
 <#if this.chartSource.whereMap?hasContent>
     <sql id="queryCondition">
     <#list paramedWhere as where>
@@ -64,6 +65,7 @@
     </sql>
 
 </#if>
+<#-- 过滤条件having -->
 <#list filteredHaving>
     <sql id="havingCondition">
         having
@@ -97,6 +99,7 @@
     </sql>
 
 </#list>
+<#-- 排序条件 -->
 <#if isChartType(ChartType.DETAIL_LIST)>
     <#list this.chartSource.detailOrderMap>
     <sql id="orderCondition">
@@ -114,7 +117,7 @@
 
     </#list>
 </#if>
-
+<#-- 查询记录数 -->
 <#if isChartType(ChartType.DETAIL_LIST)>
     <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
         select count(1)
@@ -128,25 +131,6 @@
             <include refid="queryCondition"/>
         </where>
     </#if>
-    </select>
-
-    <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
-        select
-        <include refid="columns"></include>
-        from ${wrapMysqlKeyword(mainEntity.tableName)} t0
-    <#list joins as join>
-        ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
-            on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
-    </#list>
-    <#if this.chartSource.whereMap?hasContent>
-        <where>
-            <include refid="queryCondition"/>
-        </where>
-    </#if>
-    <#if this.chartSource.detailOrderMap?hasContent>
-        <include refid="orderCondition"/>
-    </#if>
-        limit ${r'#'}{startIndex},${r'#'}{pageSize}
     </select>
 <#elseIf isChartType(ChartType.AGG_TABLE)>
     <select id="selectCount" parameterType="${this.chartName}QO" resultType="int">
@@ -177,7 +161,29 @@
         </#if>
         ) tmp
     </select>
+</#if>
 
+<#-- 查询列表数据 -->
+<#if isChartType(ChartType.DETAIL_LIST)>
+    <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
+        select
+        <include refid="columns"></include>
+        from ${wrapMysqlKeyword(mainEntity.tableName)} t0
+    <#list joins as join>
+        ${mapperJoinSymbol(join.joinType)} ${joinTableName(join.right)} t${join.right.joinIndex}
+            on t${join.left.joinIndex}.${joinFieldName(join.left)} = t${join.right.joinIndex}.${joinFieldName(join.right)}
+    </#list>
+    <#if this.chartSource.whereMap?hasContent>
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </#if>
+    <#if this.chartSource.detailOrderMap?hasContent>
+        <include refid="orderCondition"/>
+    </#if>
+        limit ${r'#'}{startIndex},${r'#'}{pageSize}
+    </select>
+<#else>
     <select id="selectList" parameterType="${this.chartName}QO" resultType="${this.chartName}VO">
         select
     <#list filteredDimension as dimension>
@@ -209,7 +215,9 @@
             ${renderAlias(aggOrder.parent)} ${mapperOrderBySymbol(aggOrder.sortType)}<#if aggOrder?hasNext>,</#if>
         </#list>
     </#if>
+    <#if isChartType(ChartType.AGG_TABLE)>
         limit ${r'#'}{startIndex},${r'#'}{pageSize}
+    </#if>
     </select>
 </#if>
 
