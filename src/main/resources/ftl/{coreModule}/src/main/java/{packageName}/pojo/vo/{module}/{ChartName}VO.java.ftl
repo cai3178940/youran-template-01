@@ -29,11 +29,8 @@ public class ${this.chartName}VO extends AbstractVO {
             <#assign name=column.alias>
             <#--字段标题-->
             <#assign label=column.titleAlias>
-            <#if sourceItem.customFieldType==CustomFieldType.DATE.getValue()
-                || sourceItem.customFieldType==CustomFieldType.DATE_TIME.getValue()>
-            <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormatForCustom(sourceItem.customFieldType)}, timezone = "GMT+8")
-            </#if>
+            <#--日期格式-->
+            <#assign dateFormat=guessDateFormatForCustom(sourceItem.customFieldType)>
         <#else>
             <#assign field=sourceItem.field>
             <#--import字段类型-->
@@ -49,12 +46,14 @@ public class ${this.chartName}VO extends AbstractVO {
             <#else>
                 <#assign label=field.fetchComment()?replace('\"','\\"')?replace('\n','\\n')>
             </#if>
-            <#if field.jfieldType==JFieldType.DATE.getJavaType()
-                || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
-                || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
-            <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
-            </#if>
+            <#--日期格式-->
+            <#assign dateFormat=guessDateFormat(field)>
+        </#if>
+        <#if jfieldType==JFieldType.DATE.getJavaType()
+        || jfieldType==JFieldType.LOCALDATE.getJavaType()
+        || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
+    @JsonFormat(pattern = ${dateFormat}, timezone = "GMT+8")
         </#if>
     @ApiModelProperty(notes = "${label}")
     private ${jfieldType} ${name};
@@ -92,21 +91,17 @@ public class ${this.chartName}VO extends AbstractVO {
         <#--字段标题-->
         <#assign label=chartItem.titleAlias>
         <#if metrics.custom>
-            <#if metrics.customFieldType==CustomFieldType.DATE.getValue()
-                || metrics.customFieldType==CustomFieldType.DATE_TIME.getValue()>
-                <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormatForCustom(metrics.customFieldType)}, timezone = "GMT+8")
-            </#if>
+            <#--日期格式-->
+            <#assign dateFormat=guessDateFormatForCustom(metrics.customFieldType)>
         <#else>
-            <#assign field=metrics.field>
-            <#--import字段类型-->
-            <@call this.addFieldTypeImport(field)/>
-            <#if jfieldType==JFieldType.DATE.getJavaType()
-                || jfieldType==JFieldType.LOCALDATE.getJavaType()
-                || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
-                <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
-            </#if>
+            <#--日期格式-->
+            <#assign dateFormat=guessDateFormat(metrics.field)>
+        </#if>
+        <#if jfieldType==JFieldType.DATE.getJavaType()
+            || jfieldType==JFieldType.LOCALDATE.getJavaType()
+            || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+            <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
+    @JsonFormat(pattern = ${dateFormat}, timezone = "GMT+8")
         </#if>
     @ApiModelProperty(notes = "${label}")
     private ${jfieldType} ${name};
