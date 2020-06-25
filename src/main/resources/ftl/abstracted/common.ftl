@@ -47,7 +47,7 @@
 </#function>
 
 <#-- 渲染API路径 -->
-<#function  renderApiPath entity suffix>
+<#function renderApiPath entity suffix>
     <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
     <#if entity.module?hasContent>
         <#return "WebConst.ModulePath.${entity.module?upperCase} + \"/${lowerFirstWord(entity.className)}${suffix}\"" >
@@ -56,7 +56,7 @@
     </#if>
 </#function>
 <#-- 渲染API路径 -->
-<#function  renderApiPathForChart chart suffix>
+<#function renderApiPathForChart chart suffix>
     <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
     <#if chart.module?hasContent>
         <#return "WebConst.ModulePath.${chart.module?upperCase} + \"/${lowerFirstWord(chart.chartName)}${suffix}\"" >
@@ -64,3 +64,25 @@
         <#return "WebConst.API_PATH + \"/${lowerFirstWord(chart.chartName)}${suffix}\"" >
     </#if>
 </#function>
+<#--是否存在图表-->
+<#assign hasChart = false>
+<#--是否存在明细表-->
+<#assign hasDetailList = false>
+<#--是否存在聚合表-->
+<#assign hasAggTable = false>
+<#--是否存在柱线图-->
+<#assign hasBarLine = false>
+<#--是否存在饼图-->
+<#assign hasPie = false>
+<#list this.charts as chart>
+    <#assign hasChart = true>
+    <#if chart.chartType == ChartType.DETAIL_LIST.getValue()>
+        <#assign hasDetailList = true>
+    <#elseIf chart.chartType == ChartType.AGG_TABLE.getValue()>
+        <#assign hasAggTable = true>
+    <#elseIf chart.chartType == ChartType.BAR_LINE.getValue()>
+        <#assign hasBarLine = true>
+    <#elseIf chart.chartType == ChartType.PIE.getValue()>
+        <#assign hasPie = true>
+    </#if>
+</#list>

@@ -9,7 +9,6 @@
 <@call this.addImport("org.springframework.web.bind.annotation.*")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("${qoPackageName}.${this.chartName}QO")/>
-<@call this.addImport("${voPackageName}.${this.chartName}VO")/>
 <@call this.addImport("javax.validation.Valid")/>
 <@call this.printClassCom("【${this.title}】图表控制器")/>
 @RestController
@@ -20,6 +19,7 @@ public class ${this.chartName}Controller extends AbstractController implements $
     private ${this.chartName}Service ${this.chartNameLower}Service;
 
 <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
+    <@call this.addImport("${voPackageName}.${this.chartName}VO")/>
     @Override
     @GetMapping
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
@@ -31,8 +31,8 @@ public class ${this.chartName}Controller extends AbstractController implements $
     @Override
     @GetMapping
     <@call this.addImport("java.util.List")/>
-    public ResponseEntity<List<${this.chartName}VO>> findChartData(@Valid ${this.chartName}QO qo) {
-        List<${this.chartName}VO> list = ${this.chartNameLower}Service.findChartData(qo);
+    public ResponseEntity<List<Object[]>> findChartData(@Valid ${this.chartName}QO qo) {
+        List<Object[]> list = ${this.chartNameLower}Service.findChartData(qo);
         return ResponseEntity.ok(list);
     }
 </#if>

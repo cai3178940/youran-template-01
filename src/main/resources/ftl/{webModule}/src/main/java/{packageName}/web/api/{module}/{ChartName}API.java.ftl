@@ -6,12 +6,12 @@
 <@call this.addImport("io.swagger.annotations.ApiOperation")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("${qoPackageName}.${this.chartName}QO")/>
-<@call this.addImport("${voPackageName}.${this.chartName}VO")/>
 <@call this.printClassCom("【${this.title}】图表API" "swagger接口文档")/>
 @Api(tags = "【${this.title}】图表API")
 public interface ${this.chartName}API {
 
 <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
+    <@call this.addImport("${voPackageName}.${this.chartName}VO")/>
     /**
      * 查询明细表
      */
@@ -24,7 +24,7 @@ public interface ${this.chartName}API {
      */
     @ApiOperation(value="查询图表数据")
     <@call this.addImport("java.util.List")/>
-    ResponseEntity<List<${this.chartName}VO>> findChartData(${this.chartName}QO qo);
+    ResponseEntity<List<Object[]>> findChartData(${this.chartName}QO qo);
 </#if>
 
 }

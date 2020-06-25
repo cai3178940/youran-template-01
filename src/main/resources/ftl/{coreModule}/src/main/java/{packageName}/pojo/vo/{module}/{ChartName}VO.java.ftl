@@ -7,6 +7,9 @@
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
 <@call this.printClassCom("【${this.title}】图表展示对象")/>
+<#if barLineParamMode == 1>
+    <@call this.addImport("${this.commonPackage}.pojo.vo.Chart2DimensionVO")/>
+</#if>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
@@ -14,7 +17,7 @@
 @EqualsAndHashCode(callSuper=true)
 </#if>
 @ApiModel(description = "【${this.title}】图表展示对象")
-public class ${this.chartName}VO extends AbstractVO {
+public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>implements Chart2DimensionVO </#if>{
 
 <#-- 定义getterSetter代码 -->
 <#assign getterSetterCode = "">
@@ -110,6 +113,46 @@ public class ${this.chartName}VO extends AbstractVO {
     </#list>
 </#if>
 
+<#if barLineParamMode == 1>
+    public static String header0() {
+        return "${this.axisX.titleAlias}";
+    }
+
+    @Override
+    public Object fetchDimension1() {
+        return ${this.axisX.alias};
+    }
+
+    @Override
+    public Object fetchDimension2() {
+        return ${this.axisX2.alias};
+    }
+
+    @Override
+    public Object fetchMetrics() {
+        return ${this.axisYList[0].alias};
+    }
+
+<#elseIf barLineParamMode == 2>
+    public static Object[] header() {
+        return new Object[]{
+                "${this.axisX.titleAlias}",
+    <#list this.axisYList as axisY>
+                "${axisY.titleAlias}"<#if axisY_has_next>,</#if>
+    </#list>
+        };
+    }
+
+    public Object[] dataArray() {
+        return new Object[]{
+                ${this.axisX.alias},
+    <#list this.axisYList as axisY>
+                ${axisY.alias}<#if axisY_has_next>,</#if>
+    </#list>
+        };
+    }
+
+</#if>
 <#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
 
 }

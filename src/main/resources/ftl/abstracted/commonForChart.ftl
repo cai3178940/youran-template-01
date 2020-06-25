@@ -63,3 +63,12 @@
         </#if>
     </#if>
 </#function>
+<#-- 柱线图的参数模式 -->
+<#assign barLineParamMode=0>
+<#if isChartType(ChartType.BAR_LINE)>
+    <#if this.axisX2??>
+        <#assign barLineParamMode=1>
+    <#else>
+        <#assign barLineParamMode=2>
+    </#if>
+</#if>

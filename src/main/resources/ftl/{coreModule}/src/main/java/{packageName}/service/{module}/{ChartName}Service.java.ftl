@@ -38,6 +38,7 @@ public class ${this.chartName}Service {
         PageVO<${this.chartName}VO> pageVO = new PageVO<>(list, qo.getPageNo(), qo.getPageSize(), count);
         return pageVO;
     }
+
 <#else>
     /**
      * 查询图表数据
@@ -45,12 +46,46 @@ public class ${this.chartName}Service {
      * @param qo
      * @return
      */
-    public List<${this.chartName}VO> findChartData(${this.chartName}QO qo) {
+    public List<Object[]> findChartData(${this.chartName}QO qo) {
     <#if paramedWhere?hasContent || filteredHaving?hasContent>
         this.initQueryParam(qo);
     </#if>
         List<${this.chartName}VO> list = ${this.chartNameLower}DAO.selectList(qo);
-        return list;
+        return this.convertChartData(list);
+    }
+
+    /**
+     * 图表数据转换
+     *
+     * @param list
+     * @return
+     */
+    private static List<Object[]> convertChartData(List<${this.chartName}VO> list) {
+        <@call this.addImport("java.util.LinkedList")/>
+        List<Object[]> result = new LinkedList<>();
+    <#-- 柱线图的数据转换 -->
+    <#if isChartType(ChartType.BAR_LINE)>
+        <#-- 模式1 -->
+        <#if barLineParamMode == 1>
+            <@call this.addImport("${this.commonPackage}.util.ChartDataUtil")/>
+            <@call this.addImport("${this.commonPackage}.pojo.vo.Chart2DimensionVO")/>
+            <@call this.addImport("java.util.ArrayList")/>
+        List<Object> dimension2Values = ChartDataUtil.getDistinctValues(list, Chart2DimensionVO::fetchDimension2);
+        List<Object> header = new ArrayList<>();
+        header.add(${this.chartName}VO.header0());
+        header.addAll(dimension2Values);
+        result.add(header.toArray());
+        List<Object[]> datas = ChartDataUtil.convert2DimensionMetrix(list, dimension2Values);
+        result.addAll(datas);
+        <#-- 模式2 -->
+        <#elseIf barLineParamMode == 2>
+        result.add(${this.chartName}VO.header());
+        for (${this.chartName}VO vo : list) {
+            result.add(vo.dataArray());
+        }
+        </#if>
+    </#if>
+        return result;
     }
 
 </#if>

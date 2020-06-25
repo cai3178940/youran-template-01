@@ -77,10 +77,12 @@
     {"fileName":"PageQO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/qo","contextType":1,"fileType":1},
 
     {"fileName":"AbstractVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"fileType":1},
+    {"fileName":"Chart2DimensionVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"fileType":1},
     {"fileName":"OptionVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"fileType":1},
     {"fileName":"PageVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"fileType":1},
     {"fileName":"ReplyVO.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/pojo/vo","contextType":1,"fileType":1},
 
+    {"fileName":"ChartDataUtil.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/util","contextType":1,"fileType":1},
     {"fileName":"ConvertUtil.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/util","contextType":1,"fileType":1},
     {"fileName":"DateUtil.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/util","contextType":1,"fileType":1},
     {"fileName":"TempDirUtil.java.ftl","fileDir":"/{commonModule}/src/main/java/{commonPackage}/util","contextType":1,"fileType":1},
