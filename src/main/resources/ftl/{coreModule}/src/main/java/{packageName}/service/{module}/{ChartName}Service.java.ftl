@@ -84,6 +84,11 @@ public class ${this.chartName}Service {
             result.add(vo.dataArray());
         }
         </#if>
+    <#elseIf isChartType(ChartType.PIE)>
+        result.add(${this.chartName}VO.header());
+        for (${this.chartName}VO vo : list) {
+            result.add(vo.dataArray());
+        }
     </#if>
         return result;
     }

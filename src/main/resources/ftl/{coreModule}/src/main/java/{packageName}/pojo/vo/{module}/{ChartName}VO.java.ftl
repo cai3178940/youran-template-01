@@ -113,7 +113,8 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
     </#list>
 </#if>
 
-<#if barLineParamMode == 1>
+<#if isChartType(ChartType.BAR_LINE)>
+    <#if barLineParamMode == 1>
     public static String header0() {
         return "${this.axisX.titleAlias}";
     }
@@ -133,22 +134,38 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
         return ${this.axisYList[0].alias};
     }
 
-<#elseIf barLineParamMode == 2>
+    <#elseIf barLineParamMode == 2>
     public static Object[] header() {
         return new Object[]{
                 "${this.axisX.titleAlias}",
-    <#list this.axisYList as axisY>
+        <#list this.axisYList as axisY>
                 "${axisY.titleAlias}"<#if axisY_has_next>,</#if>
-    </#list>
+        </#list>
         };
     }
 
     public Object[] dataArray() {
         return new Object[]{
                 ${this.axisX.alias},
-    <#list this.axisYList as axisY>
+        <#list this.axisYList as axisY>
                 ${axisY.alias}<#if axisY_has_next>,</#if>
-    </#list>
+        </#list>
+        };
+    }
+
+    </#if>
+<#elseIf isChartType(ChartType.PIE)>
+    public static Object[] header() {
+        return new Object[]{
+                "${this.dimension.titleAlias}",
+                "${this.metrics.titleAlias}"
+        };
+    }
+
+    public Object[] dataArray() {
+        return new Object[]{
+                ${this.dimension.alias},
+                ${this.metrics.alias}
         };
     }
 
