@@ -115,18 +115,30 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 
 <#if isChartType(ChartType.BAR_LINE)>
     <#if barLineParamMode == 1>
+        <#assign axisXField = this.axisX.sourceItem.field>
+        <#assign axisX2Field = this.axisX2.sourceItem.field>
     public static String header0() {
         return "${this.axisX.titleAlias}";
     }
 
     @Override
     public Object fetchDimension1() {
+        <#if axisXField.dicType??>
+            <@call this.addConstImport(axisXField.dicType)/>
+        return ${axisXField.dicType}.valueToDesc(${this.axisX.alias});
+        <#else>
         return ${this.axisX.alias};
+        </#if>
     }
 
     @Override
     public Object fetchDimension2() {
+        <#if axisX2Field.dicType??>
+            <@call this.addConstImport(axisX2Field.dicType)/>
+        return ${axisX2Field.dicType}.valueToDesc(${this.axisX2.alias});
+        <#else>
         return ${this.axisX2.alias};
+        </#if>
     }
 
     @Override
@@ -135,6 +147,7 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
     }
 
     <#elseIf barLineParamMode == 2>
+        <#assign axisXField = this.axisX.sourceItem.field>
     public static Object[] header() {
         return new Object[]{
                 "${this.axisX.titleAlias}",
@@ -146,7 +159,12 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 
     public Object[] dataArray() {
         return new Object[]{
+        <#if axisXField.dicType??>
+            <@call this.addConstImport(axisXField.dicType)/>
+                ${axisXField.dicType}.valueToDesc(${this.axisX.alias}),
+        <#else>
                 ${this.axisX.alias},
+        </#if>
         <#list this.axisYList as axisY>
                 ${axisY.alias}<#if axisY_has_next>,</#if>
         </#list>
@@ -155,6 +173,7 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 
     </#if>
 <#elseIf isChartType(ChartType.PIE)>
+    <#assign dimensionField = this.dimension.sourceItem.field>
     public static Object[] header() {
         return new Object[]{
                 "${this.dimension.titleAlias}",
@@ -164,7 +183,12 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 
     public Object[] dataArray() {
         return new Object[]{
+    <#if dimensionField.dicType??>
+        <@call this.addConstImport(dimensionField.dicType)/>
+                ${dimensionField.dicType}.valueToDesc(${this.dimension.alias}),
+    <#else>
                 ${this.dimension.alias},
+    </#if>
                 ${this.metrics.alias}
         };
     }

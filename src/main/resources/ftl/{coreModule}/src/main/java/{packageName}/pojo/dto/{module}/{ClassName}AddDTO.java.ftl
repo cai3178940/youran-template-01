@@ -23,7 +23,7 @@ public class ${this.className}AddDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
-    @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${JavaTemplateFunction.fetchClassName(field.dicType)}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
         <@call this.addImport("javax.validation.constraints.NotNull")/>
     @NotNull
@@ -31,7 +31,7 @@ public class ${this.className}AddDTO extends AbstractDTO {
     <#if field.dicType??>
         <@call this.addImport("${this.commonPackage}.validator.Const")/>
         <@call this.addConstImport(field.dicType)/>
-    @Const(constClass = ${JavaTemplateFunction.fetchClassName(field.dicType)}.class)
+    @Const(constClass = ${field.dicType}.class)
     <#elseIf field.jfieldType==JFieldType.STRING.getJavaType()>
         <#if field.fieldLength gt 0 >
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
