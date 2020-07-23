@@ -140,7 +140,9 @@
     {"fileName":"{ClassName}Example.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/example/{module}","contextType":2,"fileType":1},
 
     {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ChartName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":4,"fileType":5},
     {"fileName":"__{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ChartName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":4,"fileType":1},
     {"fileName":"{ClassName}Mapper.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/mapper/{module}","contextType":2,"fileType":1},
 
     {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/po/{module}","contextType":1,"fileType":4},
@@ -156,10 +158,12 @@
     {"fileName":"UserLoginVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo","contextType":1,"fileType":1},
 
     {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":1,"fileType":4},
+    {"fileName":"__{ChartName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":4,"fileType":5},
     {"fileName":"__{ChartName}VO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":4,"fileType":5},
     {"fileName":"__{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
     {"fileName":"__{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
     {"fileName":"__{ClassName}ShowVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":5},
+    {"fileName":"{ChartName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":4,"fileType":1},
     {"fileName":"{ChartName}VO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":4,"fileType":1},
     {"fileName":"{ClassName}ExcelVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":1},
     {"fileName":"{ClassName}ListVO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/vo/{module}","contextType":2,"fileType":1},

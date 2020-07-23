@@ -18,6 +18,15 @@ public interface ${this.chartName}API {
     @ApiOperation(value="查询明细表")
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     ResponseEntity<PageVO<${this.chartName}VO>> findList(${this.chartName}QO qo);
+
+    <#if this.excelExport>
+        <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    /**
+     * 导出excel
+     */
+    @ApiOperation(value="导出excel")
+    void exportExcel(${this.chartName}QO qo, HttpServletResponse response) throws Exception;
+    </#if>
 <#else>
     /**
      * 查询图表数据

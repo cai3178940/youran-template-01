@@ -27,6 +27,29 @@ public class ${this.chartName}Controller extends AbstractController implements $
         PageVO<${this.chartName}VO> page = ${this.chartNameLower}Service.findList(qo);
         return ResponseEntity.ok(page);
     }
+
+    <#if this.excelExport>
+        <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
+        <@call this.addImport("java.net.URLEncoder")/>
+        <@call this.addImport("java.util.List")/>
+        <@call this.addImport("${mapperPackageName}.${this.chartName}Mapper")/>
+        <@call this.addImport("${voPackageName}.${this.chartName}ExcelVO")/>
+    @Override
+    @GetMapping("/export")
+    public void exportExcel(@Valid ${this.chartName}QO qo, HttpServletResponse response) throws Exception {
+        qo.setPageSize(Integer.MAX_VALUE);
+        qo.setPageNo(1);
+        List<${this.chartName}VO> list = ${this.chartNameLower}Service.findList(qo).getList();
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("${this.title}", "utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), ${this.chartName}ExcelVO.class)
+                .sheet()
+                .doWrite(${this.chartName}Mapper.INSTANCE.toExcelVOList(list));
+    }
+    </#if>
 <#else>
     @Override
     @GetMapping

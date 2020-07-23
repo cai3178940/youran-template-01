@@ -28,7 +28,7 @@ ${content}<#rt>
 @Mapper
 public interface ${this.className}Mapper {
 
-    ${this.className}Mapper INSTANCE = Mappers.getMapper( ${this.className}Mapper.class );
+    ${this.className}Mapper INSTANCE = Mappers.getMapper(${this.className}Mapper.class);
 
     /**
      * addDTO映射po

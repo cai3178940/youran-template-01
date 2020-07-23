@@ -8,3 +8,12 @@
         <#break>
     </#if>
 </#list>
+<#list this.charts as chart>
+    <#if chart.chartType==ChartType.DETAIL_LIST.getValue()
+        || chart.chartType==ChartType.AGG_TABLE.getValue()>
+        <#if chart.excelExport>
+            <#assign usingExcel = true>
+            <#break>
+        </#if>
+    </#if>
+</#list>
