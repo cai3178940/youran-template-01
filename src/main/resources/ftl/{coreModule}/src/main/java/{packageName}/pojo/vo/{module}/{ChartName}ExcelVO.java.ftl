@@ -40,9 +40,13 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
             <#assign columnWidth=15>
         <#else>
             <#assign field=sourceItem.field>
-            <#--import字段类型-->
-            <@call this.addFieldTypeImport(field)/>
-            <#assign jfieldType=field.jfieldType>
+            <#if field.dicType??>
+                <#assign jfieldType = "String">
+            <#else>
+                <#--import字段类型-->
+                <@call this.addFieldTypeImport(field)/>
+                <#assign jfieldType=field.jfieldType>
+            </#if>
             <#if column.alias?hasContent>
                 <#assign name=column.alias>
             <#else>
@@ -79,7 +83,11 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
     <#-- 维度字段 -->
     <#list filteredDimension as dimension>
         <#assign chartItem = chartItemMapWrapper.get(dimension.sourceItemId)>
-        <#assign jfieldType=convertDimensionFieldType(dimension)>
+        <#if dimension.field.dicType??>
+            <#assign jfieldType = "String">
+        <#else>
+            <#assign jfieldType=convertDimensionFieldType(dimension)>
+        </#if>
         <#if chartItem.alias?hasContent>
             <#assign name=chartItem.alias>
         <#else>

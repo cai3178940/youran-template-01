@@ -129,7 +129,7 @@ public interface ${this.className}Mapper {
      * @return
      */
     <@wrapMappings>
-        <#list this.insertFields as id,field>
+        <#list this.listFields as id,field>
             <#if field.dicType??>
             @Mapping(target = "${field.jfieldName}", expression = "java(${this.getConstFullClassPath(field.dicType)}.valueToDesc(vo.get${field.jfieldName?capFirst}()))"),
             </#if>
