@@ -25,19 +25,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mybatis-spring-boot.version>2.1.1</mybatis-spring-boot.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-io.version>2.6</commons-io.version>
+        <mybatis-spring-boot.version>2.1.3</mybatis-spring-boot.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-collections.version>4.4</commons-collections.version>
         <guava.version>29.0-jre</guava.version>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
-        <jsoup.version>1.12.1</jsoup.version>
+        <jsoup.version>1.13.1</jsoup.version>
         <h2.version>1.4.200</h2.version>
         <mysql2h2.version>0.2.1</mysql2h2.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
-        <#if this.projectFeature.lombokEnabled><lombok.version>1.18.10</lombok.version></#if>
-        <#if usingExcel><easyexcel.version>2.1.6</easyexcel.version></#if>
+        <#if this.projectFeature.lombokEnabled><lombok.version>1.18.12</lombok.version></#if>
+        <#if usingExcel><easyexcel.version>2.2.6</easyexcel.version></#if>
     </properties>
 
     <dependencyManagement>
