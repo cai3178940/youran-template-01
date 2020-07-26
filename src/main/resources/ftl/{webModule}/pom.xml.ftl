@@ -49,11 +49,10 @@
             <artifactId>mysql2h2-parser</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- swagger依赖 @ https://github.com/SpringForAll/spring-boot-starter-swagger -->
+        <!-- swagger依赖 -->
         <dependency>
-            <groupId>com.spring4all</groupId>
-            <artifactId>swagger-spring-boot-starter</artifactId>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
         </dependency>
     </dependencies>
     <build>

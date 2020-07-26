@@ -20,7 +20,7 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
 
     private final Environment env;
 
-    @Value("${r'$'}{swagger.enabled:false}")
+    @Value("${r'$'}{springfox.documentation.enabled:true}")
     private boolean swaggerEnabled;
 
     public StartLogCommandLineRunner(Environment env){
@@ -30,11 +30,7 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
     @Override
     public void run(String... args) throws Exception {
         String port = env.getProperty("server.port","8080");
-    <#if this.projectFeature.bootVersion==2>
         String contextPath = env.getProperty("server.servlet.context-path","/");
-    <#else>
-        String contextPath = env.getProperty("server.context-path","/");
-    </#if>
         String applicationName = env.getProperty("spring.application.name","");
         String profiles = "";
         if(ArrayUtils.isNotEmpty(env.getActiveProfiles())) {
@@ -47,8 +43,8 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
             .append("\t访问路径:\n")
             .append("\t本地: \thttp://localhost:").append(port).append(contextPath).append("\n")
             .append("\t外部: \thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("\n");
-        if(swaggerEnabled){
-            sb.append("\t文档:\thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("swagger-ui.html");
+        if (swaggerEnabled) {
+            sb.append("\t文档:\thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("swagger-ui/index.html");
         }
         sb.append("\n----------------------------------------------------------");
         LOG.info(sb.toString());

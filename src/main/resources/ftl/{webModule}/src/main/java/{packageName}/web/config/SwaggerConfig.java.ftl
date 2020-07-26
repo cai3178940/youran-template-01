@@ -1,40 +1,29 @@
 <#include "/abstracted/common.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("com.spring4all.swagger.EnableSwagger2Doc")/>
 <@call this.addImport("org.springframework.boot.autoconfigure.condition.ConditionalOnProperty")/>
 <@call this.addImport("org.springframework.context.annotation.Configuration")/>
-<@call this.addImport("org.springframework.core.Ordered")/>
-<@call this.addImport("org.springframework.http.HttpStatus")/>
-<@call this.addImport("org.springframework.web.servlet.config.annotation.ViewControllerRegistry")/>
-<@call this.printClassCom("swagger配置开关")/>
+<@call this.addImport("org.springframework.context.annotation.Bean")/>
+<@call this.addImport("springfox.documentation.builders.PathSelectors")/>
+<@call this.addImport("springfox.documentation.spi.DocumentationType")/>
+<@call this.addImport("springfox.documentation.spring.web.plugins.Docket")/>
+<@call this.printClassCom("swagger配置")/>
 @Configuration
+@ConditionalOnProperty(
+    value = "springfox.documentation.enabled",
+    havingValue = "true",
+    matchIfMissing = true
+)
 public class SwaggerConfig {
 
-    @EnableSwagger2Doc
-    @ConditionalOnProperty(value = "swagger.enabled")
-    public static class SwaggerEnabledConfig{}
-
-    /**
-     * 如果没有开启swagger，则需要手动隐藏swagger-ui.html静态页面
-     */
-    @Configuration
-    @ConditionalOnProperty(value = "swagger.enabled", havingValue = "false", matchIfMissing = true)
-<#if this.projectFeature.bootVersion==2>
-    <@call this.addImport("org.springframework.web.servlet.config.annotation.WebMvcConfigurer")/>
-    public static class SwaggerDisabledConfig implements WebMvcConfigurer {
-<#else>
-    <@call this.addImport("org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter")/>
-    public static class SwaggerDisabledConfig extends WebMvcConfigurerAdapter {
-</#if>
-
-        @Override
-        public void addViewControllers(ViewControllerRegistry registry) {
-            registry.addStatusController("/swagger-ui.html", HttpStatus.NOT_FOUND);
-            registry.setOrder( Ordered.HIGHEST_PRECEDENCE );
-        }
-
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.OAS_30)
+            .select()
+            .paths(PathSelectors.ant("/api/**"))
+            .build();
     }
+
 
 }
 </#assign>

@@ -65,12 +65,7 @@ public class WebConfig {
      */
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
-    <#if this.projectFeature.bootVersion==2>
         return new WebMvcConfigurer() {
-    <#else>
-        <@call this.addImport("org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter")/>
-        return new WebMvcConfigurerAdapter() {
-    </#if>
             // 拦截器
             @Override
             public void addInterceptors(InterceptorRegistry registry) {

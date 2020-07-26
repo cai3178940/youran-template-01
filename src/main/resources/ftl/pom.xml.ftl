@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version><#if this.projectFeature.bootVersion==2>2.2.5.RELEASE<#else>1.5.22.RELEASE</#if></version>
+        <version>2.3.1.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>${this.groupId}</groupId>
@@ -25,16 +25,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mybatis-spring-boot.version><#if this.projectFeature.bootVersion==2>2.1.1<#else>1.3.5</#if></mybatis-spring-boot.version>
-        <springfox.version><#if this.projectFeature.bootVersion==2>2.9.2<#else>2.7.0</#if></springfox.version>
+        <mybatis-spring-boot.version>2.1.1</mybatis-spring-boot.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-collections.version>4.4</commons-collections.version>
+        <guava.version>29.0-jre</guava.version>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
         <jsoup.version>1.12.1</jsoup.version>
         <h2.version>1.4.200</h2.version>
         <mysql2h2.version>0.2.1</mysql2h2.version>
-        <spring-boot-swagger.version><#if this.projectFeature.bootVersion==2>1.9.1.RELEASE<#else>1.6.0.RELEASE</#if></spring-boot-swagger.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <#if this.projectFeature.lombokEnabled><lombok.version>1.18.10</lombok.version></#if>
         <#if usingExcel><easyexcel.version>2.1.6</easyexcel.version></#if>
     </properties>
@@ -75,22 +76,11 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${r'$'}{commons-collections.version}</version>
             </dependency>
-            <!-- spring集成swagger第三方包 http://springfox.github.io/springfox/ -->
+            <!-- guava工具包 -->
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${r'$'}{springfox.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.mapstruct</groupId>
-                        <artifactId>mapstruct</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-bean-validators</artifactId>
-                <version>${r'$'}{springfox.version}</version>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${r'$'}{guava.version}</version>
             </dependency>
             <!-- 集成mybatis http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/index.html -->
             <dependency>
@@ -116,11 +106,16 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${r'$'}{org.mapstruct.version}</version>
             </dependency>
-            <!-- swagger依赖 @ https://github.com/SpringForAll/spring-boot-starter-swagger -->
+            <!-- swagger依赖 -->
             <dependency>
-                <groupId>com.spring4all</groupId>
-                <artifactId>swagger-spring-boot-starter</artifactId>
-                <version>${r'$'}{spring-boot-swagger.version}</version>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${r'$'}{swagger-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${r'$'}{springfox-boot-starter.version}</version>
             </dependency>
             <!-- jsoup HTML parser library（用于过滤XSS） https://jsoup.org/ -->
             <dependency>

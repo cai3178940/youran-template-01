@@ -1,11 +1,7 @@
 <#include "/abstracted/common.ftl">
 server:
-<#if this.projectFeature.bootVersion==2>
     servlet:
         context-path: /
-<#else>
-    context-path: /
-</#if>
     port: 8080
 spring:
     application:
@@ -17,7 +13,8 @@ spring:
         encoding:
             force: true
 
-swagger:
-    base-package: ${this.packageName}
+springfox:
+    documentation:
+        enabled: false
 
 
