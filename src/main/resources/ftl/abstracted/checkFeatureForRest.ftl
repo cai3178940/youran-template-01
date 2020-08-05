@@ -30,3 +30,8 @@
         </#if>
     </#if>
 </#list>
+<#list this.charts as chart>
+    <#if chart.module?hasContent>
+        <@justCall modulesForRest.add(chart.module)/>
+    </#if>
+</#list>
