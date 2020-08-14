@@ -1,5 +1,9 @@
 # java后端代码模板
 
+## 1.3.0新特性
+- 支持生成自定义表格和echarts图表的后端服务代码
+- 升级maven依赖
+
 ## 介绍
 
 本项目是<a href="../../../youran" target="_blank">youran代码自动化平台</a>的预置代码模板：
