@@ -1,4 +1,7 @@
 <#include "/abstracted/common.ftl">
+<#if !hasChart>
+    <@call this.skipCurrent()/>
+</#if>
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.vo.Chart2DimensionVO")/>
