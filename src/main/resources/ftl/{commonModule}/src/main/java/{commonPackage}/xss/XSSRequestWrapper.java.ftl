@@ -6,9 +6,9 @@
 <@call this.addImport("java.util.HashMap")/>
 <@call this.addImport("java.util.Map")/>
 <@call this.printClassCom("包装HttpServletRequest，嵌入过滤XSS逻辑")/>
-public class XSSRequestWrapper  extends HttpServletRequestWrapper {
+public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
-    private Map<String , String[]> params = new HashMap<>();
+    private Map<String, String[]> params = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     public XSSRequestWrapper(HttpServletRequest request) {
@@ -20,13 +20,14 @@ public class XSSRequestWrapper  extends HttpServletRequestWrapper {
 
     /**
      * 重写getParameter，代表参数从当前类中的map获取
+     *
      * @param name
      * @return
      */
     @Override
     public String getParameter(String name) {
-        String[]values = params.get(name);
-        if(values == null || values.length == 0) {
+        String[] values = params.get(name);
+        if (values == null || values.length == 0) {
             return null;
         }
         String result = values[0];
@@ -37,7 +38,7 @@ public class XSSRequestWrapper  extends HttpServletRequestWrapper {
 
     @Override
     public String[] getParameterValues(String name) {
-        if(params.get(name) instanceof String[]) {
+        if (params.get(name) instanceof String[]) {
             int size = (params.get(name)).length;
             String[] vals = new String[size];
             for(int i=0;i<(params.get(name)).length;i++) {
@@ -45,12 +46,12 @@ public class XSSRequestWrapper  extends HttpServletRequestWrapper {
                 String str = clean((params.get(name))[i]);
                 vals[i] = str;
             }
-            return  vals;
+            return vals;
         }
         return null;
     }
 
-    private String clean(String value){
+    private String clean(String value) {
         return XSSUtil.clean(value);
     }
 

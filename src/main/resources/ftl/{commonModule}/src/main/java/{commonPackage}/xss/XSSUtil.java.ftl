@@ -7,14 +7,14 @@
 <@call this.printClassCom("过滤XSS工具")/>
 public class XSSUtil {
 
-    public static String clean(String value){
-        if(value==null){
+    public static String clean(String value) {
+        if (value == null) {
             return null;
         }
         // 允许base64格式的图片,字符串不进行美化
-        return Jsoup.clean(value,"",
-            Whitelist.basicWithImages().addProtocols("img","src","data"),
-            new Document.OutputSettings().prettyPrint(false));
+        return Jsoup.clean(value, "",
+                Whitelist.basicWithImages().addProtocols("img", "src", "data"),
+                new Document.OutputSettings().prettyPrint(false));
     }
 
 }
