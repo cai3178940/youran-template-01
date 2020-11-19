@@ -5,7 +5,7 @@
 <@call this.addImport("org.springframework.stereotype.Component")/>
 <@call this.printClassCom("web登录用户上下文")/>
 @Component
-public class WebLoginContext implements LoginContext{
+public class WebLoginContext implements LoginContext {
 
     /**
      * 获取当前操作员id

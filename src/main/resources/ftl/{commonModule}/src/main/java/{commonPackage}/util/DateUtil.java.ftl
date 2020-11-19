@@ -17,43 +17,47 @@ public class DateUtil {
 
     /**
      * 获取日期字符串yyyy-MM-dd
+     *
      * @param date
      * @return
      */
     public static String getDateStr(Date date) {
-        return getDateStr(date,DATE_FORMAT_1);
+        return getDateStr(date, DATE_FORMAT_1);
     }
 
     /**
      * 获取指定格式的日期字符串
+     *
      * @param date
      * @param dateFormat
      * @return
      */
     public static String getDateStr(Date date, String dateFormat) {
-        if(date==null || StringUtils.isBlank(dateFormat)){
+        if (date == null || StringUtils.isBlank(dateFormat)) {
             return "";
         }
-        return DateFormatUtils.format(date,dateFormat);
+        return DateFormatUtils.format(date, dateFormat);
     }
 
     /**
      * 获取日期字符串yyyy-MM-dd
+     *
      * @param date
      * @return
      */
     public static String getLocalDateStr(LocalDate date) {
-        return getLocalDateStr(date,DATE_FORMAT_1);
+        return getLocalDateStr(date, DATE_FORMAT_1);
     }
 
     /**
      * 获取指定格式的日期字符串
+     *
      * @param date
      * @param dateFormat
      * @return
      */
     public static String getLocalDateStr(LocalDate date, String dateFormat) {
-        if(date==null || StringUtils.isBlank(dateFormat)){
+        if (date == null || StringUtils.isBlank(dateFormat)) {
             return "";
         }
         return date.format(DateTimeFormatter.ofPattern(dateFormat));
@@ -61,21 +65,23 @@ public class DateUtil {
 
     /**
      * 获取日期字符串yyyy-MM-dd HH:mm:ss
+     *
      * @param dateTime
      * @return
      */
     public static String getLocalDateTimeStr(LocalDateTime dateTime) {
-        return getLocalDateTimeStr(dateTime,DATE_FORMAT_2);
+        return getLocalDateTimeStr(dateTime, DATE_FORMAT_2);
     }
 
     /**
      * 获取指定格式的日期字符串
+     *
      * @param dateTime
      * @param dateFormat
      * @return
      */
     public static String getLocalDateTimeStr(LocalDateTime dateTime, String dateFormat) {
-        if(dateTime==null || StringUtils.isBlank(dateFormat)){
+        if (dateTime == null || StringUtils.isBlank(dateFormat)) {
             return "";
         }
         return dateTime.format(DateTimeFormatter.ofPattern(dateFormat));
@@ -83,69 +89,74 @@ public class DateUtil {
 
     /**
      * 解析日期字符串
+     *
      * @param datetime
      * @param dateFormat
      * @return
      */
-    public static Date parseDate(String datetime,String dateFormat){
-        if(StringUtils.isBlank(datetime)){
+    public static Date parseDate(String datetime, String dateFormat) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         try {
-            return DateUtils.parseDate(datetime,dateFormat);
+            return DateUtils.parseDate(datetime, dateFormat);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
     }
+
     /**
      * 解析日期字符串yyyy-MM-dd
+     *
      * @param datetime
      * @return
      */
-    public static Date parseDate(String datetime){
-        if(StringUtils.isBlank(datetime)){
+    public static Date parseDate(String datetime) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         String dateFormat;
-        if(datetime.length()==DATE_FORMAT_1.length()){
+        if (datetime.length() == DATE_FORMAT_1.length()) {
             dateFormat = DATE_FORMAT_1;
-        }else if(datetime.length()==DATE_FORMAT_2.length()){
+        } else if (datetime.length() == DATE_FORMAT_2.length()) {
             dateFormat = DATE_FORMAT_2;
-        }else{
-            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
+        } else {
+            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error") + ",datetime=" + datetime);
         }
-        return parseDate(datetime,dateFormat);
+        return parseDate(datetime, dateFormat);
     }
 
 
     /**
      * 解析日期字符串
+     *
      * @param datetime
      * @return
      */
-    public static LocalDate parseLocalDate(String datetime){
-        if(StringUtils.isBlank(datetime)){
+    public static LocalDate parseLocalDate(String datetime) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         String dateFormat;
-        if(datetime.length()==DATE_FORMAT_1.length()){
+        if (datetime.length() == DATE_FORMAT_1.length()) {
             dateFormat = DATE_FORMAT_1;
-        }else if(datetime.length()==DATE_FORMAT_2.length()){
+        } else if (datetime.length() == DATE_FORMAT_2.length()) {
             dateFormat = DATE_FORMAT_2;
-        }else{
-            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
+        } else {
+            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error") + ",datetime=" + datetime);
         }
-        return parseLocalDate(datetime,dateFormat);
+        return parseLocalDate(datetime, dateFormat);
     }
 
     /**
      * 解析日期字符串
+     *
      * @param datetime
      * @param dateFormat
      * @return
      */
-    public static LocalDate parseLocalDate(String datetime, String dateFormat){
-        if(StringUtils.isBlank(datetime)){
+    public static LocalDate parseLocalDate(String datetime, String dateFormat) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         return LocalDate.parse(datetime, DateTimeFormatter.ofPattern(dateFormat));
@@ -153,32 +164,34 @@ public class DateUtil {
 
     /**
      * 解析日期字符串
+     *
      * @param datetime
      * @return
      */
-    public static LocalDateTime parseLocalDateTime(String datetime){
-        if(StringUtils.isBlank(datetime)){
+    public static LocalDateTime parseLocalDateTime(String datetime) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         String dateFormat;
-        if(datetime.length()==DATE_FORMAT_1.length()){
+        if (datetime.length() == DATE_FORMAT_1.length()) {
             dateFormat = DATE_FORMAT_1;
-        }else if(datetime.length()==DATE_FORMAT_2.length()){
+        } else if (datetime.length() == DATE_FORMAT_2.length()) {
             dateFormat = DATE_FORMAT_2;
-        }else{
-            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error")+",datetime="+datetime);
+        } else {
+            throw new IllegalArgumentException(MessageSourceUtil.getMessage("error.data_format_error") + ",datetime=" + datetime);
         }
-        return parseLocalDateTime(datetime,dateFormat);
+        return parseLocalDateTime(datetime, dateFormat);
     }
 
     /**
      * 解析日期字符串
+     *
      * @param datetime
      * @param dateFormat
      * @return
      */
-    public static LocalDateTime parseLocalDateTime(String datetime, String dateFormat){
-        if(StringUtils.isBlank(datetime)){
+    public static LocalDateTime parseLocalDateTime(String datetime, String dateFormat) {
+        if (StringUtils.isBlank(datetime)) {
             return null;
         }
         return LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern(dateFormat));

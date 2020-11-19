@@ -24,6 +24,7 @@
 <@call this.addImport("org.springframework.web.bind.annotation.ExceptionHandler")/>
 <@call this.addImport("org.springframework.web.bind.annotation.ResponseBody")/>
 <@call this.addImport("org.springframework.web.bind.annotation.ResponseStatus")/>
+<@call this.addImport("javax.validation.ConstraintViolationException")/>
 <@call this.addImport("java.util.List")/>
 <@call this.addImport("java.util.stream.Collectors")/>
 
@@ -32,6 +33,23 @@
 public class ExceptionTranslator {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionTranslator.class);
+
+
+    /**
+     * 自定义参数校验失败
+     *
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ReplyVO processValidationError(ConstraintViolationException ex) {
+        ReplyVO replyVO = new ReplyVO();
+        replyVO.setCode(ErrorCode.ERR_VALIDATION.getValue());
+        replyVO.setMessage(ex.getMessage());
+        return replyVO;
+    }
 
     /**
      * body参数校验失败
