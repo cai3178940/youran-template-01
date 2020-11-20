@@ -210,6 +210,30 @@
 
     </#if>
 </#list>
+<#if this.entityFeature.excelImport>
+    /**
+     * 导入【${this.title}】excel
+     */
+    @Test
+    public void importExcel() throws Exception {
+        <@call this.addImport("org.springframework.test.web.servlet.MvcResult")/>
+        // 首先下载excel模板
+        MvcResult mvcResult = restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/template")}))
+                .andExpect(status().isOk())
+                .andReturn();
+        <@call this.addImport("org.springframework.mock.web.MockHttpServletResponse")/>
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        <@call this.addImport("org.springframework.mock.web.MockMultipartFile")/>
+        // 将模板原封不动导入
+        MockMultipartFile file = new MockMultipartFile("file", response.getContentAsByteArray());
+        restMockMvc.perform(multipart(${renderApiPath(this.metaEntity, "/import")})
+                .file(file))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
+    }
+
+</#if>
 </#assign>
 <#--开始渲染代码-->
 package ${restPackageName};
