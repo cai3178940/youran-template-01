@@ -19,7 +19,7 @@
 </#function>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
+<@call this.addImport("${this.packageName}.pojo.dto.AbstractExcelDTO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
@@ -30,7 +30,7 @@
 @Data
 @EqualsAndHashCode(callSuper=true)
 </#if>
-public class ${this.className}ExcelDTO extends AbstractDTO {
+public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 
 <#list this.insertFields as id,field>
     <#if field.jfieldType==JFieldType.LOCALDATE.getJavaType()>

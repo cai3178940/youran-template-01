@@ -238,24 +238,30 @@ public class ${this.className}Controller extends AbstractController implements $
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        List<${this.className}AddDTO> list = EasyExcel.read(file.getInputStream())
-                <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
+        <@call this.addImport("${this.packageName}.excel.listener.SyncReadExcelListener")/>
+        <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
+        SyncReadExcelListener<${this.className}ExcelDTO> excelListener = new SyncReadExcelListener();
+        EasyExcel.read(file.getInputStream())
                 .head(${this.className}ExcelDTO.class)
                 .sheet()
                 .headRowNumber(3)
-                .<${this.className}ExcelDTO>doReadSync()
-                .stream()
-                <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
-                .map(${this.className}Mapper.INSTANCE::fromExcelDTO)
-                .peek(${this.classNameLower}AddDTO -> {
+                .registerReadListener(excelListener)
+                .doRead();
+        List<${this.className}AddDTO> list = excelListener.getList().stream()
+                .map(excelDTO -> {
+                    <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
+                    ${this.className}AddDTO addDTO = ${this.className}Mapper.INSTANCE.fromExcelDTO(excelDTO);
                     // 校验数据
                     <@call this.addImport("java.util.Set")/>
                     <@call this.addImport("javax.validation.ConstraintViolation")/>
-                    Set<ConstraintViolation<${this.className}AddDTO>> set = validator.validate(${this.classNameLower}AddDTO);
+                    Set<ConstraintViolation<${this.className}AddDTO>> set = validator.validate(addDTO);
                     if (!set.isEmpty()) {
+                        ConstraintViolation<${this.className}AddDTO> violation = set.stream().findFirst().get();
+                        String errorMsg = "第" + (excelDTO.getRowIndex() + 1) + "行数据不合法：" + violation.getMessage();
                         <@call this.addImport("javax.validation.ConstraintViolationException")/>
-                        throw new ConstraintViolationException(set);
+                        throw new ConstraintViolationException(errorMsg, set);
                     }
+                    return addDTO;
                 })
                 <@call this.addImport("java.util.stream.Collectors")/>
                 .collect(Collectors.toList());

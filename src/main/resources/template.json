@@ -125,6 +125,9 @@
     {"fileName":"TemplateCellStyleStrategy.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"fileType":1},
     {"fileName":"TitleDescriptionWriteHandler.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/handler","contextType":1,"fileType":1},
 
+    {"fileName":"SyncReadExcelListener.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/excel/listener","contextType":1,"fileType":1},
+
+    {"fileName":"AbstractExcelDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":1,"fileType":1},
     {"fileName":"UserLoginDTO.java.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto","contextType":1,"fileType":1},
 
     {"fileName":"__dir.ftl","fileDir":"/{coreModule}/src/main/java/{packageName}/pojo/dto/{module}","contextType":1,"fileType":4},
