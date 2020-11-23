@@ -234,7 +234,7 @@ public class ${this.className}Controller extends AbstractController implements $
     @Override
     @PostMapping("/import")
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
-    public ResponseEntity<Integer> importExcel(@RequestParam(value = "file") MultipartFile file) throws Exception {
+    public ResponseEntity<Integer> importExcel(@RequestPart MultipartFile file) throws Exception {
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
         <@call this.addImport("com.alibaba.excel.EasyExcel")/>

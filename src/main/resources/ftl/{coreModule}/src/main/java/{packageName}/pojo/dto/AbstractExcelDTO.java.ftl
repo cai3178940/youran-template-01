@@ -16,6 +16,8 @@ public abstract class AbstractExcelDTO extends AbstractDTO {
     /**
      * 行号
      */
+    <@call this.addImport("com.alibaba.excel.annotation.ExcelIgnore")/>
+    @ExcelIgnore
     private Integer rowIndex;
 
 <#if !this.projectFeature.lombokEnabled>
