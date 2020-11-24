@@ -7,8 +7,6 @@
 </#if>
 <@call this.addImport("${this.commonPackage}.util.JsonUtil")/>
 <@call this.addImport("${helpPackageName}.${this.className}Helper")/>
-<@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
-<@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
 <@call this.addImport("${poPackageName}.${this.className}PO")/>
 <@call this.addImport("${this.packageName}.web.AbstractWebTest")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
@@ -34,6 +32,7 @@
         ${saveExample}
         </#if>
     </#list>
+        <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
         ${this.className}AddDTO addDTO = ${this.classNameLower}Helper.get${this.className}AddDTO(<@call this.printSaveExampleArg(this.metaEntity)/>);
         restMockMvc.perform(post(${renderApiPath(this.metaEntity, "")})
             .contentType(MediaType.APPLICATION_JSON)
@@ -51,6 +50,7 @@
         <#list saveExampleCode as saveExample>
         ${saveExample}
         </#list>
+        <@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
         ${this.className}UpdateDTO updateDTO = ${this.classNameLower}Helper.get${this.className}UpdateDTO(${this.classNameLower});
         restMockMvc.perform(put(${renderApiPath(this.metaEntity, "")})
             .contentType(MediaType.APPLICATION_JSON)
