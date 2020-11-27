@@ -68,9 +68,9 @@ public @interface Const {
             boolean success;
             try {
                 Object result = checkMethod.invoke(null, value);
-                if(result instanceof Boolean){
+                if (result instanceof Boolean) {
                     success = (Boolean) result;
-                }else{
+                } else {
                     throw new RuntimeException("校验方法返回值类型必须是boolean");
                 }
             } catch (IllegalAccessException e) {

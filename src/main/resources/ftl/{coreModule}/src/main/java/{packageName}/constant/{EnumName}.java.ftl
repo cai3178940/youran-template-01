@@ -9,9 +9,9 @@ public enum ${this.constNameUpper} {
 
 <#assign allValuesStr="">
 <#list this.detailList as detail>
-    <#if this.constType==MetaConstType.INTEGER>
+    <#if this.constType == MetaConstType.INTEGER>
         <#assign valueStr>${detail.detailValue}</#assign>
-    <#elseIf this.constType==MetaConstType.STRING>
+    <#elseIf this.constType == MetaConstType.STRING>
         <#assign valueStr>"${detail.detailValue}"</#assign>
     </#if>
     <#if detail?hasNext>
@@ -52,9 +52,9 @@ public enum ${this.constNameUpper} {
         return LOOKUP.get(value);
     }
 
-    public static ${this.constNameUpper} findByDesc(String desc){
+    public static ${this.constNameUpper} findByDesc(String desc) {
         for (${this.constNameUpper} e : ${this.constNameUpper}.values()) {
-            if(e.getDesc().equals(desc)){
+            if (e.getDesc().equals(desc)) {
                 return e;
             }
         }
@@ -94,9 +94,9 @@ public enum ${this.constNameUpper} {
      * 校验有效性
      */
     @Check
-    public static final boolean validate(${this.constTypeStr} value){
+    public static final boolean validate(${this.constTypeStr} value) {
         ${this.constNameUpper} theEnum = find(value);
-        return theEnum!=null;
+        return theEnum != null;
     }
 
     public ${this.constTypeStr} getValue() {

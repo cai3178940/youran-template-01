@@ -96,30 +96,30 @@ public class ${this.chartName}Service {
 </#if>
 <#-- 打印字段过滤值 -->
 <#function printFilterValue jfieldType value>
-    <#if jfieldType==JFieldType.STRING.getJavaType()>
+    <#if jfieldType == JFieldType.STRING.getJavaType()>
         <#return "\"${value}\"">
-    <#elseIf jfieldType==JFieldType.BOOLEAN.getJavaType()>
+    <#elseIf jfieldType == JFieldType.BOOLEAN.getJavaType()>
         <#return "${value}">
-    <#elseIf jfieldType==JFieldType.INTEGER.getJavaType()>
+    <#elseIf jfieldType == JFieldType.INTEGER.getJavaType()>
         <#return "${value}">
-    <#elseIf jfieldType==JFieldType.SHORT.getJavaType()>
+    <#elseIf jfieldType == JFieldType.SHORT.getJavaType()>
         <#return "${value}">
-    <#elseIf jfieldType==JFieldType.LONG.getJavaType()>
+    <#elseIf jfieldType == JFieldType.LONG.getJavaType()>
         <#return "${value}L">
-    <#elseIf jfieldType==JFieldType.DOUBLE.getJavaType()>
+    <#elseIf jfieldType == JFieldType.DOUBLE.getJavaType()>
         <#return "${value}d">
-    <#elseIf jfieldType==JFieldType.FLOAT.getJavaType()>
+    <#elseIf jfieldType == JFieldType.FLOAT.getJavaType()>
         <#return "${value}f">
-    <#elseIf jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
+    <#elseIf jfieldType == JFieldType.BIGDECIMAL.getJavaType()>
         <@call this.addImport("java.math.BigDecimal")/>
         <#return "new BigDecimal(\"${value}\")">
-    <#elseIf jfieldType==JFieldType.DATE.getJavaType()>
+    <#elseIf jfieldType == JFieldType.DATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseDate(\"${value}\")">
-    <#elseIf jfieldType==JFieldType.LOCALDATE.getJavaType()>
+    <#elseIf jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseLocalDate(\"${value}\")">
-    <#elseIf jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#return "DateUtil.parseLocalDateTime(\"${value}\")">
     </#if>

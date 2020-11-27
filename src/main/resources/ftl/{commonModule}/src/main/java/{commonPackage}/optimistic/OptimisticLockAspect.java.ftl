@@ -32,7 +32,7 @@ public class OptimisticLockAspect {
     public Object doDAOAround(final ProceedingJoinPoint thisJoinPoint) throws Throwable {
         Object[] args = thisJoinPoint.getArgs();
         int count = (int) thisJoinPoint.proceed();
-        if ((args[0] instanceof Version) && count <= 0){
+        if ((args[0] instanceof Version) && count <= 0) {
             throw new OptimisticException(MessageSourceUtil.getMessage("error.optimistic_lock"));
         }
         return count;
@@ -57,7 +57,7 @@ public class OptimisticLockAspect {
         }
 
         Class<? extends Exception>[] catchTypes = optimisticLock.catchType();
-        if(catchTypes == null || catchTypes.length == 0){
+        if (catchTypes == null || catchTypes.length == 0) {
             throw new RuntimeException("optimistic lock aop error");
         }
         int retry = optimisticLock.retry();

@@ -41,7 +41,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         if (params.get(name) instanceof String[]) {
             int size = (params.get(name)).length;
             String[] vals = new String[size];
-            for(int i=0;i<(params.get(name)).length;i++) {
+            for (int i=0;i<(params.get(name)).length;i++) {
                 // 转码
                 String str = clean((params.get(name))[i]);
                 vals[i] = str;

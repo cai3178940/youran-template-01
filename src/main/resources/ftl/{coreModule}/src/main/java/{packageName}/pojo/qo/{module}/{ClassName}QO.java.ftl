@@ -43,12 +43,12 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#else>
     <#--其他查询方式-->
     @ApiParam(value = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase})
-        <#if field.jfieldType==JFieldType.STRING.getJavaType()>
+        <#if field.jfieldType == JFieldType.STRING.getJavaType()>
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
     @Length(max = ${field.fieldLength},message = "${jfieldName}最大长度不能超过{max}")
-        <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()
-            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()
+            || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("java.util.Date")/>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
@@ -70,7 +70,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 <#list this.fkFields as id,field>
     <#if field.cascadeQueryExts?? && field.cascadeQueryExts?size &gt; 0>
         <#assign exampleClass="">
-        <#if field.foreignEntity!=this.metaEntity>
+        <#if field.foreignEntity != this.metaEntity>
             <@call this.addImport("${examplePackageName}.${field.foreignEntity.className}Example")/>
             <#assign exampleClass="${field.foreignEntity.className}Example.">
         </#if>

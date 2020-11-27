@@ -18,7 +18,7 @@ public class ${this.projectNameUpper}Configuration {
      * @return
      */
     @Bean
-    public SpringUtil springUtil(){
+    public SpringUtil springUtil() {
         return new SpringUtil();
     }
 

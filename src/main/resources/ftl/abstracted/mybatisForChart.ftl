@@ -3,41 +3,41 @@
 <#include "/abstracted/mybatis.ftl">
 <#-- 映射过滤运算符 -->
 <#function mapperOperatorSymbol operator>
-    <#if FilterOperator.EQUAL.getValue()==operator>
+    <#if FilterOperator.EQUAL.getValue() == operator>
         <#return "=">
-    <#elseIf FilterOperator.NOT_EQUAL.getValue()==operator>
+    <#elseIf FilterOperator.NOT_EQUAL.getValue() == operator>
         <#return "!=">
-    <#elseIf FilterOperator.GT.getValue()==operator>
+    <#elseIf FilterOperator.GT.getValue() == operator>
         <#return ">">
-    <#elseIf FilterOperator.GE.getValue()==operator>
+    <#elseIf FilterOperator.GE.getValue() == operator>
         <#return ">=">
-    <#elseIf FilterOperator.LT.getValue()==operator>
+    <#elseIf FilterOperator.LT.getValue() == operator>
         <#return "&lt;">
-    <#elseIf FilterOperator.LE.getValue()==operator>
+    <#elseIf FilterOperator.LE.getValue() == operator>
         <#return "&lt;=">
-    <#elseIf FilterOperator.BETWEEN.getValue()==operator>
+    <#elseIf FilterOperator.BETWEEN.getValue() == operator>
         <#return "between">
-    <#elseIf FilterOperator.CONTAIN.getValue()==operator>
+    <#elseIf FilterOperator.CONTAIN.getValue() == operator>
         <#return "in">
-    <#elseIf FilterOperator.NOT_CONTAIN.getValue()==operator>
+    <#elseIf FilterOperator.NOT_CONTAIN.getValue() == operator>
         <#return "not in">
-    <#elseIf FilterOperator.IS_NULL.getValue()==operator>
+    <#elseIf FilterOperator.IS_NULL.getValue() == operator>
         <#return "is null">
-    <#elseIf FilterOperator.NOT_NULL.getValue()==operator>
+    <#elseIf FilterOperator.NOT_NULL.getValue() == operator>
         <#return "is not null">
-    <#elseIf FilterOperator.LIKE.getValue()==operator>
+    <#elseIf FilterOperator.LIKE.getValue() == operator>
         <#return "like">
-    <#elseIf FilterOperator.IS_NOW.getValue()==operator>
+    <#elseIf FilterOperator.IS_NOW.getValue() == operator>
         <#return "between">
-    <#elseIf FilterOperator.BEFORE_TIME.getValue()==operator>
+    <#elseIf FilterOperator.BEFORE_TIME.getValue() == operator>
         <#return "between">
-    <#elseIf FilterOperator.AFTER_TIME.getValue()==operator>
+    <#elseIf FilterOperator.AFTER_TIME.getValue() == operator>
         <#return "between">
     </#if>
 </#function>
 <#-- 映射排序运算符 -->
 <#function mapperOrderBySymbol sortType>
-    <#if SortType.ASC.getValue()==sortType>
+    <#if SortType.ASC.getValue() == sortType>
         <#return "asc">
     <#else>
         <#return "desc">
@@ -45,9 +45,9 @@
 </#function>
 <#-- 映射排序运算符 -->
 <#function mapperJoinSymbol joinType>
-    <#if JoinType.RIGHT_JOIN.getValue()==joinType>
+    <#if JoinType.RIGHT_JOIN.getValue() == joinType>
         <#return "right join">
-    <#elseIf JoinType.LEFT_JOIN.getValue()==joinType>
+    <#elseIf JoinType.LEFT_JOIN.getValue() == joinType>
         <#return "left join">
     <#else>
         <#return "inner join">

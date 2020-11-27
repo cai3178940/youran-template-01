@@ -129,7 +129,7 @@
         <@call this.addImport("${this.commonPackage}.pojo.po.Version")/>
     </#if>
 </#if>
-<#if implementsStr!="">
+<#if implementsStr != "">
     <#assign implementsStr=" implements"+implementsStr?removeEnding(",")>
 </#if>
 <@call this.printClassCom("${this.title}" "${this.desc}")/>
@@ -166,7 +166,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
         <@call JavaTemplateFunction.printGetterSetterList("${otherEntity.className}PO","${otherEntity.className}PO")/>
     </#list>
 </#if>
-<#if implementsDeleteSign && this.delField.jfieldName!="deleted">
+<#if implementsDeleteSign && this.delField.jfieldName != "deleted">
     @Override
     public Boolean getDeleted() {
         return this.${this.delField.jfieldName};
@@ -178,7 +178,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsCreatedBy && this.createdByField.jfieldName!="createdBy">
+<#if implementsCreatedBy && this.createdByField.jfieldName != "createdBy">
     @Override
     public String getCreatedBy() {
         return this.${this.createdByField.jfieldName};
@@ -190,7 +190,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsCreatedTime && this.createdTimeField.jfieldName!="createdTime">
+<#if implementsCreatedTime && this.createdTimeField.jfieldName != "createdTime">
     @Override
     public Date getCreatedTime() {
         return this.${this.createdTimeField.jfieldName};
@@ -202,7 +202,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsJsr310CreatedTime && this.createdTimeField.jfieldName!="createdTime">
+<#if implementsJsr310CreatedTime && this.createdTimeField.jfieldName != "createdTime">
     @Override
     public LocalDateTime getCreatedTime() {
         return this.${this.createdTimeField.jfieldName};
@@ -214,7 +214,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsOperatedBy && this.operatedByField.jfieldName!="operatedBy">
+<#if implementsOperatedBy && this.operatedByField.jfieldName != "operatedBy">
     @Override
     public String getOperatedBy() {
         return this.${this.operatedByField.jfieldName};
@@ -226,7 +226,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsOperatedTime && this.operatedTimeField.jfieldName!="operatedTime">
+<#if implementsOperatedTime && this.operatedTimeField.jfieldName != "operatedTime">
     @Override
     public Date getOperatedTime() {
         return this.${this.operatedTimeField.jfieldName};
@@ -238,7 +238,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsJsr310OperatedTime && this.operatedTimeField.jfieldName!="operatedTime">
+<#if implementsJsr310OperatedTime && this.operatedTimeField.jfieldName != "operatedTime">
     @Override
     public LocalDateTime getOperatedTime() {
         return this.${this.operatedTimeField.jfieldName};
@@ -250,7 +250,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     }
 
 </#if>
-<#if implementsVersion && this.versionField.jfieldName!="version">
+<#if implementsVersion && this.versionField.jfieldName != "version">
     @Override
     public Integer getVersion() {
         return this.${this.versionField.jfieldName};

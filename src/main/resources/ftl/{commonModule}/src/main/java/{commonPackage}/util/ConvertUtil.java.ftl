@@ -17,8 +17,8 @@ public class ConvertUtil {
      * @param array
      * @return
      */
-    public static String convertIntegerArrayToString(Iterable<?> array){
-        if(array==null){
+    public static String convertIntegerArrayToString(Iterable<?> array) {
+        if (array == null) {
             return null;
         }
         String join = Joiner.on(',').join(array);
@@ -30,8 +30,8 @@ public class ConvertUtil {
      * @param str
      * @return
      */
-    public static String[] convertStringArray(String str){
-        if(StringUtils.isBlank(str)){
+    public static String[] convertStringArray(String str) {
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         Iterable<String> split = Splitter.on(',').omitEmptyStrings().split(str);
@@ -43,8 +43,8 @@ public class ConvertUtil {
      * @param str
      * @return
      */
-    public static List<String> convertStringList(String str){
-        if(StringUtils.isBlank(str)){
+    public static List<String> convertStringList(String str) {
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         List<String> list = Splitter.on(',').omitEmptyStrings().splitToList(str);
@@ -56,8 +56,8 @@ public class ConvertUtil {
      * @param str
      * @return
      */
-    public static Integer[] convertIntegerArray(String str){
-        if(StringUtils.isBlank(str)){
+    public static Integer[] convertIntegerArray(String str) {
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         Iterable<String> split = Splitter.on(',').omitEmptyStrings().split(str);
@@ -70,8 +70,8 @@ public class ConvertUtil {
      * @param str
      * @return
      */
-    public static Double[] convertDoubleArray(String str){
-        if(StringUtils.isBlank(str)){
+    public static Double[] convertDoubleArray(String str) {
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         Iterable<String> split = Splitter.on(',').omitEmptyStrings().split(str);
@@ -87,8 +87,8 @@ public class ConvertUtil {
      * @param clazz
      * @return
      */
-    public static <T>T[] convertMapListToArray(List<Map<String,Object>> list, final String key, Class<T> clazz){
-        if(list==null){
+    public static <T>T[] convertMapListToArray(List<Map<String,Object>> list, final String key, Class<T> clazz) {
+        if (list == null) {
             return null;
         }
         return convertListToArray(list,input -> (T)input.get(key),clazz);
@@ -101,8 +101,8 @@ public class ConvertUtil {
      * @param clazz
      * @return
      */
-    public static <F,T>T[] convertListToArray(List<F> list, Function<F,T> function, Class<T> clazz){
-        if(list==null){
+    public static <F,T>T[] convertListToArray(List<F> list, Function<F,T> function, Class<T> clazz) {
+        if (list == null) {
             return null;
         }
         Iterable<T> transform = Iterables.transform(list, function);
@@ -115,8 +115,8 @@ public class ConvertUtil {
      * @param function
      * @return
      */
-    public static <F,T>List<T> convertList(List<F> list, Function<F,T> function){
-        if(list==null){
+    public static <F,T>List<T> convertList(List<F> list, Function<F,T> function) {
+        if (list == null) {
             return null;
         }
         List<T> transform = Lists.transform(list, function);
@@ -129,7 +129,7 @@ public class ConvertUtil {
      * @return
      */
     public static List<Integer> convertIntegerList(String str) {
-        if(StringUtils.isBlank(str)){
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         List<String> list = Splitter.on(',').omitEmptyStrings().splitToList(str);
@@ -142,11 +142,11 @@ public class ConvertUtil {
      * @return
      */
     public static List<Long> convertLongList(String str) {
-        if(StringUtils.isBlank(str)){
+        if (StringUtils.isBlank(str)) {
             return null;
         }
         List<String> list = Splitter.on(',').omitEmptyStrings().splitToList(str);
-        return Lists.transform(list,SafeUtil::getLong);
+        return Lists.transform(list, SafeUtil::getLong);
     }
 
 }

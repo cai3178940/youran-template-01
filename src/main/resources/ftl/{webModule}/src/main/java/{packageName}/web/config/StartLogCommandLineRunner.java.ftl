@@ -23,7 +23,7 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
     @Value("${r'$'}{springfox.documentation.enabled:true}")
     private boolean swaggerEnabled;
 
-    public StartLogCommandLineRunner(Environment env){
+    public StartLogCommandLineRunner(Environment env) {
         this.env = env;
     }
 
@@ -33,7 +33,7 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
         String contextPath = env.getProperty("server.servlet.context-path","/");
         String applicationName = env.getProperty("spring.application.name","");
         String profiles = "";
-        if(ArrayUtils.isNotEmpty(env.getActiveProfiles())) {
+        if (ArrayUtils.isNotEmpty(env.getActiveProfiles())) {
             profiles = Arrays.stream(env.getActiveProfiles()).collect(Collectors.joining(","));
         }
         StringBuilder sb = new StringBuilder();

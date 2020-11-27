@@ -32,14 +32,14 @@ public class ${this.className}AddDTO extends AbstractDTO {
         <@call this.addImport("${this.commonPackage}.validator.Const")/>
         <@call this.addConstImport(field.dicType)/>
     @Const(constClass = ${field.dicType}.class)
-    <#elseIf field.jfieldType==JFieldType.STRING.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
         <#if field.fieldLength gt 0 >
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
     @Length(max = ${field.fieldLength})
         </#if>
-    <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()
-            || field.jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()
+            || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
     </#if>

@@ -52,9 +52,9 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
             <#--日期格式-->
             <#assign dateFormat=guessDateFormat(field)>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-        || jfieldType==JFieldType.LOCALDATE.getJavaType()
-        || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+        || jfieldType == JFieldType.LOCALDATE.getJavaType()
+        || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern = ${dateFormat}, timezone = "GMT+8")
         </#if>
@@ -74,9 +74,9 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
         <#else>
             <#assign name=dimension.field.jfieldName>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern = ${guessDateFormat(dimension.field)}, timezone = "GMT+8")
         </#if>
@@ -100,9 +100,9 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
             <#--日期格式-->
             <#assign dateFormat=guessDateFormat(metrics.field)>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
     @JsonFormat(pattern = ${dateFormat}, timezone = "GMT+8")
         </#if>

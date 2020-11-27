@@ -66,9 +66,9 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
                 <#assign columnWidth=15>
             </#if>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-        || jfieldType==JFieldType.LOCALDATE.getJavaType()
-        || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+        || jfieldType == JFieldType.LOCALDATE.getJavaType()
+        || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${dateFormat})
         </#if>
@@ -93,9 +93,9 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
         <#else>
             <#assign name=dimension.field.jfieldName>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(dimension.field)})
         </#if>
@@ -132,9 +132,9 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
                 <#assign columnWidth=15>
             </#if>
         </#if>
-        <#if jfieldType==JFieldType.DATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATE.getJavaType()
-            || jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#if jfieldType == JFieldType.DATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATE.getJavaType()
+            || jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${dateFormat})
         </#if>

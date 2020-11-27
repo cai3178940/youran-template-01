@@ -33,16 +33,16 @@
 public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 
 <#list this.insertFields as id,field>
-    <#if field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+    <#if field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}<#if field.notNull>*</#if>", converter = LocalDateConverter.class)
-    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateTimeConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}<#if field.notNull>*</#if>", converter = LocalDateTimeConverter.class)
     <#else>
     @ExcelProperty("${field.fieldDesc}<#if field.notNull>*</#if>")
     </#if>
-    <#if field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#if field.jfieldType == JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(field)})
     </#if>
@@ -77,18 +77,18 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
         <@call this.addConstImport(field.dicType)/>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
         <#assign arg="${field.dicType}.valueToDesc(SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase}))">
-    <#elseIf field.jfieldType==JFieldType.STRING.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
         <#assign arg="E_${jfieldNameSnakeCase}">
-    <#elseIf field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#assign arg="DateUtil.parseDate(E_${jfieldNameSnakeCase})">
-    <#elseIf field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#assign arg="DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
-    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
         <#assign arg="DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
-    <#elseIf field.jfieldType==JFieldType.BIGDECIMAL.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.BIGDECIMAL.getJavaType()>
         <@call this.addImport("java.math.BigDecimal")/>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
         <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">

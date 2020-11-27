@@ -28,9 +28,9 @@ public class JsonUtil {
     }
 
 
-    public static <T> T parseObject(String json, Class<T> clazz){
+    public static <T> T parseObject(String json, Class<T> clazz) {
         T t;
-        if(StringUtils.isBlank(json)){
+        if (StringUtils.isBlank(json)) {
             return null;
         }
         try {
@@ -49,7 +49,7 @@ public class JsonUtil {
     }
 
 
-    public static String toJSONString(Object obj){
+    public static String toJSONString(Object obj) {
         String str;
         try {
             str = mapper.writeValueAsString(obj);
@@ -60,8 +60,8 @@ public class JsonUtil {
         return str;
     }
 
-    public static String toJSONString(Object object,boolean prettyFormat){
-        if(prettyFormat) {
+    public static String toJSONString(Object object,boolean prettyFormat) {
+        if (prettyFormat) {
             try {
                 return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
             } catch (JsonProcessingException e) {
@@ -73,9 +73,9 @@ public class JsonUtil {
 
     }
 
-    public static <T> List<T> parseArray(String json, Class<T> clazz){
+    public static <T> List<T> parseArray(String json, Class<T> clazz) {
         List<T> list;
-        if(StringUtils.isBlank(json)){
+        if (StringUtils.isBlank(json)) {
             return null;
         }
         try {

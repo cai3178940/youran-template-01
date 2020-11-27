@@ -28,7 +28,7 @@ public class H2Flusher implements InitializingBean {
     /**
      * 刷新H2数据库
      */
-    public void flushDB(){
+    public void flushDB() {
         jdbcTemplate.execute("drop all objects;");
         for (String key : scriptFilePath.keySet()) {
             jdbcTemplate.execute("runscript from '"+ scriptFilePath.get(key)+"'");

@@ -10,7 +10,7 @@ public abstract class AbstractPO implements Serializable {
     private static final long serialVersionUID = 640619331196056814L;
 
     public void preInsert(String createdBy) {
-        if(this instanceof CreatedTime || this instanceof OperatedTime){
+        if (this instanceof CreatedTime || this instanceof OperatedTime) {
             Date now = new Date();
             if (this instanceof CreatedTime) {
                 ((CreatedTime) this).setCreatedTime(now);
@@ -19,7 +19,7 @@ public abstract class AbstractPO implements Serializable {
                 ((OperatedTime) this).setOperatedTime(now);
             }
         }
-        if(this instanceof Jsr310CreatedTime || this instanceof Jsr310OperatedTime){
+        if (this instanceof Jsr310CreatedTime || this instanceof Jsr310OperatedTime) {
             LocalDateTime now = LocalDateTime.now();
             if (this instanceof Jsr310CreatedTime) {
                 ((Jsr310CreatedTime) this).setCreatedTime(now);
@@ -43,7 +43,7 @@ public abstract class AbstractPO implements Serializable {
     }
 
     public void preUpdate(String operatedBy) {
-        if (this instanceof OperatedTime){
+        if (this instanceof OperatedTime) {
             ((OperatedTime) this).setOperatedTime(new Date());
         }
         if (this instanceof Jsr310OperatedTime) {

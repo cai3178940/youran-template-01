@@ -63,14 +63,14 @@ public class ${this.className}Service {
      * @param ${this.classNameLower}
      * @param isUpdate 是否更新校验
      */
-    private void checkUnique(${this.className}PO ${this.classNameLower}, boolean isUpdate){
+    private void checkUnique(${this.className}PO ${this.classNameLower}, boolean isUpdate) {
     <#list this.metaEntity.checkUniqueIndexes as index>
-        <#assign suffix=(index?index==0)?string('',''+index?index)>
+        <#assign suffix=(index?index == 0)?string('',''+index?index)>
         <#assign params=''>
         <#list index.fields as field>
             <#assign params+=this.classNameLower+'.get'+field.jfieldName?capFirst+'(), '>
         </#list>
-        if(${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate?${this.classNameLower}.get${this.idUpper}():null)){
+        if (${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate?${this.classNameLower}.get${this.idUpper}():null)) {
             throw new BusinessException(ErrorCode.DUPLICATE_KEY);
         }
     </#list>
@@ -83,7 +83,7 @@ public class ${this.className}Service {
         <#if field.foreignKey>
             <@call this.addImport("org.springframework.util.Assert")/>
             <#assign foreigncName=lowerFirstWord(field.foreignEntity.className)>
-        if(${this.classNameLower}.get${field.jfieldName?capFirst}() != null){
+        if (${this.classNameLower}.get${field.jfieldName?capFirst}() != null) {
             Assert.isTrue(${foreigncName}DAO.exist(${this.classNameLower}.get${field.jfieldName?capFirst}()),"${field.fieldDesc}有误");
         }
         </#if>
@@ -131,7 +131,7 @@ public class ${this.className}Service {
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         List<${otherPk.jfieldType}> ${othercName}List = ${this.classNameLower}DTO.get${otherCName}List();
-        if(CollectionUtils.isNotEmpty(${othercName}List)) {
+        if (CollectionUtils.isNotEmpty(${othercName}List)) {
             this.doAdd${otherCName}(${this.classNameLower}.get${this.idUpper}(), ${othercName}List.toArray(new ${otherPk.jfieldType}[0]));
         }
     </#if>
@@ -190,7 +190,7 @@ public class ${this.className}Service {
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         List<${otherPk.jfieldType}> ${othercName}List = ${this.classNameLower}UpdateDTO.get${otherCName}List();
-        if(${othercName}List != null) {
+        if (${othercName}List != null) {
             this.set${otherCName}(${this.classNameLower}.get${this.idUpper}(), ${othercName}List.toArray(new ${otherPk.jfieldType}[]{}));
         }
     </#if>
@@ -209,7 +209,7 @@ public class ${this.className}Service {
     public PageVO<${this.className}ListVO> list(${this.className}QO ${this.classNameLower}QO) {
         PageVO<${this.className}ListVO> page = ${this.classNameLower}DAO.findByPage(${this.classNameLower}QO);
         <#if mtmCascadeEntitiesForList?hasContent>
-        for(${this.className}ListVO listVO : page.getList()){
+        for (${this.className}ListVO listVO : page.getList()) {
             <#list mtmCascadeEntitiesForList as otherEntity>
                 <#assign otherCName=otherEntity.className>
                 <#assign othercName=lowerFirstWord(otherEntity.className)>
@@ -232,7 +232,7 @@ public class ${this.className}Service {
     public List<${this.className}ListVO> list(${this.className}QO ${this.classNameLower}QO) {
         List<${this.className}ListVO> list = ${this.classNameLower}DAO.findListByQuery(${this.classNameLower}QO);
     <#if mtmCascadeEntitiesForList?hasContent>
-        for(${this.className}ListVO listVO : list){
+        for (${this.className}ListVO listVO : list) {
         <#list mtmCascadeEntitiesForList as otherEntity>
             <#assign otherCName=otherEntity.className>
             <#assign othercName=lowerFirstWord(otherEntity.className)>
@@ -269,7 +269,7 @@ public class ${this.className}Service {
      * @param force 是否强制获取
      * @return
      */
-    public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force){
+    public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force) {
     <#assign withFalseCode="">
     <#list this.holds! as otherEntity,mtm>
         <#assign withFalseCode=withFalseCode+"false, ">
@@ -292,7 +292,7 @@ public class ${this.className}Service {
      * @param force 是否强制获取
      * @return
      */
-    public ${this.className}PO get${this.className}(${this.type} ${this.id}, ${withHoldParam}boolean force){
+    public ${this.className}PO get${this.className}(${this.type} ${this.id}, ${withHoldParam}boolean force) {
         ${this.className}PO ${this.classNameLower} = ${this.classNameLower}DAO.findById(${this.id});
         if (force && ${this.classNameLower} == null) {
             throw new BusinessException(ErrorCode.RECORD_NOT_FIND);
@@ -300,7 +300,7 @@ public class ${this.className}Service {
 <#list this.holds! as otherEntity,mtm>
     <#assign otherCName=otherEntity.className>
     <#assign othercName=lowerFirstWord(otherEntity.className)>
-        if (with${otherCName}){
+        if (with${otherCName}) {
             ${this.classNameLower}.set${otherCName}POList(${othercName}DAO.findBy${this.className}(${this.id}));
         }
 </#list>
@@ -323,7 +323,7 @@ public class ${this.className}Service {
         <#assign otherCName=field.foreignEntity.className>
         <#assign othercName=lowerFirstWord(field.foreignEntity.className)>
         <@call this.addImport("${poPackageName}.${otherCName}PO")/>
-        if(${this.classNameLower}.get${field.jfieldName?capFirst}()!=null){
+        if (${this.classNameLower}.get${field.jfieldName?capFirst}() != null) {
             ${otherCName}PO _${othercName}PO = ${othercName}DAO.findById(${this.classNameLower}.get${field.jfieldName?capFirst}());
         <#list field.cascadeShowExts as cascadeExt>
             showVO.set${cascadeExt.alias?capFirst}(_${othercName}PO.get${cascadeExt.cascadeField.jfieldName?capFirst}());
@@ -392,9 +392,9 @@ public class ${this.className}Service {
      */
     private void checkDeleteBy${foreignCName}(${this.type} ${this.id}) {
     <#list this.foreignFields as foreignField>
-        <#if foreignField.entityId==foreignEntity.entityId>
+        <#if foreignField.entityId == foreignEntity.entityId>
         <#if !alreadyFind>int </#if>count = ${foreigncName}DAO.getCountBy${foreignField.jfieldName?capFirst}(${this.id});
-        if(count>0){
+        if (count > 0) {
             throw new BusinessException(ErrorCode.CASCADE_DELETE_ERROR);
         }
             <#assign alreadyFind=true>
@@ -413,7 +413,7 @@ public class ${this.className}Service {
      */
     private void checkDeleteBy${otherCName}(${this.type} ${this.id}) {
         int count = ${othercName}DAO.getCountBy${this.className}(${this.id});
-        if(count>0){
+        if (count > 0) {
             throw new BusinessException(ErrorCode.CASCADE_DELETE_ERROR);
         }
     }
@@ -436,7 +436,7 @@ public class ${this.className}Service {
     private int doAdd${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}... ${otherFkId}) {
         int count = 0;
         for (${otherPk.jfieldType} _id : ${otherFkId}) {
-            if(${othercName}DAO.exist(_id)){
+            if (${othercName}DAO.exist(_id)) {
                 count += ${this.classNameLower}DAO.add${otherCName}(${this.id}, _id);
             }
         }
@@ -454,7 +454,7 @@ public class ${this.className}Service {
     @Transactional(rollbackFor = RuntimeException.class)
     public int add${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}... ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
-        if(ArrayUtils.isEmpty(${otherFkId})){
+        if (ArrayUtils.isEmpty(${otherFkId})) {
             throw new BusinessException(ErrorCode.PARAM_IS_NULL);
         }
         return doAdd${otherCName}(${this.id}, ${otherFkId});
@@ -470,7 +470,7 @@ public class ${this.className}Service {
     @Transactional(rollbackFor = RuntimeException.class)
     public int remove${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}... ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
-        if(ArrayUtils.isEmpty(${otherFkId})){
+        if (ArrayUtils.isEmpty(${otherFkId})) {
             throw new BusinessException(ErrorCode.PARAM_IS_NULL);
         }
         return ${this.classNameLower}DAO.remove${otherCName}(${this.id}, ${otherFkId});
@@ -489,7 +489,7 @@ public class ${this.className}Service {
     public int set${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}[] ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
         ${this.classNameLower}DAO.removeAll${otherCName}(${this.id});
-        if(ArrayUtils.isEmpty(${otherFkId})){
+        if (ArrayUtils.isEmpty(${otherFkId})) {
             return 0;
         }
         return doAdd${otherCName}(${this.id}, ${otherFkId});

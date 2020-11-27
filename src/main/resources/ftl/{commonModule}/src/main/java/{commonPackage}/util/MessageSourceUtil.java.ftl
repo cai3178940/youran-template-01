@@ -13,12 +13,12 @@ public class MessageSourceUtil {
 
     private static MessageSource messageSource;
 
-    public static MessageSource getMessageSource(){
-        if(messageSource!=null){
+    public static MessageSource getMessageSource() {
+        if (messageSource != null) {
             return messageSource;
         }
         MessageSource ms = SpringUtil.getBean(MessageSource.class);
-        if(ms != null){
+        if (ms != null) {
             messageSource = ms;
             return ms;
         }
@@ -29,7 +29,7 @@ public class MessageSourceUtil {
      * @param code 对应messages配置的key.
      * @return
      */
-    public static String getMessage(String code){
+    public static String getMessage(String code) {
         return getMessage(code,null,null);
     }
 
@@ -39,7 +39,7 @@ public class MessageSourceUtil {
      * @param args 数组参数.
      * @return
      */
-    public static String getMessage(String code,Object[] args){
+    public static String getMessage(String code,Object[] args) {
         return getMessage(code, args,"");
     }
 
@@ -49,7 +49,7 @@ public class MessageSourceUtil {
      * @param defaultMessage 没有设置key的时候的默认值.
      * @return
      */
-    public static String getMessage(String code,String defaultMessage){
+    public static String getMessage(String code,String defaultMessage) {
         return getMessage(code, null,defaultMessage);
     }
 
@@ -61,13 +61,13 @@ public class MessageSourceUtil {
      * @param defaultMessage 没有设置key的时候的默认值.
      * @return
      */
-    public static String getMessage(String code,Object[] args,String defaultMessage){
+    public static String getMessage(String code,Object[] args,String defaultMessage) {
         Locale locale = LocaleContextHolder.getLocale();
         MessageSource messageSource = getMessageSource();
-        if(messageSource!=null){
+        if (messageSource != null) {
             return messageSource.getMessage(code, args, defaultMessage, locale);
         }
-        if(defaultMessage!=null) {
+        if (defaultMessage != null) {
             return defaultMessage;
         }
         LOGGER.warn("未找到{}对应的消息体",code);

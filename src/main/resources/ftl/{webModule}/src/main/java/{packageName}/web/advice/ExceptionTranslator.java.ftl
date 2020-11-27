@@ -84,7 +84,7 @@ public class ExceptionTranslator {
         ReplyVO replyVO = new ReplyVO();
         replyVO.setCode(ErrorCode.ERR_VALIDATION.getValue());
         replyVO.setMessage(ErrorCode.ERR_VALIDATION.getDesc());
-        if(CollectionUtils.isNotEmpty(errors)){
+        if (CollectionUtils.isNotEmpty(errors)) {
             List<String> errorMsgs = errors.stream()
                 .map(error -> error.getDefaultMessage())
                 .collect(Collectors.toList());

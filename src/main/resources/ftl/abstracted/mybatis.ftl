@@ -3,9 +3,9 @@
 <#-- 生成if不为空条件内容，支持字段别名-->
 <#function ifNotEmptyConditionWithAlias alias field>
     <#if QueryType.isIn(field.queryType)>
-        <#return "${alias} != null and ${alias}.size() >0 " >
-    <#elseIf field.jfieldType==JFieldType.STRING.getJavaType()>
-        <#return "${alias} != null and ${alias} !='' " >
+        <#return "${alias} != null and ${alias}.size() > 0 " >
+    <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
+        <#return "${alias} != null and ${alias} != '' " >
     <#else>
         <#return "${alias} != null " >
     </#if>
@@ -23,7 +23,7 @@
 <#function getSelectFieldWithAlias field tableAlias fieldAlias="">
     <#if fieldAlias?hasContent>
         <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(fieldAlias)}">
-    <#elseIf field.fieldName?capitalize!=field.jfieldName?capitalize>
+    <#elseIf field.fieldName?capitalize != field.jfieldName?capitalize>
         <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(field.jfieldName)}">
     <#else>
         <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)}">

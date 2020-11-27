@@ -10,13 +10,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Integer getInteger(Object obj){
-        if(obj==null){
+    public static Integer getInteger(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Integer.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -24,13 +25,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Long getLong(Object obj){
-        if(obj==null){
+    public static Long getLong(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Long.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -38,13 +40,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Short getShort(Object obj){
-        if(obj==null){
+    public static Short getShort(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Short.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -52,13 +55,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Double getDouble(Object obj){
-        if(obj==null){
+    public static Double getDouble(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Double.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -66,13 +70,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static BigDecimal getBigDecimal(Object obj){
-        if(obj==null){
+    public static BigDecimal getBigDecimal(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return new BigDecimal(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -80,13 +85,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Float getFloat(Object obj){
-        if(obj==null){
+    public static Float getFloat(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Float.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -94,13 +100,14 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static Boolean getBoolean(Object obj){
-        if(obj==null){
+    public static Boolean getBoolean(Object obj) {
+        if (obj == null) {
             return null;
         }
         try {
             return Boolean.valueOf(obj.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
     /**
@@ -108,8 +115,8 @@ public class SafeUtil {
      * @param obj
      * @return
      */
-    public static String getString(Object obj){
-        return obj==null?null:obj.toString();
+    public static String getString(Object obj) {
+        return obj == null ? null : obj.toString();
     }
 
 

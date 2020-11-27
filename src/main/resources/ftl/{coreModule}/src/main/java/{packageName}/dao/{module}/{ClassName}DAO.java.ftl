@@ -65,7 +65,7 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
 
 <#list this.metaEntity.checkUniqueIndexes as index>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
-    <#assign suffix=(index?index==0)?string('',''+index?index)>
+    <#assign suffix=(index?index == 0)?string('', '' + index?index)>
     <#assign params=''>
     <#list index.fields as field>
         <#assign params+='@Param("'+field.jfieldName+'")'+field.jfieldType+' '+field.jfieldName+', '>

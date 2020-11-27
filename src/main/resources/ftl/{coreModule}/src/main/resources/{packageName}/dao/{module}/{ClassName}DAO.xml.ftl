@@ -69,7 +69,7 @@
             </#if>
         </#list>
         <#list set_field_arr as field>
-            <#if field.specialField?? && field.specialField==MetaSpecialField.VERSION>
+            <#if field.specialField?? && field.specialField == MetaSpecialField.VERSION>
             ${wrapMysqlKeyword(field.fieldName)} = ${wrapMysqlKeyword(field.fieldName)}+1<#if field?hasNext>,</#if>
             <#elseIf !field.primaryKey && !MetaSpecialField.isCreatedBy(field.specialField)  && !MetaSpecialField.isCreatedTime(field.specialField) >
             ${wrapMysqlKeyword(field.fieldName)}=${r'#'}{${field.jfieldName},jdbcType=${JFieldType.mapperJdbcType(field.jfieldType)}}<#if field?hasNext>,</#if>
@@ -255,7 +255,7 @@
     <sql id="orderCondition">
         order by
         <#list this.listSortFields as id,field>
-        <if test="${field.jfieldName}SortSign != null and ${field.jfieldName}SortSign!=0">
+        <if test="${field.jfieldName}SortSign != null and ${field.jfieldName}SortSign != 0">
             t.${wrapMysqlKeyword(field.fieldName)} <if test="${field.jfieldName}SortSign > 0">asc</if><if test="${field.jfieldName}SortSign &lt; 0">desc</if>,
         </if>
         </#list>
@@ -433,7 +433,7 @@
 
 </#list>
 <#list this.metaEntity.checkUniqueIndexes as index>
-    <#assign suffix=(index?index==0)?string('',''+index?index)>
+    <#assign suffix=(index?index == 0)?string('',''+index?index)>
     <select id="notUnique${suffix}" resultType="boolean">
         select count(1) from ${wrapTableName} t
         <where>

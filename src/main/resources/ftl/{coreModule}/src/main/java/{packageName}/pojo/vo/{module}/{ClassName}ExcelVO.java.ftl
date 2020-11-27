@@ -33,16 +33,16 @@ public class ${this.className}ExcelVO extends AbstractVO {
 
 <#--当前实体列表展示字段-->
 <#list this.listFields as id,field>
-    <#if field.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+    <#if field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}", converter = LocalDateConverter.class)
-    <#elseIf field.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateTimeConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}", converter = LocalDateTimeConverter.class)
     <#else>
     @ExcelProperty("${field.fieldDesc}")
     </#if>
-    <#if field.jfieldType==JFieldType.DATE.getJavaType()>
+    <#if field.jfieldType == JFieldType.DATE.getJavaType()>
         <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(field)})
     </#if>
@@ -58,16 +58,16 @@ public class ${this.className}ExcelVO extends AbstractVO {
 <#list this.fkFields as id,field>
     <#list field.cascadeListExts! as cascadeExt>
         <#assign cascadeField=cascadeExt.cascadeField>
-        <#if cascadeField.jfieldType==JFieldType.LOCALDATE.getJavaType()>
+        <#if cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()>
             <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${cascadeField.fieldDesc}", converter = LocalDateConverter.class)
-        <#elseIf cascadeField.jfieldType==JFieldType.LOCALDATETIME.getJavaType()>
+        <#elseIf cascadeField.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("${this.packageName}.excel.converter.LocalDateTimeConverter")/>
     @ExcelProperty(value = "${cascadeField.fieldDesc}", converter = LocalDateTimeConverter.class)
         <#else>
     @ExcelProperty("${cascadeField.fieldDesc}")
         </#if>
-        <#if cascadeField.jfieldType==JFieldType.DATE.getJavaType()>
+        <#if cascadeField.jfieldType == JFieldType.DATE.getJavaType()>
             <@call this.addImport("com.alibaba.excel.annotation.format.DateTimeFormat")/>
     @DateTimeFormat(${guessDateFormat(cascadeField)})
         </#if>

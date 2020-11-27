@@ -115,7 +115,7 @@ public class ${this.className}Controller extends AbstractController implements $
     @DeleteMapping
     public ResponseEntity<Integer> deleteBatch(@RequestBody ${this.type}[] id) {
         <@call this.addImport("org.apache.commons.lang3.ArrayUtils")/>
-        if(ArrayUtils.isEmpty(id)){
+        if (ArrayUtils.isEmpty(id)) {
             throw new BusinessException(ErrorCode.PARAM_IS_NULL);
         }
         int count = ${this.classNameLower}Service.delete(id);
