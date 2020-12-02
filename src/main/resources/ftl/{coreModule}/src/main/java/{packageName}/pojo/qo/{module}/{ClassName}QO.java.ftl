@@ -50,7 +50,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
         </#if>
     private ${field.jfieldType} ${jfieldName};
     </#if>

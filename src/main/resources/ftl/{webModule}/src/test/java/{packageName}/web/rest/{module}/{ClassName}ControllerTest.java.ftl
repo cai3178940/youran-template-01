@@ -247,5 +247,4 @@ public class ${this.className}ControllerTest extends AbstractWebTest {
 
 
 ${methodCode}
-
 }

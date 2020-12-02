@@ -112,7 +112,6 @@ public class ${this.className}ShowVO extends AbstractVO {
 </#if>
 <#--多对多级联扩展详情展示【静态内部类】-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
-
     <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className>
     <#assign exampleClass="${otherEntity.className}Example">
@@ -161,8 +160,8 @@ public class ${this.className}ShowVO extends AbstractVO {
         </#list>
     </#if>
     }
-</#list>
 
+</#list>
 
 }
 </#assign>

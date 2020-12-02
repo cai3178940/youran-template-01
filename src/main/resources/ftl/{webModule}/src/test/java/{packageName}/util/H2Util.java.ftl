@@ -25,7 +25,7 @@ public class H2Util {
      * @return 临时文件路径
      */
     public static String getH2Script(String pathInClass) {
-        String tempFolder =  TempDirUtil.getTmpDir(null, true, false);
+        String tempFolder = TempDirUtil.getTmpDir(null, true, false);
         String path = tempFolder + File.separator + pathInClass;
         File file = new File(path);
         File parentFile = file.getParentFile();
