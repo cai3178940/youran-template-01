@@ -15,11 +15,11 @@
 <@call this.printClassCom("给excel单元格设置下拉框")/>
 public class ConstConstraintHandler implements SheetWriteHandler {
 
-    private String[] constraint;
-    private int firstRow;
-    private int lastRow;
-    private int firstCol;
-    private int lastCol;
+    private final String[] constraint;
+    private final int firstRow;
+    private final int lastRow;
+    private final int firstCol;
+    private final int lastCol;
 
     public ConstConstraintHandler(String[] constraint,
                                   int firstRow, int lastRow,

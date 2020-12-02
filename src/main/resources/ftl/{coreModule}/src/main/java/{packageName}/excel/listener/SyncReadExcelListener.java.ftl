@@ -14,7 +14,7 @@
 <@call this.printClassCom("同步读取excel的监听器")/>
 public class SyncReadExcelListener<T extends AbstractExcelDTO> extends AnalysisEventListener<T> {
 
-    private List<T> list = new ArrayList<>();
+    private final List<T> list = new ArrayList<>();
 
     @Override
     public void invoke(T data, AnalysisContext context) {

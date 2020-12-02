@@ -10,7 +10,7 @@ public class TestConfiguration {
 
     @Bean
     public H2Flusher h2Flusher(JdbcTemplate jdbcTemplate) {
-        return new H2Flusher(jdbcTemplate,"DB/${this.projectName}.sql");
+        return new H2Flusher(jdbcTemplate, "DB/${this.projectName}.sql");
     }
 
 }

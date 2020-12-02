@@ -97,7 +97,7 @@ public class ConvertUtil {
         if (list == null) {
             return null;
         }
-        return convertListToArray(list, input -> (T)input.get(key), clazz);
+        return convertListToArray(list, input -> (T) input.get(key), clazz);
     }
 
     /**

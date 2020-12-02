@@ -42,16 +42,15 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     private List<${field.jfieldType}> ${jfieldName};
     <#else>
     <#--其他查询方式-->
-    @ApiParam(value = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase})
+    @ApiParam(value = ${exampleClass}N_${jfieldNameSnakeCase}, example = ${exampleClass}E_${jfieldNameSnakeCase})
         <#if field.jfieldType == JFieldType.STRING.getJavaType()>
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>
-    @Length(max = ${field.fieldLength},message = "${jfieldName}最大长度不能超过{max}")
+    @Length(max = ${field.fieldLength}, message = "${jfieldName}最大长度不能超过{max}")
         <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
-            <@call this.addImport("java.util.Date")/>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone="GMT+8")
         </#if>
     private ${field.jfieldType} ${jfieldName};
     </#if>
@@ -100,7 +99,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 </#list>
 <#--开始渲染排序条件声明语句-->
 <#list this.listSortFields as id,field>
-    @ApiParam(value = "${field.fieldDesc}排序标识【1升序,-1降序,0不排序】",example = "1")
+    @ApiParam(value = "${field.fieldDesc}排序标识【1升序,-1降序,0不排序】", example = "1")
     private Integer ${field.jfieldName}SortSign;
 
 </#list>

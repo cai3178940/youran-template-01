@@ -20,7 +20,7 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign pkNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(this.pk.jfieldName,true)>
-    @ApiModelProperty(notes = N_${pkNameSnakeCase},example = E_${pkNameSnakeCase},required = true)
+    @ApiModelProperty(notes = N_${pkNameSnakeCase}, example = E_${pkNameSnakeCase}, required = true)
     @NotNull
     <#if this.pk.jfieldType == JFieldType.STRING.getJavaType()>
         <#if this.pk.fieldLength gt 0 >
@@ -36,7 +36,7 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
-    @ApiModelProperty(notes = N_${jfieldNameSnakeCase},example = E_${jfieldNameSnakeCase}<#if field.notNull>,required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
     @NotNull
     </#if>

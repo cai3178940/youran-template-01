@@ -13,11 +13,11 @@ public class H2Flusher implements InitializingBean {
     /**
      * 数据库脚本文件保存路径
      */
-    private final Map<String,String> scriptFilePath;
+    private final Map<String, String> scriptFilePath;
 
     private final JdbcTemplate jdbcTemplate;
 
-    public H2Flusher(JdbcTemplate jdbcTemplate,String... scriptFiles) {
+    public H2Flusher(JdbcTemplate jdbcTemplate, String... scriptFiles) {
         this.jdbcTemplate = jdbcTemplate;
         this.scriptFilePath = new HashMap<>();
         for (String scriptFile : scriptFiles) {
@@ -31,7 +31,7 @@ public class H2Flusher implements InitializingBean {
     public void flushDB() {
         jdbcTemplate.execute("drop all objects;");
         for (String key : scriptFilePath.keySet()) {
-            jdbcTemplate.execute("runscript from '"+ scriptFilePath.get(key)+"'");
+            jdbcTemplate.execute("runscript from '" + scriptFilePath.get(key) + "'");
         }
     }
 

@@ -60,6 +60,7 @@ public class ${this.className}Service {
 <#if this.metaEntity.checkUniqueIndexes?? && this.metaEntity.checkUniqueIndexes?size &gt; 0>
     /**
      * 校验数据唯一性
+     *
      * @param ${this.classNameLower}
      * @param isUpdate 是否更新校验
      */
@@ -70,7 +71,7 @@ public class ${this.className}Service {
         <#list index.fields as field>
             <#assign params+=this.classNameLower+'.get'+field.jfieldName?capFirst+'(), '>
         </#list>
-        if (${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate?${this.classNameLower}.get${this.idUpper}():null)) {
+        if (${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate ? ${this.classNameLower}.get${this.idUpper}() : null)) {
             throw new BusinessException(ErrorCode.DUPLICATE_KEY);
         }
     </#list>
@@ -84,7 +85,7 @@ public class ${this.className}Service {
             <@call this.addImport("org.springframework.util.Assert")/>
             <#assign foreigncName=lowerFirstWord(field.foreignEntity.className)>
         if (${this.classNameLower}.get${field.jfieldName?capFirst}() != null) {
-            Assert.isTrue(${foreigncName}DAO.exist(${this.classNameLower}.get${field.jfieldName?capFirst}()),"${field.fieldDesc}有误");
+            Assert.isTrue(${foreigncName}DAO.exist(${this.classNameLower}.get${field.jfieldName?capFirst}()), "${field.fieldDesc}有误");
         }
         </#if>
     </#list>
@@ -102,7 +103,7 @@ public class ${this.className}Service {
         <@checkForeignKeys this.insertFields/>
 <#if this.metaEntity.checkUniqueIndexes?? && this.metaEntity.checkUniqueIndexes?size &gt; 0>
         // 唯一性校验
-        this.checkUnique(${this.classNameLower},false);
+        this.checkUnique(${this.classNameLower}, false);
 </#if>
 <#-- addDTO中不存在并且不能为空的字段，赋初始值 -->
 <#list this.fields as id,field>
@@ -178,7 +179,7 @@ public class ${this.className}Service {
         <@checkForeignKeys this.updateFields/>
 <#if this.metaEntity.checkUniqueIndexes?? && this.metaEntity.checkUniqueIndexes?size &gt; 0>
         // 唯一性校验
-        this.checkUnique(${this.classNameLower},true);
+        this.checkUnique(${this.classNameLower}, true);
 </#if>
         ${this.classNameLower}DAO.update(${this.classNameLower});
 <#list this.holds! as otherEntity,mtm>

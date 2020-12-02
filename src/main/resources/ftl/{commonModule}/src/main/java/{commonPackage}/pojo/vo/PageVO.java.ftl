@@ -3,7 +3,6 @@
 <#assign code>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
-<@call this.addImport("java.util.ArrayList")/>
 <@call this.addImport("java.util.List")/>
 <@call this.addImport("org.apache.commons.lang3.builder.ToStringBuilder")/>
 <@call this.addImport("org.apache.commons.lang3.builder.ToStringStyle")/>

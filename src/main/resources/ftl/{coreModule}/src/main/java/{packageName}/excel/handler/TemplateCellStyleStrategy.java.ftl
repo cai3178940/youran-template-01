@@ -14,8 +14,8 @@
 <@call this.printClassCom("excel模板单元格样式策略")/>
 public class TemplateCellStyleStrategy extends AbstractCellStyleStrategy {
 
-    private WriteCellStyle headWriteCellStyle;
-    private WriteCellStyle contentWriteCellStyle;
+    private final WriteCellStyle headWriteCellStyle;
+    private final WriteCellStyle contentWriteCellStyle;
 
     private CellStyle headCellStyle;
     private CellStyle contentCellStyle;

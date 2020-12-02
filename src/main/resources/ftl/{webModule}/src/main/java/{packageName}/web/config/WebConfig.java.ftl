@@ -43,7 +43,7 @@ public class WebConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonXSSCustomizer() {
         return jacksonObjectMapperBuilder ->
-                jacksonObjectMapperBuilder.deserializerByType(String.class,new JacksonXSSDeserializer());
+                jacksonObjectMapperBuilder.deserializerByType(String.class, new JacksonXSSDeserializer());
     }
 
 

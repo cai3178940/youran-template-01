@@ -22,12 +22,10 @@ public enum ${this.constNameUpper} {
     /**
      * ${detail.detailRemark}
      */
-    ${detail.detailName}(${valueStr},"${detail.detailRemark}")<#if detail?hasNext>,<#else >;</#if>
+    ${detail.detailName}(${valueStr}, "${detail.detailRemark}"),
 </#list>
+    ;
 
-
-    private final ${this.constTypeStr} value;
-    private final String desc;
 
     /**
      * 枚举值罗列，给swagger接口文档展示用
@@ -41,6 +39,9 @@ public enum ${this.constNameUpper} {
             LOOKUP.put(e.value, e);
         }
     }
+
+    private final ${this.constTypeStr} value;
+    private final String desc;
 
 
     ${this.constNameUpper}(${this.constTypeStr} value, String desc) {

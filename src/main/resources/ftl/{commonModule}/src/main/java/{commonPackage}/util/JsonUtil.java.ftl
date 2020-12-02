@@ -21,6 +21,7 @@ public class JsonUtil {
     private final static Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 
     private static final ObjectMapper mapper = new ObjectMapper();
+
     static {
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

@@ -92,9 +92,9 @@ public class ${this.className}ListVO extends AbstractVO {
         <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
     </#list>
 </#if>
-
 <#--多对多列表展示【静态内部类】-->
 <#list mtmCascadeEntitiesForList as otherEntity>
+
     <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
     <#assign otherCName=otherEntity.className>
     <#assign exampleClass="${otherEntity.className}Example">
@@ -144,6 +144,7 @@ public class ${this.className}ListVO extends AbstractVO {
     </#if>
     }
 </#list>
+
 
 }
 </#assign>

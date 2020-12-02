@@ -27,6 +27,7 @@ public class ${this.className}Helper {
     </#if>
     /**
      * 生成add测试数据
+     *
      * @return
      */
     public ${this.className}AddDTO get${this.className}AddDTO(${foreignArg}) {
@@ -64,6 +65,7 @@ public class ${this.className}Helper {
 
     /**
      * 生成update测试数据
+     *
      * @return
      */
     public ${this.className}UpdateDTO get${this.className}UpdateDTO(${this.className}PO ${this.classNameLower}) {
@@ -77,13 +79,13 @@ public class ${this.className}Helper {
 
     /**
      * 保存示例
+     *
      * @return
      */
     public ${this.className}PO save${this.className}Example(${foreignArg}) {
         ${this.className}AddDTO addDTO = this.get${this.className}AddDTO(${foreignArg2});
         return ${this.classNameLower}Service.save(addDTO);
     }
-
 
 
 }

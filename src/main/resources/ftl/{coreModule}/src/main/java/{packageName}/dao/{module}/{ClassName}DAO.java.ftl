@@ -68,9 +68,9 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
     <#assign suffix=(index?index == 0)?string('', '' + index?index)>
     <#assign params=''>
     <#list index.fields as field>
-        <#assign params+='@Param("'+field.jfieldName+'")'+field.jfieldType+' '+field.jfieldName+', '>
+        <#assign params+='@Param("'+field.jfieldName+'") '+field.jfieldType+' '+field.jfieldName+', '>
     </#list>
-    boolean notUnique${suffix}(${params}@Param("${this.id}")${this.type} ${this.id});
+    boolean notUnique${suffix}(${params}@Param("${this.id}") ${this.type} ${this.id});
 
 </#list>
 }

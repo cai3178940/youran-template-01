@@ -27,12 +27,12 @@ public class ${this.className}ShowVO extends AbstractVO {
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
     </#if>
-    @ApiModelProperty(notes = N_${jfieldNameSnakeCase},example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.jfieldType == JFieldType.DATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
+    @JsonFormat(pattern=${guessDateFormat(field)}, timezone="GMT+8")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
@@ -53,12 +53,12 @@ public class ${this.className}ShowVO extends AbstractVO {
         </#if>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
-    @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase},example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${cascadeField.dicType}.VALUES_STR</#if>)
+    @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase}, example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${cascadeField.dicType}.VALUES_STR</#if>)
         <#if cascadeField.jfieldType == JFieldType.DATE.getJavaType()
             || cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || cascadeField.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern=${guessDateFormat(cascadeField)},timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(cascadeField)}, timezone="GMT+8")
         </#if>
     private ${cascadeField.jfieldType} ${cascadeExt.alias};
 
@@ -110,9 +110,9 @@ public class ${this.className}ShowVO extends AbstractVO {
         <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
     </#list>
 </#if>
-
 <#--多对多级联扩展详情展示【静态内部类】-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
+
     <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
     <#assign otherCName=otherEntity.className>
     <#assign exampleClass="${otherEntity.className}Example">
@@ -127,7 +127,7 @@ public class ${this.className}ShowVO extends AbstractVO {
     <#assign pkField=otherEntity.pkField>
     <#--字段名转下划线大写-->
     <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(pkField.jfieldName,true)>
-        @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase},example = ${exampleClass}.E_${pkFieldNameSnakeCase})
+        @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase}, example = ${exampleClass}.E_${pkFieldNameSnakeCase})
         private ${pkField.jfieldType} ${pkField.jfieldName};
 
     <#--多对多级联扩展，列表展示字段-->
@@ -140,12 +140,12 @@ public class ${this.className}ShowVO extends AbstractVO {
         <#if field.dicType??>
             <@call this.addConstImport(field.dicType)/>
         </#if>
-        @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase},example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
+        @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase}, example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
         <#if field.jfieldType == JFieldType.DATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-        @JsonFormat(pattern=${guessDateFormat(field)},timezone="GMT+8")
+        @JsonFormat(pattern = ${guessDateFormat(field)}, timezone="GMT+8")
         </#if>
         private ${field.jfieldType} ${field.jfieldName};
 
@@ -162,6 +162,7 @@ public class ${this.className}ShowVO extends AbstractVO {
     </#if>
     }
 </#list>
+
 
 }
 </#assign>

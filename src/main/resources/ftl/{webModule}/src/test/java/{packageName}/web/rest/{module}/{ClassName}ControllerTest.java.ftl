@@ -35,9 +35,9 @@
         <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
         ${this.className}AddDTO addDTO = ${this.classNameLower}Helper.get${this.className}AddDTO(<@call this.printSaveExampleArg(this.metaEntity)/>);
         restMockMvc.perform(post(${renderApiPath(this.metaEntity, "")})
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(addDTO)))
-            .andExpect(status().isCreated());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(addDTO)))
+                .andExpect(status().isCreated());
     }
 
 </#if>
@@ -53,9 +53,9 @@
         <@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
         ${this.className}UpdateDTO updateDTO = ${this.classNameLower}Helper.get${this.className}UpdateDTO(${this.classNameLower});
         restMockMvc.perform(put(${renderApiPath(this.metaEntity, "")})
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(updateDTO)))
-            .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(updateDTO)))
+                .andExpect(status().isOk());
     }
 
 </#if>
@@ -73,11 +73,11 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "")}))
-            .andExpect(status().isOk())
+                .andExpect(status().isOk())
     <#if this.pageSign>
-            .andExpect(jsonPath("$.list.length()").value(is(1)));
+                .andExpect(jsonPath("$.list.length()").value(is(1)));
     <#else>
-            .andExpect(jsonPath("$.length()").value(is(1)));
+                .andExpect(jsonPath("$.length()").value(is(1)));
     </#if>
     }
 
@@ -92,8 +92,8 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/options")}))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.length()").value(is(1)));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(is(1)));
     }
 
 </#if>
@@ -107,7 +107,7 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.classNameLower}.get${this.idUpper}()))
-            .andExpect(status().isOk());
+                .andExpect(status().isOk());
     }
 
 </#if>
@@ -121,8 +121,8 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "/{${this.id}}")}, ${this.classNameLower}.get${this.idUpper}()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(is(1)));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
     }
 
 </#if>
@@ -137,10 +137,10 @@
         ${saveExample}
     </#list>
         restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "")})
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(Lists.newArrayList(${this.classNameLower}.get${this.idUpper}()))))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(is(1)));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(Lists.newArrayList(${this.classNameLower}.get${this.idUpper}()))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
     }
 
 </#if>
@@ -164,23 +164,23 @@
         </#list>
         // 先测试添加【${otherEntity.title}】关联
         restMockMvc.perform(post(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.classNameLower}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(is(1)));
+                ${this.classNameLower}.get${this.idUpper}())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
         // 再测试查询【${otherEntity.title}】关联
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.classNameLower}.get${this.idUpper}()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.length()").value(is(1)));
+                ${this.classNameLower}.get${this.idUpper}()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(is(1)));
         // 最后测试移除【${otherEntity.title}】关联
         restMockMvc.perform(delete(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.classNameLower}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(is(1)));
+                ${this.classNameLower}.get${this.idUpper}())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
     }
 
     </#if>
@@ -196,16 +196,16 @@
         </#list>
         // 先测试设置【${otherEntity.title}】关联
         restMockMvc.perform(put(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.classNameLower}.get${this.idUpper}())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(is(1)));
+                ${this.classNameLower}.get${this.idUpper}())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.toJSONString(Lists.newArrayList(${othercName}.get${otherPk.jfieldName?capFirst}()))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
         // 再测试查询【${otherEntity.title}】关联
         restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/{${this.id}}/${othercName}")},
-            ${this.classNameLower}.get${this.idUpper}()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.length()").value(is(1)));
+                ${this.classNameLower}.get${this.idUpper}()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(is(1)));
     }
 
     </#if>

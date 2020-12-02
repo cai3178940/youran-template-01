@@ -147,6 +147,7 @@ public class ${this.className}PO extends AbstractPO${implementsStr} {
     /**
 ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())}
     <#if field.dicType??>
+     *
      * @see ${this.getConstFullClassPath(field.dicType)}
     </#if>
      */

@@ -14,10 +14,9 @@
 <@call this.printClassCom("给excel单元格设置下拉框")/>
 public class TitleDescriptionWriteHandler implements SheetWriteHandler {
 
-
-    private String title;
-    private String[] description;
-    private Class dtoClass;
+    private final String title;
+    private final String[] description;
+    private final Class dtoClass;
 
     public TitleDescriptionWriteHandler(String title, String[] description, Class dtoClass) {
         this.title = title;

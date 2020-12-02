@@ -26,6 +26,8 @@ public class MessageSourceUtil {
     }
 
     /**
+     * 获取国际化后的字符串
+     *
      * @param code 对应messages配置的key.
      * @return
      */
@@ -34,6 +36,7 @@ public class MessageSourceUtil {
     }
 
     /**
+     * 获取国际化后的字符串
      *
      * @param code 对应messages配置的key.
      * @param args 数组参数.
@@ -44,6 +47,7 @@ public class MessageSourceUtil {
     }
 
     /**
+     * 获取国际化后的字符串
      *
      * @param code           对应messages配置的key.
      * @param defaultMessage 没有设置key的时候的默认值.
@@ -55,6 +59,7 @@ public class MessageSourceUtil {
 
 
     /**
+     * 获取国际化后的字符串
      *
      * @param code           对应messages配置的key.
      * @param args           数组参数.

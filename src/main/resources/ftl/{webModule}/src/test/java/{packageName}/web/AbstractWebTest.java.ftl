@@ -6,7 +6,7 @@
 <@call this.addImport("org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc")/>
 <@call this.addImport("org.springframework.test.web.servlet.MockMvc")/>
 <@call this.printClassCom("web单元测试抽象类")/>
-@AutoConfigureMockMvc(printOnlyOnFailure=false)
+@AutoConfigureMockMvc(printOnlyOnFailure = false)
 public abstract class AbstractWebTest extends AbstractTest {
 
     @Autowired

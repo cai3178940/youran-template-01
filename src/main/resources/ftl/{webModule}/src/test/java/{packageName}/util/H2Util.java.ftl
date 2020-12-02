@@ -20,12 +20,13 @@ public class H2Util {
 
     /**
      * 修改数据库脚本并保存到临时目录
+     *
      * @param pathInClass 文件在classpath下路径
      * @return 临时文件路径
      */
     public static String getH2Script(String pathInClass) {
-        String tempFolder =  TempDirUtil.getTmpDir(null,true,false);
-        String path = tempFolder+File.separator+pathInClass;
+        String tempFolder =  TempDirUtil.getTmpDir(null, true, false);
+        String path = tempFolder + File.separator + pathInClass;
         File file = new File(path);
         File parentFile = file.getParentFile();
         if (!parentFile.exists()) {
@@ -61,11 +62,11 @@ public class H2Util {
         }
 
         static class ConverterIterator implements Iterator<SqlStatement> {
-            private Map<String, Integer> indexNameOccurrences = new HashMap<>();
-            private List<SqlStatement> delayedStatements = new ArrayList<>();
+            private final Map<String, Integer> indexNameOccurrences = new HashMap<>();
+            private final List<SqlStatement> delayedStatements = new ArrayList<>();
 
-            private Iterator<SqlStatement> sourceIterator;
-            private List<SqlStatement> nextStatements = new ArrayList<>();
+            private final Iterator<SqlStatement> sourceIterator;
+            private final List<SqlStatement> nextStatements = new ArrayList<>();
             private Iterator<SqlStatement> nextStatementIterator, delayedStatementsIterator;
 
             ConverterIterator(Iterator<SqlStatement> sourceIterator) {
@@ -307,11 +308,12 @@ public class H2Util {
     }
 
     static class CreateIndexStatement implements SqlStatement {
-        private boolean unique, ifNotExists;
-        private String tableName;
-        private String indexType;
-        private String indexName;
-        private List<ColumnName> columnNames;
+        private final boolean unique;
+        private final boolean ifNotExists;
+        private final String tableName;
+        private final String indexType;
+        private final String indexName;
+        private final List<ColumnName> columnNames;
 
         CreateIndexStatement(boolean unique, String indexType, boolean ifNotExists, String indexName, String tableName, List<ColumnName> columnNames) {
             this.unique = unique;

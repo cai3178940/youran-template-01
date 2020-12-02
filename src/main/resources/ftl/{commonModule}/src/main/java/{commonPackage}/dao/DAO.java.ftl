@@ -65,7 +65,7 @@ public interface DAO<PO extends AbstractPO> {
      *
      * @param po 实体PO对象
      * @return 保存成功数量
-     *         如果保存成功返回1，失败则返回0
+     * 如果保存成功返回1，失败则返回0
      */
     int _save(PO po);
 

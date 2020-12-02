@@ -14,7 +14,7 @@
         <#else>
             <@call this.addImport("${this.packageName}.web.rest.${metaEntity.className}ControllerTest")/>
         </#if>
-    ${metaEntity.className}ControllerTest.class,
+        ${metaEntity.className}ControllerTest.class,
     </#if>
 </#list>
 })
