@@ -25,7 +25,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="新增【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.classNameLower}AddDTO", dataType = "${this.className}AddDTO", value = "新增【${this.title}】参数", paramType = "body"),
+        @ApiImplicitParam(name = "${this.classNameLower}AddDTO", dataTypeClass = ${this.className}AddDTO.class, value = "新增【${this.title}】参数", paramType = "body"),
     })
     ResponseEntity<${this.className}ShowVO> save(${this.className}AddDTO ${this.classNameLower}AddDTO) throws Exception;
 
@@ -38,7 +38,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="修改【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.classNameLower}UpdateDTO", dataType = "${this.className}UpdateDTO", value = "修改【${this.title}】参数", paramType = "body"),
+        @ApiImplicitParam(name = "${this.classNameLower}UpdateDTO", dataTypeClass = ${this.className}UpdateDTO.class, value = "修改【${this.title}】参数", paramType = "body"),
     })
     ResponseEntity<${this.className}ShowVO> update(${this.className}UpdateDTO ${this.classNameLower}UpdateDTO);
 
@@ -81,7 +81,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="查看【${this.title}】详情")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<${this.className}ShowVO> show(${this.type} ${this.id});
 
@@ -92,7 +92,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="删除单个【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<Integer> delete(${this.type} ${this.id});
 
@@ -103,7 +103,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value = "批量删除【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "id数组", paramType = "body"),
+        @ApiImplicitParam(name = "id", dataTypeClass = ${this.type}.class, value = "id数组", paramType = "body"),
     })
     ResponseEntity<Integer> deleteBatch(${this.type}[] id);
 
@@ -131,7 +131,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="获取【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<List<${resultType}>> fetch${otherCName}List(${this.type} ${this.id});
 
@@ -142,8 +142,8 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="添加【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataType = "${JavaTemplateFunction.getSwaggerType(otherPk.jfieldType)}", value = "【${otherEntity.title}】id数组", paramType = "body"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> add${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
@@ -152,8 +152,8 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="移除【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataType = "${JavaTemplateFunction.getSwaggerType(otherPk.jfieldType)}", value = "【${otherEntity.title}】id数组", paramType = "body"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> remove${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
@@ -164,8 +164,8 @@ public interface ${this.className}API {
      */
     @ApiOperation(value="设置【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataType = "${JavaTemplateFunction.getSwaggerType(this.type)}", value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataType = "${JavaTemplateFunction.getSwaggerType(otherPk.jfieldType)}", value = "【${otherEntity.title}】id数组", paramType = "body"),
+        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> set${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
