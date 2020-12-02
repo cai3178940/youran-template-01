@@ -14,7 +14,7 @@
 <@call this.addImport("java.util.stream.Collectors")/>
 <@call this.printClassCom("打印启动日志")/>
 @Component
-public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
+public class StartLogCommandLineRunner implements CommandLineRunner, Ordered {
 
     private static final Logger LOG = LoggerFactory.getLogger(StartLogCommandLineRunner.class);
 
@@ -29,20 +29,20 @@ public class StartLogCommandLineRunner implements CommandLineRunner,Ordered {
 
     @Override
     public void run(String... args) throws Exception {
-        String port = env.getProperty("server.port","8080");
-        String contextPath = env.getProperty("server.servlet.context-path","/");
-        String applicationName = env.getProperty("spring.application.name","");
+        String port = env.getProperty("server.port", "8080");
+        String contextPath = env.getProperty("server.servlet.context-path", "/");
+        String applicationName = env.getProperty("spring.application.name", "");
         String profiles = "";
         if (ArrayUtils.isNotEmpty(env.getActiveProfiles())) {
             profiles = Arrays.stream(env.getActiveProfiles()).collect(Collectors.joining(","));
         }
         StringBuilder sb = new StringBuilder();
         sb.append("\n----------------------------------------------------------\n")
-            .append("\t应用【").append(applicationName).append("】已经启动！\n")
-            .append("\t激活profile:\t").append(profiles).append("\n")
-            .append("\t访问路径:\n")
-            .append("\t本地: \thttp://localhost:").append(port).append(contextPath).append("\n")
-            .append("\t外部: \thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("\n");
+                .append("\t应用【").append(applicationName).append("】已经启动！\n")
+                .append("\t激活profile:\t").append(profiles).append("\n")
+                .append("\t访问路径:\n")
+                .append("\t本地: \thttp://localhost:").append(port).append(contextPath).append("\n")
+                .append("\t外部: \thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("\n");
         if (swaggerEnabled) {
             sb.append("\t文档:\thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("swagger-ui/index.html");
         }

@@ -18,6 +18,7 @@ public class ${this.projectNameUpper}App extends SpringBootServletInitializer {
 
     /**
      * 兼容tomcat部署模式
+     *
      * @param application
      * @return
      */

@@ -24,7 +24,7 @@ public interface DAO<PO extends AbstractPO> {
     /**
      * 查询分页结果
      *
-     * @param qo 分页查询参数
+     * @param qo   分页查询参数
      * @param <VO> 列表展示结果类型
      * @param <QO> 分页查询参数类型
      * @return 分页展示对象
@@ -44,7 +44,7 @@ public interface DAO<PO extends AbstractPO> {
     /**
      * 根据条件查询记录数
      *
-     * @param qo 查询参数
+     * @param qo   查询参数
      * @param <QO> 查询参数类型
      * @return
      */
@@ -53,7 +53,7 @@ public interface DAO<PO extends AbstractPO> {
     /**
      * 根据分页条件查询列表
      *
-     * @param qo 查询参数
+     * @param qo   查询参数
      * @param <VO> 列表展示结果类型
      * @param <QO> 查询参数类型
      * @return
@@ -74,7 +74,7 @@ public interface DAO<PO extends AbstractPO> {
      *
      * @param po 实体PO对象
      * @return 保存成功数量
-     *         如果保存成功返回1，失败则返回0
+     * 如果保存成功返回1，失败则返回0
      */
     default int save(PO po) {
         LoginContext loginContext = SpringUtil.getBean(LoginContext.class);
@@ -87,7 +87,7 @@ public interface DAO<PO extends AbstractPO> {
      *
      * @param po 实体PO对象
      * @return 修改成功数量
-     *         如果修改成功返回1，失败则返回0
+     * 如果修改成功返回1，失败则返回0
      */
     int _update(PO po);
 
@@ -97,7 +97,7 @@ public interface DAO<PO extends AbstractPO> {
      *
      * @param po 实体PO对象
      * @return 修改成功数量
-     *         如果修改成功返回1，失败则返回0
+     * 如果修改成功返回1，失败则返回0
      */
     default int update(PO po) {
         LoginContext loginContext = SpringUtil.getBean(LoginContext.class);
@@ -114,7 +114,7 @@ public interface DAO<PO extends AbstractPO> {
      *
      * @param id 主键
      * @return 删除成功数量
-     *         如果删除成功返回1，失败则返回0
+     * 如果删除成功返回1，失败则返回0
      */
     int delete(Object id);
 

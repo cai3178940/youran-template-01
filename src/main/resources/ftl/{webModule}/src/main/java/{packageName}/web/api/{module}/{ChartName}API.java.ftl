@@ -15,7 +15,7 @@ public interface ${this.chartName}API {
     /**
      * 查询明细表
      */
-    @ApiOperation(value="查询明细表")
+    @ApiOperation(value = "查询明细表")
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     ResponseEntity<PageVO<${this.chartName}VO>> findList(${this.chartName}QO qo);
 
@@ -24,14 +24,14 @@ public interface ${this.chartName}API {
     /**
      * 导出excel
      */
-    @ApiOperation(value="导出excel")
+    @ApiOperation(value = "导出excel")
     void exportExcel(${this.chartName}QO qo, HttpServletResponse response) throws Exception;
     </#if>
 <#else>
     /**
      * 查询图表数据
      */
-    @ApiOperation(value="查询图表数据")
+    @ApiOperation(value = "查询图表数据")
     <@call this.addImport("java.util.List")/>
     ResponseEntity<List<Object[]>> findChartData(${this.chartName}QO qo);
 </#if>

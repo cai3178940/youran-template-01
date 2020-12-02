@@ -59,6 +59,7 @@ public class PageQO extends AbstractQO {
     public int getStartIndex() {
         return (pageNo - 1) * pageSize;
     }
+
     public int getEndIndex() {
         return pageNo * pageSize;
     }

@@ -10,6 +10,12 @@ public class MyCustomLocalDateEditor extends PropertyEditorSupport {
 
 
     @Override
+    public String getAsText() {
+        LocalDate value = (LocalDate) getValue();
+        return DateUtil.getLocalDateStr(value);
+    }
+
+    @Override
     public void setAsText(String text) throws IllegalArgumentException {
         if (!StringUtils.hasText(text)) {
             // Treat empty String as null value.
@@ -17,12 +23,6 @@ public class MyCustomLocalDateEditor extends PropertyEditorSupport {
         } else {
             setValue(DateUtil.parseLocalDate(text));
         }
-    }
-
-    @Override
-    public String getAsText() {
-        LocalDate value = (LocalDate) getValue();
-        return DateUtil.getLocalDateStr(value);
     }
 
 

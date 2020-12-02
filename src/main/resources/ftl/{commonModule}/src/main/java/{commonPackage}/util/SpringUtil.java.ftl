@@ -14,6 +14,15 @@ public class SpringUtil implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     /**
+     * 得到上下文
+     *
+     * @return
+     */
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    /**
      * 注入context
      *
      * @param context
@@ -21,15 +30,6 @@ public class SpringUtil implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext context) {
         applicationContext = context;
-    }
-
-    /**
-     * 得到上下文
-     *
-     * @return
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
     }
 
     /**

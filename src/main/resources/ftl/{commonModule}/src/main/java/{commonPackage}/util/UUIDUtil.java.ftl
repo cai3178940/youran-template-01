@@ -11,7 +11,7 @@ public class UUIDUtil {
     }
 
     public static String getUUID16() {
-        return getUUID().substring(8,24);
+        return getUUID().substring(8, 24);
     }
 
 }

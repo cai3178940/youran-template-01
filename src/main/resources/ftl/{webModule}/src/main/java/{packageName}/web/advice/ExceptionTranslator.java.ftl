@@ -86,11 +86,11 @@ public class ExceptionTranslator {
         replyVO.setMessage(ErrorCode.ERR_VALIDATION.getDesc());
         if (CollectionUtils.isNotEmpty(errors)) {
             List<String> errorMsgs = errors.stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.toList());
+                    .map(error -> error.getDefaultMessage())
+                    .collect(Collectors.toList());
             LOGGER.warn(JsonUtil.toJSONString(errorMsgs));
             String message = errorMsgs.stream()
-                .collect(Collectors.joining(";"));
+                    .collect(Collectors.joining(";"));
             replyVO.setMessage(message);
         }
         return replyVO;
@@ -176,7 +176,7 @@ public class ExceptionTranslator {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<ReplyVO> processRuntimeException(Exception ex) {
-        LOGGER.error("系统内部错误",ex);
+        LOGGER.error("系统内部错误", ex);
         ResponseEntity.BodyBuilder builder;
         ReplyVO replyVO;
         ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);

@@ -30,7 +30,7 @@ public class MessageSourceUtil {
      * @return
      */
     public static String getMessage(String code) {
-        return getMessage(code,null,null);
+        return getMessage(code, null, null);
     }
 
     /**
@@ -39,29 +39,29 @@ public class MessageSourceUtil {
      * @param args 数组参数.
      * @return
      */
-    public static String getMessage(String code,Object[] args) {
-        return getMessage(code, args,"");
+    public static String getMessage(String code, Object[] args) {
+        return getMessage(code, args, "");
     }
 
     /**
      *
-     * @param code 对应messages配置的key.
+     * @param code           对应messages配置的key.
      * @param defaultMessage 没有设置key的时候的默认值.
      * @return
      */
-    public static String getMessage(String code,String defaultMessage) {
-        return getMessage(code, null,defaultMessage);
+    public static String getMessage(String code, String defaultMessage) {
+        return getMessage(code, null, defaultMessage);
     }
 
 
     /**
      *
-     * @param code 对应messages配置的key.
-     * @param args 数组参数.
+     * @param code           对应messages配置的key.
+     * @param args           数组参数.
      * @param defaultMessage 没有设置key的时候的默认值.
      * @return
      */
-    public static String getMessage(String code,Object[] args,String defaultMessage) {
+    public static String getMessage(String code, Object[] args, String defaultMessage) {
         Locale locale = LocaleContextHolder.getLocale();
         MessageSource messageSource = getMessageSource();
         if (messageSource != null) {
@@ -70,7 +70,7 @@ public class MessageSourceUtil {
         if (defaultMessage != null) {
             return defaultMessage;
         }
-        LOGGER.warn("未找到{}对应的消息体",code);
+        LOGGER.warn("未找到{}对应的消息体", code);
         return code;
     }
 

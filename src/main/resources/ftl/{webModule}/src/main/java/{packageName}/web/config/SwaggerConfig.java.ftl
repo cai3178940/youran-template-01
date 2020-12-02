@@ -10,18 +10,18 @@
 <@call this.printClassCom("swagger配置")/>
 @Configuration
 @ConditionalOnProperty(
-    value = "springfox.documentation.enabled",
-    havingValue = "true",
-    matchIfMissing = true
+        value = "springfox.documentation.enabled",
+        havingValue = "true",
+        matchIfMissing = true
 )
 public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
-            .select()
-            .paths(PathSelectors.ant("/api/**"))
-            .build();
+                .select()
+                .paths(PathSelectors.ant("/api/**"))
+                .build();
     }
 
 

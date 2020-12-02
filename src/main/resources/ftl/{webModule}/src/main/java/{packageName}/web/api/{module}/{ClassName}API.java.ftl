@@ -23,9 +23,9 @@ public interface ${this.className}API {
     /**
      * 新增【${this.title}】
      */
-    @ApiOperation(value="新增【${this.title}】")
+    @ApiOperation(value = "新增【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.classNameLower}AddDTO", dataTypeClass = ${this.className}AddDTO.class, value = "新增【${this.title}】参数", paramType = "body"),
+            @ApiImplicitParam(name = "${this.classNameLower}AddDTO", dataTypeClass = ${this.className}AddDTO.class, value = "新增【${this.title}】参数", paramType = "body"),
     })
     ResponseEntity<${this.className}ShowVO> save(${this.className}AddDTO ${this.classNameLower}AddDTO) throws Exception;
 
@@ -36,9 +36,9 @@ public interface ${this.className}API {
     /**
      * 修改【${this.title}】
      */
-    @ApiOperation(value="修改【${this.title}】")
+    @ApiOperation(value = "修改【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.classNameLower}UpdateDTO", dataTypeClass = ${this.className}UpdateDTO.class, value = "修改【${this.title}】参数", paramType = "body"),
+            @ApiImplicitParam(name = "${this.classNameLower}UpdateDTO", dataTypeClass = ${this.className}UpdateDTO.class, value = "修改【${this.title}】参数", paramType = "body"),
     })
     ResponseEntity<${this.className}ShowVO> update(${this.className}UpdateDTO ${this.classNameLower}UpdateDTO);
 
@@ -51,14 +51,14 @@ public interface ${this.className}API {
     /**
      * 分页查询【${this.title}】
      */
-    @ApiOperation(value="分页查询【${this.title}】")
+    @ApiOperation(value = "分页查询【${this.title}】")
     ResponseEntity<PageVO<${this.className}ListVO>> list(${this.className}QO ${this.classNameLower}QO);
     <#else>
         <@call this.addImport("java.util.List")/>
     /**
      * 列表查询【${this.title}】
      */
-    @ApiOperation(value="列表查询【${this.title}】")
+    @ApiOperation(value = "列表查询【${this.title}】")
     ResponseEntity<List<${this.className}ListVO>> list(${this.className}QO ${this.classNameLower}QO);
     </#if>
 
@@ -79,9 +79,9 @@ public interface ${this.className}API {
     /**
      * 查看【${this.title}】详情
      */
-    @ApiOperation(value="查看【${this.title}】详情")
+    @ApiOperation(value = "查看【${this.title}】详情")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<${this.className}ShowVO> show(${this.type} ${this.id});
 
@@ -90,9 +90,9 @@ public interface ${this.className}API {
     /**
      * 删除单个【${this.title}】
      */
-    @ApiOperation(value="删除单个【${this.title}】")
+    @ApiOperation(value = "删除单个【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<Integer> delete(${this.type} ${this.id});
 
@@ -103,7 +103,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value = "批量删除【${this.title}】")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "id", dataTypeClass = ${this.type}.class, value = "id数组", paramType = "body"),
+            @ApiImplicitParam(name = "id", dataTypeClass = ${this.type}.class, value = "id数组", paramType = "body"),
     })
     ResponseEntity<Integer> deleteBatch(${this.type}[] id);
 
@@ -129,9 +129,9 @@ public interface ${this.className}API {
     /**
      * 获取【${otherEntity.title}】关联
      */
-    @ApiOperation(value="获取【${otherEntity.title}】关联")
+    @ApiOperation(value = "获取【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
     })
     ResponseEntity<List<${resultType}>> fetch${otherCName}List(${this.type} ${this.id});
 
@@ -140,20 +140,20 @@ public interface ${this.className}API {
     /**
      * 添加【${otherEntity.title}】关联
      */
-    @ApiOperation(value="添加【${otherEntity.title}】关联")
+    @ApiOperation(value = "添加【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> add${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
     /**
      * 移除【${otherEntity.title}】关联
      */
-    @ApiOperation(value="移除【${otherEntity.title}】关联")
+    @ApiOperation(value = "移除【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> remove${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
@@ -162,10 +162,10 @@ public interface ${this.className}API {
     /**
      * 设置【${otherEntity.title}】关联
      */
-    @ApiOperation(value="设置【${otherEntity.title}】关联")
+    @ApiOperation(value = "设置【${otherEntity.title}】关联")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
-        @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
+            @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
+            @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
     ResponseEntity<Integer> set${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
 
@@ -177,7 +177,7 @@ public interface ${this.className}API {
     /**
      * 导出【${this.title}】excel
      */
-    @ApiOperation(value="导出【${this.title}】excel")
+    @ApiOperation(value = "导出【${this.title}】excel")
     void exportExcel(${this.className}QO ${this.classNameLower}QO, HttpServletResponse response) throws Exception;
 
 </#if>
@@ -187,13 +187,13 @@ public interface ${this.className}API {
     /**
      * 导入【${this.title}】excel
      */
-    @ApiOperation(value="导入【${this.title}】excel")
+    @ApiOperation(value = "导入【${this.title}】excel")
     ResponseEntity<Integer> importExcel(MultipartFile file) throws Exception;
 
     /**
      * 下载【${this.title}】excel模板
      */
-    @ApiOperation(value="下载【${this.title}】excel模板")
+    @ApiOperation(value = "下载【${this.title}】excel模板")
     void downloadExcelTemplate(HttpServletResponse response) throws Exception;
 
 </#if>

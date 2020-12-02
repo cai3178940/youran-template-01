@@ -26,7 +26,7 @@
 @Documented
 public @interface Const {
 
-    String DEFAULT_MESSAGE="{${this.commonPackage}.validator.Const}";
+    String DEFAULT_MESSAGE = "{${this.commonPackage}.validator.Const}";
 
     Class constClass();
 

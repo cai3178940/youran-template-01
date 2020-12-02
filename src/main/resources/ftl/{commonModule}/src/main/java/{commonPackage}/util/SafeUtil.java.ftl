@@ -7,6 +7,7 @@ public class SafeUtil {
 
     /**
      * 对象转Integer
+     *
      * @param obj
      * @return
      */
@@ -20,8 +21,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转Long
+     *
      * @param obj
      * @return
      */
@@ -35,8 +38,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转Short
+     *
      * @param obj
      * @return
      */
@@ -50,8 +55,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转Double
+     *
      * @param obj
      * @return
      */
@@ -65,8 +72,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转BigDecimal
+     *
      * @param obj
      * @return
      */
@@ -80,8 +89,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转Float
+     *
      * @param obj
      * @return
      */
@@ -95,8 +106,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 对象转Boolean
+     *
      * @param obj
      * @return
      */
@@ -110,8 +123,10 @@ public class SafeUtil {
         }
         return null;
     }
+
     /**
      * 转字符串
+     *
      * @param obj
      * @return
      */

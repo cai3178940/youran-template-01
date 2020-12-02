@@ -21,6 +21,7 @@ public class WebConfig {
 
     /**
      * 防止通过parameter传入XSS脚本
+     *
      * @return
      */
     @Bean
@@ -36,12 +37,13 @@ public class WebConfig {
 
     /**
      * 防止通过body传入XSS脚本
+     *
      * @return
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonXSSCustomizer() {
         return jacksonObjectMapperBuilder ->
-            jacksonObjectMapperBuilder.deserializerByType(String.class,new JacksonXSSDeserializer());
+                jacksonObjectMapperBuilder.deserializerByType(String.class,new JacksonXSSDeserializer());
     }
 
 

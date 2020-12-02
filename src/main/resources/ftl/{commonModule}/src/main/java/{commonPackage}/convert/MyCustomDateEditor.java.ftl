@@ -10,6 +10,12 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
 
 
     @Override
+    public String getAsText() {
+        Date value = (Date) getValue();
+        return DateUtil.getDateStr(value);
+    }
+
+    @Override
     public void setAsText(String text) throws IllegalArgumentException {
         if (!StringUtils.hasText(text)) {
             // Treat empty String as null value.
@@ -17,12 +23,6 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
         } else {
             setValue(DateUtil.parseDate(text));
         }
-    }
-
-    @Override
-    public String getAsText() {
-        Date value = (Date) getValue();
-        return DateUtil.getDateStr(value);
     }
 
 

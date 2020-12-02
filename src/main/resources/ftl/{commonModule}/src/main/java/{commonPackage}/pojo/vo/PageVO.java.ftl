@@ -11,20 +11,20 @@
 @ApiModel
 public class PageVO<T> extends AbstractVO {
 
-    @ApiModelProperty(notes = "每页条数",example = "10",required = true)
+    @ApiModelProperty(notes = "每页条数", example = "10", required = true)
     private Integer pageSize;
-    @ApiModelProperty(notes = "页码",example = "1",required = true)
+    @ApiModelProperty(notes = "页码", example = "1", required = true)
     private Integer currentPage;
-    @ApiModelProperty(notes = "开始序号",example = "0",required = true)
+    @ApiModelProperty(notes = "开始序号", example = "0", required = true)
     private Integer firstIndex;
-    @ApiModelProperty(notes = "结束序号",example = "10",required = true)
+    @ApiModelProperty(notes = "结束序号", example = "10", required = true)
     private Integer lastIndex;
 
-    @ApiModelProperty(notes = "数据列表",required = true)
+    @ApiModelProperty(notes = "数据列表", required = true)
     private List<T> list;
-    @ApiModelProperty(notes = "总条数",example = "100",required = true)
+    @ApiModelProperty(notes = "总条数", example = "100", required = true)
     private Integer total;
-    @ApiModelProperty(notes = "总页数",example = "10",required = true)
+    @ApiModelProperty(notes = "总页数", example = "10", required = true)
     private Integer pageCount;
 
     public PageVO() {
@@ -33,7 +33,7 @@ public class PageVO<T> extends AbstractVO {
     public PageVO(List<T> list, int currentPage, int pageSize, int total) {
         if (pageSize <= 0) {
             throw new IllegalArgumentException(
-                "Illegal paging arguments. [pageSize=" + pageSize + "]");
+                    "Illegal paging arguments. [pageSize=" + pageSize + "]");
         }
         this.list = list;
         this.currentPage = currentPage;
@@ -41,7 +41,7 @@ public class PageVO<T> extends AbstractVO {
         this.total = total;
         this.firstIndex = (currentPage - 1) * pageSize;
         this.lastIndex = currentPage * pageSize;
-        if ( total % pageSize > 0 ) {
+        if (total % pageSize > 0) {
             this.pageCount = total / pageSize + 1;
         } else {
             this.pageCount = total / pageSize;
@@ -52,14 +52,14 @@ public class PageVO<T> extends AbstractVO {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
-            .append("pageSize", pageSize)
-            .append("currentPage", currentPage)
-            .append("firstIndex", firstIndex)
-            .append("lastIndex", lastIndex)
-            .append("list", list)
-            .append("total", total)
-            .append("pageCount", pageCount)
-            .toString();
+                .append("pageSize", pageSize)
+                .append("currentPage", currentPage)
+                .append("firstIndex", firstIndex)
+                .append("lastIndex", lastIndex)
+                .append("list", list)
+                .append("total", total)
+                .append("pageCount", pageCount)
+                .toString();
     }
 
     public Integer getPageSize() {
