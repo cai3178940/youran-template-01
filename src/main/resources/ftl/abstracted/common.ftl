@@ -3,6 +3,11 @@
 <#-- 仅调用函数，不打印 -->
 <#macro justCall func></#macro>
 
+<#-- 格式化参数注释 -->
+<#macro formatParamComments>
+<#local content><#nested></#local>
+${CommonTemplateFunction.formatParamComments(content)}</#macro>
+
 <#-- 将当前model赋值给this变量 -->
 <#assign this = .dataModel>
 

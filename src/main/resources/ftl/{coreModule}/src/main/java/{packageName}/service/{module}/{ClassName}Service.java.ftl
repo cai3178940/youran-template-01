@@ -266,8 +266,11 @@ public class ${this.className}Service {
     /**
      * 根据主键获取【${this.title}】
      * 不获取多对多级联对象
+     *
+     <@formatParamComments>
      * @param ${this.id} 主键
      * @param force 是否强制获取
+     </@formatParamComments>
      * @return
      */
     public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force) {
@@ -282,6 +285,7 @@ public class ${this.className}Service {
     /**
      * 根据主键获取【${this.title}】
      *
+     <@formatParamComments>
      * @param ${this.id} 主键
 <#assign withHoldParam="">
 <#list this.holds! as otherEntity,mtm>
@@ -291,6 +295,7 @@ public class ${this.className}Service {
      * @param ${withParamName} 是否级联获取【${otherEntity.title}】
 </#list>
      * @param force 是否强制获取
+     </@formatParamComments>
      * @return
      */
     public ${this.className}PO get${this.className}(${this.type} ${this.id}, ${withHoldParam}boolean force) {
