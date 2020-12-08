@@ -103,7 +103,7 @@ public interface ${this.className}API {
      */
     @ApiOperation(value = "批量删除【${this.title}】")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", dataTypeClass = ${this.type}.class, value = "id数组", paramType = "body"),
+            @ApiImplicitParam(name = "id", dataTypeClass = ${this.type}.class, allowMultiple = true, value = "id数组", paramType = "body"),
     })
     ResponseEntity<Integer> deleteBatch(${this.type}[] id);
 
