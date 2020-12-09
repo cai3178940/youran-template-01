@@ -8,6 +8,8 @@
 <@call this.addImport("java.time.LocalDate")/>
 <@call this.addImport("java.time.LocalDateTime")/>
 <@call this.addImport("java.time.format.DateTimeFormatter")/>
+<@call this.addImport("java.time.format.DateTimeFormatterBuilder")/>
+<@call this.addImport("java.time.temporal.ChronoField")/>
 <@call this.addImport("java.util.Date")/>
 <@call this.printClassCom("日期工具")/>
 public class DateUtil {
@@ -159,7 +161,12 @@ public class DateUtil {
         if (StringUtils.isBlank(datetime)) {
             return null;
         }
-        return LocalDate.parse(datetime, DateTimeFormatter.ofPattern(dateFormat));
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern(dateFormat)
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter();
+        return LocalDateTime.parse(datetime, formatter);
     }
 
     /**
