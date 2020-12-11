@@ -5,7 +5,7 @@
 </#if>
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("com.jd.y.ss.price.common.pojo.dto.AbstractDTO")/>
+<@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.printClassCom("抽象excel数据传输对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
