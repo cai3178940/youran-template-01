@@ -8,7 +8,7 @@
 <@call this.addImport("com.alibaba.excel.context.AnalysisContext")/>
 <@call this.addImport("com.alibaba.excel.event.AnalysisEventListener")/>
 <@call this.addImport("com.alibaba.excel.read.metadata.holder.ReadRowHolder")/>
-<@call this.addImport("com.jd.y.ss.price.sale.pojo.dto.AbstractExcelDTO")/>
+<@call this.addImport("${this.packageName}.pojo.dto.AbstractExcelDTO")/>
 <@call this.addImport("java.util.ArrayList")/>
 <@call this.addImport("java.util.List")/>
 <@call this.printClassCom("同步读取excel的监听器")/>
