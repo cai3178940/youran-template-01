@@ -10,7 +10,7 @@
 <@call this.addImport("${poPackageName}.${this.className}PO")/>
 <@call this.addImport("${this.packageName}.web.AbstractWebTest")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
-<@call this.addImport("org.junit.Test")/>
+<@call this.addImport("org.junit.jupiter.api.Test")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.http.MediaType")/>
 <@call this.addStaticImport("org.hamcrest.Matchers.is")/>
@@ -22,10 +22,8 @@
 <#--定义方法区代码-->
 <#assign methodCode>
 <#if this.entityFeature.save>
-    /**
-     * 新增【${this.title}】
-     */
     @Test
+    @DisplayName("新增【${this.title}】")
     public void save() throws Exception {
     <#list saveExampleCode as saveExample>
         <#if saveExample?hasNext>
@@ -42,10 +40,8 @@
 
 </#if>
 <#if this.entityFeature.update>
-    /**
-     * 修改【${this.title}】
-     */
     @Test
+    @DisplayName("修改【${this.title}】")
     public void update() throws Exception {
         <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -60,14 +56,12 @@
 
 </#if>
 <#if this.entityFeature.list>
-    /**
-    <#if this.pageSign>
-     * 分页查询【${this.title}】
-    <#else>
-     * 列表查询【${this.title}】
-    </#if>
-     */
     @Test
+    <#if this.pageSign>
+    @DisplayName("分页查询【${this.title}】")
+    <#else>
+    @DisplayName("列表查询【${this.title}】")
+    </#if>
     public void list() throws Exception {
     <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -83,10 +77,8 @@
 
 </#if>
 <#if this.titleField??>
-    /**
-     * 查询【${this.title}】选项列表
-     */
     @Test
+    @DisplayName("查询【${this.title}】选项列表")
     public void findOptions() throws Exception {
     <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -98,10 +90,8 @@
 
 </#if>
 <#if this.entityFeature.show>
-    /**
-     * 查看【${this.title}】详情
-     */
     @Test
+    @DisplayName("查看【${this.title}】详情")
     public void show() throws Exception {
     <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -112,10 +102,8 @@
 
 </#if>
 <#if this.entityFeature.delete>
-    /**
-     * 删除单个【${this.title}】
-     */
     @Test
+    @DisplayName("删除单个【${this.title}】")
     public void del() throws Exception {
     <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -128,10 +116,8 @@
 </#if>
 <#if this.entityFeature.deleteBatch>
     <@call this.addImport("com.google.common.collect.Lists")/>
-    /**
-     * 批量删除【${this.title}】
-     */
     @Test
+    @DisplayName("批量删除【${this.title}】")
     public void deleteBatch() throws Exception {
     <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -154,10 +140,8 @@
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove>
         <@call this.addImport("com.google.common.collect.Lists")/>
-    /**
-     * 添加/移除【${otherEntity.title}】关联
-     */
     @Test
+    @DisplayName("添加/移除【${otherEntity.title}】关联")
     public void addRemove${otherCName}2() throws Exception {
         <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -186,10 +170,8 @@
     </#if>
     <#if entityFeature.set>
         <@call this.addImport("com.google.common.collect.Lists")/>
-    /**
-     * 设置【${otherEntity.title}】关联
-     */
     @Test
+    @DisplayName("设置【${otherEntity.title}】关联")
     public void set${otherCName}() throws Exception {
         <#list saveExampleCode as saveExample>
         ${saveExample}
@@ -211,10 +193,8 @@
     </#if>
 </#list>
 <#if this.entityFeature.excelImport>
-    /**
-     * 导入【${this.title}】excel
-     */
     @Test
+    @DisplayName("导入【${this.title}】excel")
     public void importExcel() throws Exception {
         <@call this.addImport("org.springframework.test.web.servlet.MvcResult")/>
         // 首先下载excel模板
@@ -241,6 +221,7 @@ package ${restPackageName};
 <@call this.printImport()/>
 
 <@call this.printClassCom("【${this.title}】单元测试")/>
+@DisplayName("【${this.title}】Controller")
 public class ${this.className}ControllerTest extends AbstractWebTest {
 
 <@call this.printAutowired()/>

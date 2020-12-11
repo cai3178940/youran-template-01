@@ -1,14 +1,11 @@
 <#include "/abstracted/common.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("org.junit.Before")/>
-<@call this.addImport("org.junit.runner.RunWith")/>
+<@call this.addImport("org.junit.jupiter.api.BeforeEach")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Value")/>
 <@call this.addImport("org.springframework.boot.test.context.SpringBootTest")/>
-<@call this.addImport("org.springframework.test.context.junit4.SpringRunner")/>
 <@call this.printClassCom("单元测试抽象类")/>
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = ${this.projectNameUpper}App.class)
 public class AbstractTest {
 
@@ -18,7 +15,7 @@ public class AbstractTest {
     @Value("${r'$'}{spring.datasource.url}")
     private String jdbcUrl;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         if (!jdbcUrl.startsWith("jdbc:h2:mem:")) {
             return;
