@@ -11,6 +11,7 @@
 <@call this.addImport("${this.packageName}.web.AbstractWebTest")/>
 <@call this.addImport("${this.packageName}.web.constant.WebConst")/>
 <@call this.addImport("org.junit.jupiter.api.Test")/>
+<@call this.addImport("org.junit.jupiter.api.DisplayName")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
 <@call this.addImport("org.springframework.http.MediaType")/>
 <@call this.addStaticImport("org.hamcrest.Matchers.is")/>
