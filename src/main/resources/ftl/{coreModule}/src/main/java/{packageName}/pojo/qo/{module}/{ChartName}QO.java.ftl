@@ -75,15 +75,15 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         <#assign field = where.field>
         <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
-            <@call JavaTemplateFunction.printGetterSetterList("whereParam${where?counter}","${field.jfieldType}",false)/>
+            <@call JavaTemplateFunction.printGetterSetterList("whereParam${where?counter}", "${field.jfieldType}", false)/>
         <#elseIf FilterOperator.BETWEEN.getValue() == where.filterOperator
         || FilterOperator.IS_NOW.getValue() == where.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == where.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == where.filterOperator>
-            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}Start","${field.jfieldType}")/>
-            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}End","${field.jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}Start", "${field.jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}End", "${field.jfieldType}")/>
         <#else>
-            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}","${field.jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("whereParam${where?counter}", "${field.jfieldType}")/>
         </#if>
     </#list>
     <#list filteredHaving as having>
@@ -94,15 +94,15 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         <#assign jfieldType = convertMetricsFieldType(having.parent)>
         <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
-            <@call JavaTemplateFunction.printGetterSetterList("havingParam${having?counter}","${jfieldType}",false)/>
+            <@call JavaTemplateFunction.printGetterSetterList("havingParam${having?counter}", "${jfieldType}", false)/>
         <#elseIf FilterOperator.BETWEEN.getValue() == having.filterOperator
         || FilterOperator.IS_NOW.getValue() == having.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == having.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == having.filterOperator>
-            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}Start","${jfieldType}")/>
-            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}End","${jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}Start", "${jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}End", "${jfieldType}")/>
         <#else>
-            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}","${jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("havingParam${having?counter}", "${jfieldType}")/>
         </#if>
     </#list>
 </#if>

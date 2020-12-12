@@ -141,7 +141,7 @@
 </#if>
 public class ${this.className}PO extends AbstractPO${implementsStr} {
 
-<#list this.fields as id,field>
+<#list this.fields as id, field>
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     /**
@@ -154,17 +154,17 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     private ${field.jfieldType} ${field.jfieldName};
 
 </#list>
-    <#list this.holds! as otherEntity,mtm>
+    <#list this.holds! as otherEntity, mtm>
         <@call this.addImport("java.util.List")/>
     private List<${otherEntity.className}PO> ${lowerFirstWord(otherEntity.className)}POList;
 
     </#list>
 <#if !this.projectFeature.lombokEnabled>
-    <#list this.fields as id,field>
+    <#list this.fields as id, field>
         <@call JavaTemplateFunction.printGetterSetterForPO(field)/>
     </#list>
-    <#list this.holds! as otherEntity,mtm>
-        <@call JavaTemplateFunction.printGetterSetterList("${otherEntity.className}PO","${otherEntity.className}PO")/>
+    <#list this.holds! as otherEntity, mtm>
+        <@call JavaTemplateFunction.printGetterSetterList("${otherEntity.className}PO", "${otherEntity.className}PO")/>
     </#list>
 </#if>
 <#if implementsDeleteSign && this.delField.jfieldName != "deleted">

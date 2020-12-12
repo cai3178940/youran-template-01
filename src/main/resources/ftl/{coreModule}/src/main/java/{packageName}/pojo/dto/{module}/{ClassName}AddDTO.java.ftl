@@ -17,12 +17,12 @@
 @ApiModel(description = "新增【${this.title}】的参数")
 public class ${this.className}AddDTO extends AbstractDTO {
 
-<#list this.insertFields as id,field>
+<#list this.insertFields as id, field>
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
-    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
         <@call this.addImport("javax.validation.constraints.NotNull")/>
@@ -55,13 +55,13 @@ public class ${this.className}AddDTO extends AbstractDTO {
 </#list>
 
 <#if !this.projectFeature.lombokEnabled>
-    <#list this.insertFields as id,field>
+    <#list this.insertFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
     <#list withinEntityList as otherEntity>
         <#assign otherPk = otherEntity.pkField>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
+        <@call JavaTemplateFunction.printGetterSetterList(othercName, otherPk.jfieldType)/>
     </#list>
 </#if>
 }

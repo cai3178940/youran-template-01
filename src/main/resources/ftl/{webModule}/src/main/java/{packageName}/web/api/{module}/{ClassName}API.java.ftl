@@ -108,10 +108,10 @@ public interface ${this.className}API {
     ResponseEntity<Integer> deleteBatch(${this.type}[] id);
 
 </#if>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherPk = otherEntity.pkField>
     <#assign otherCName = otherEntity.className>
-    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
@@ -145,7 +145,7 @@ public interface ${this.className}API {
             @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
             @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
-    ResponseEntity<Integer> add${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
+    ResponseEntity<Integer> add${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}[] ${otherFkId});
 
     /**
      * 移除【${otherEntity.title}】关联
@@ -155,7 +155,7 @@ public interface ${this.className}API {
             @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
             @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
-    ResponseEntity<Integer> remove${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
+    ResponseEntity<Integer> remove${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}[] ${otherFkId});
 
     <#elseIf entityFeature.set>
 
@@ -167,7 +167,7 @@ public interface ${this.className}API {
             @ApiImplicitParam(name = "${this.id}", dataTypeClass = ${this.type}.class, value = "【${this.title}】id", paramType = "path"),
             @ApiImplicitParam(name = "${otherFkId}", dataTypeClass = ${otherPk.jfieldType}.class, value = "【${otherEntity.title}】id数组", paramType = "body"),
     })
-    ResponseEntity<Integer> set${otherCName}(${this.type} ${this.id},${otherPk.jfieldType}[] ${otherFkId});
+    ResponseEntity<Integer> set${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}[] ${otherFkId});
 
     </#if>
 </#list>

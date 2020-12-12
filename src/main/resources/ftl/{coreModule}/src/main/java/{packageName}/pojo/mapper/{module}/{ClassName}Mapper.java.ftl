@@ -92,12 +92,12 @@ public interface ${this.className}Mapper {
      * @return
      */
     <@wrapMappings>
-        <#list this.insertFields as id,field>
+        <#list this.insertFields as id, field>
             <#if field.dicType??>
             @Mapping(target = "${field.jfieldName}", expression = "java(${this.getConstFullClassPath(field.dicType)}.descToValue(dto.get${field.jfieldName?capFirst}()))"),
             </#if>
         </#list>
-        <#list this.holds! as otherEntity,mtm>
+        <#list this.holds! as otherEntity, mtm>
             <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
             <#assign pkFieldType = otherEntity.pkField.jfieldType>
             <#if entityFeature.withinEntity>
@@ -129,12 +129,12 @@ public interface ${this.className}Mapper {
      * @return
      */
     <@wrapMappings>
-        <#list this.listFields as id,field>
+        <#list this.listFields as id, field>
             <#if field.dicType??>
             @Mapping(target = "${field.jfieldName}", expression = "java(${this.getConstFullClassPath(field.dicType)}.valueToDesc(vo.get${field.jfieldName?capFirst}()))"),
             </#if>
         </#list>
-        <#list this.fkFields as id,field>
+        <#list this.fkFields as id, field>
             <#list field.cascadeListExts! as cascadeExt>
                 <#assign cascadeField = cascadeExt.cascadeField>
                 <#if cascadeField.dicType??>
@@ -149,7 +149,7 @@ public interface ${this.className}Mapper {
         <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
         <#assign otherCName = otherEntity.className>
         <#--级联扩展列表字段中，如果有标题字段，则使用标题字段展示，否则直接展示主键字段-->
-        <#if hasTitleField(otherEntity,mtmCascadeExts)>
+        <#if hasTitleField(otherEntity, mtmCascadeExts)>
             <#assign displayField = otherEntity.titleField>
         <#else>
             <#assign displayField = otherEntity.pkField>

@@ -33,11 +33,11 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
     List<OptionVO<${this.type}, ${this.titleField.jfieldType}>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo);
 
 </#if>
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     int getCountBy${field.jfieldName?capFirst}(${field.jfieldType} ${field.jfieldName});
 
 </#list>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
     <#assign otherCName = otherEntity.className>
@@ -58,7 +58,7 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
     <#assign mtm = mtmsForOpp[otherEntity?index]/>
     <#assign otherCName = otherEntity.className/>
     <#assign otherType = otherEntity.pkField.jfieldType>
-    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     List<${this.className}PO> findBy${otherCName}(${otherType} ${otherFkId});
 
 </#list>

@@ -123,11 +123,11 @@ public class ${this.className}Controller extends AbstractController implements $
     }
 
 </#if>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherPk = otherEntity.pkField>
     <#assign otherCName = otherEntity.className>
     <#assign othercName = lowerFirstWord(otherEntity.className)>
-    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
@@ -148,7 +148,7 @@ public class ${this.className}Controller extends AbstractController implements $
     @GetMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<List<${resultType}>> fetch${otherCName}List(@PathVariable ${this.type} ${this.id}) {
         <#assign withFalseCode = "">
-        <#list this.holds! as otherHoldEntity,mtm>
+        <#list this.holds! as otherHoldEntity, mtm>
             <#if otherEntity == otherHoldEntity>
                 <#assign withCode = withFalseCode + "true, ">
             <#else>
@@ -270,7 +270,7 @@ public class ${this.className}Controller extends AbstractController implements $
     }
 
     <#assign dicSet = CommonTemplateFunction.createHashSet()>
-    <#list this.insertFields as id,field>
+    <#list this.insertFields as id, field>
         <#if field.dicType??>
             <@justCall dicSet.add(field.dicType)/>
         </#if>
@@ -318,7 +318,7 @@ public class ${this.className}Controller extends AbstractController implements $
         </#list>
         <@call this.addImport("com.alibaba.excel.ExcelWriter")/>
         ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream())
-        <#list this.insertFields as id,field>
+        <#list this.insertFields as id, field>
             <#if field.dicType??>
                 <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
                 .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}))

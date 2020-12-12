@@ -138,17 +138,17 @@ public class ${this.chartName}Service {
             <@call this.addImport("com.google.common.collect.Lists")/>
         qo.setWhereParam${where?counter}(Lists.newArrayList(
             <#list where.filterValue as filterValue>
-                ${printFilterValue(jfieldType,filterValue)}<#if filterValue?hasNext>,</#if>
+                ${printFilterValue(jfieldType, filterValue)}<#if filterValue?hasNext>,</#if>
             </#list>
         ));
         <#elseIf FilterOperator.BETWEEN.getValue() == where.filterOperator
         || FilterOperator.IS_NOW.getValue() == where.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == where.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == where.filterOperator>
-        qo.setWhereParam${where?counter}Start(${printFilterValue(jfieldType,where.filterValue[0])});
-        qo.setWhereParam${where?counter}End(${printFilterValue(jfieldType,where.filterValue[1])});
+        qo.setWhereParam${where?counter}Start(${printFilterValue(jfieldType, where.filterValue[0])});
+        qo.setWhereParam${where?counter}End(${printFilterValue(jfieldType, where.filterValue[1])});
         <#else>
-        qo.setWhereParam${where?counter}(${printFilterValue(jfieldType,where.filterValue[0])});
+        qo.setWhereParam${where?counter}(${printFilterValue(jfieldType, where.filterValue[0])});
         </#if>
     </#list>
     <#list filteredHaving as having>
@@ -158,17 +158,17 @@ public class ${this.chartName}Service {
             <@call this.addImport("com.google.common.collect.Lists")/>
         qo.setHavingParam${having?counter}(Lists.newArrayList(
             <#list having.filterValue as filterValue>
-                ${printFilterValue(jfieldType,filterValue)}<#if filterValue?hasNext>,</#if>
+                ${printFilterValue(jfieldType, filterValue)}<#if filterValue?hasNext>,</#if>
             </#list>
         ));
         <#elseIf FilterOperator.BETWEEN.getValue() == having.filterOperator
         || FilterOperator.IS_NOW.getValue() == having.filterOperator
         || FilterOperator.BEFORE_TIME.getValue() == having.filterOperator
         || FilterOperator.AFTER_TIME.getValue() == having.filterOperator>
-        qo.setHavingParam${having?counter}Start(${printFilterValue(jfieldType,having.filterValue[0])});
-        qo.setHavingParam${having?counter}End(${printFilterValue(jfieldType,having.filterValue[1])});
+        qo.setHavingParam${having?counter}Start(${printFilterValue(jfieldType, having.filterValue[0])});
+        qo.setHavingParam${having?counter}End(${printFilterValue(jfieldType, having.filterValue[1])});
         <#else>
-        qo.setHavingParam${having?counter}(${printFilterValue(jfieldType,having.filterValue[0])});
+        qo.setHavingParam${having?counter}(${printFilterValue(jfieldType, having.filterValue[0])});
         </#if>
     </#list>
     }

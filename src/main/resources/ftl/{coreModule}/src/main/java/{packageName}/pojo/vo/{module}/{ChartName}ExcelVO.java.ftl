@@ -55,7 +55,7 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
             <#if column.titleAlias?hasContent>
                 <#assign label = column.titleAlias>
             <#else>
-                <#assign label = field.fetchComment()?replace('\"','\\"')?replace('\n','\\n')>
+                <#assign label = field.fetchComment()?replace('\"', '\\"')?replace('\n', '\\n')>
             </#if>
             <#--日期格式-->
             <#assign dateFormat = guessDateFormat(field)>
@@ -75,7 +75,7 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
     @ExcelProperty("${label}")
     @ColumnWidth(${columnWidth})
     private ${jfieldType} ${name};
-        <#assign getterSetterCode += genGetterSetter(jfieldType,name)>
+        <#assign getterSetterCode += genGetterSetter(jfieldType, name)>
 
     </#list>
 <#elseIf isChartType(ChartType.AGG_TABLE)>
@@ -106,7 +106,7 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
     @ColumnWidth(15)
         </#if>
     private ${jfieldType} ${name};
-        <#assign getterSetterCode += genGetterSetter(jfieldType,name)>
+        <#assign getterSetterCode += genGetterSetter(jfieldType, name)>
 
     </#list>
     <#-- 指标字段 -->
@@ -141,7 +141,7 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
     @ExcelProperty("${label}")
     @ColumnWidth(${columnWidth})
     private ${jfieldType} ${name};
-        <#assign getterSetterCode += genGetterSetter(jfieldType,name)>
+        <#assign getterSetterCode += genGetterSetter(jfieldType, name)>
 
     </#list>
 </#if>

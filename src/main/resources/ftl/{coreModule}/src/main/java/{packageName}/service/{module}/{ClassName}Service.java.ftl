@@ -25,7 +25,7 @@ public class ${this.className}Service {
 <#-- 引入当前实体的DAO -->
 <@call this.addAutowired("${daoPackageName}" "${this.className}DAO")/>
 <#-- 引入多对多关联实体的DAO（当前持有） -->
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherCName = otherEntity.className>
     <@call this.addAutowired("${daoPackageName}" "${otherCName}DAO")/>
 </#list>
@@ -34,13 +34,13 @@ public class ${this.className}Service {
     <@call this.addAutowired("${daoPackageName}" "${otherEntity.className}DAO")/>
 </#list>
 <#-- 引入外键对应的DAO （插入字段对应的外键）-->
-<#list this.insertFields as id,field>
+<#list this.insertFields as id, field>
     <#if field.foreignKey>
         <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className}DAO")/>
     </#if>
 </#list>
 <#-- 引入外键对应的DAO （更新字段对应的外键）-->
-<#list this.updateFields as id,field>
+<#list this.updateFields as id, field>
     <#if field.foreignKey>
         <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className}DAO")/>
     </#if>
@@ -50,7 +50,7 @@ public class ${this.className}Service {
     <@call this.addAutowired("${daoPackageName}" "${foreignEntity.className}DAO")/>
 </#list>
 <#-- 当前实体的外键字段存在级联扩展时，引入对应实体的DAO -->
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     <#if field.cascadeListExts?? && field.cascadeListExts?size &gt; 0>
         <@call this.addAutowired("${daoPackageName}" "${field.foreignEntity.className}DAO")/>
     </#if>
@@ -80,7 +80,7 @@ public class ${this.className}Service {
 </#if>
 <#-- 抽象出公共方法【校验外键字段对应实体是否存在】 -->
 <#macro checkForeignKeys fields>
-    <#list fields as id,field>
+    <#list fields as id, field>
         <#if field.foreignKey>
             <@call this.addImport("org.springframework.util.Assert")/>
             <#assign foreigncName = lowerFirstWord(field.foreignEntity.className)>
@@ -106,7 +106,7 @@ public class ${this.className}Service {
         this.checkUnique(${this.classNameLower}, false);
 </#if>
 <#-- addDTO中不存在并且不能为空的字段，赋初始值 -->
-<#list this.fields as id,field>
+<#list this.fields as id, field>
     <#if !field.insert && field.notNull && field.specialField?default("")?length == 0>
         <#if !field.primaryKey>
         ${this.classNameLower}.set${field.jfieldName?capFirst}(${guessDefaultJfieldValue(field.jfieldType)});
@@ -123,7 +123,7 @@ public class ${this.className}Service {
     </#if>
 </#list>
         ${this.classNameLower}DAO.save(${this.classNameLower});
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
     <#assign otherPk = otherEntity.pkField>
@@ -182,7 +182,7 @@ public class ${this.className}Service {
         this.checkUnique(${this.classNameLower}, true);
 </#if>
         ${this.classNameLower}DAO.update(${this.classNameLower});
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
     <#assign otherPk = otherEntity.pkField>
@@ -275,7 +275,7 @@ public class ${this.className}Service {
      */
     public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force) {
     <#assign withFalseCode = "">
-    <#list this.holds! as otherEntity,mtm>
+    <#list this.holds! as otherEntity, mtm>
         <#assign withFalseCode = withFalseCode + "false, ">
     </#list>
         return this.get${this.className}(${this.id}, ${withFalseCode}force);
@@ -288,7 +288,7 @@ public class ${this.className}Service {
      <@formatParamComments>
      * @param ${this.id} 主键
 <#assign withHoldParam = "">
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherCName = otherEntity.className>
     <#assign withParamName = "with" + otherCName>
     <#assign withHoldParam = withHoldParam + "boolean with" + otherCName + ", ">
@@ -303,7 +303,7 @@ public class ${this.className}Service {
         if (force && ${this.classNameLower} == null) {
             throw new BusinessException(ErrorCode.RECORD_NOT_FIND);
         }
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherCName = otherEntity.className>
     <#assign othercName = lowerFirstWord(otherEntity.className)>
         if (with${otherCName}) {
@@ -324,7 +324,7 @@ public class ${this.className}Service {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
         ${this.className}ShowVO showVO = ${this.className}Mapper.INSTANCE.toShowVO(${this.classNameLower});
 <#--外键级联扩展，详情展示-->
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     <#if field.cascadeShowExts?? && field.cascadeShowExts?size &gt; 0>
         <#assign otherCName = field.foreignEntity.className>
         <#assign othercName = lowerFirstWord(field.foreignEntity.className)>
@@ -338,7 +338,7 @@ public class ${this.className}Service {
     </#if>
 </#list>
 <#--多对多随实体一起维护并且未设置级联扩展时，需要返回对方的id列表-->
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#if mtm.getEntityFeature(this.entityId).withinEntity
         && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
         <#assign otherCName = otherEntity.className>
@@ -425,12 +425,12 @@ public class ${this.className}Service {
     }
 
 </#list>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <@call this.addImport("org.apache.commons.lang3.ArrayUtils")/>
     <#assign otherPk = otherEntity.pkField>
     <#assign otherCName = otherEntity.className>
     <#assign othercName = lowerFirstWord(otherEntity.className)>
-    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     /**
      * 执行【${otherEntity.title}】添加

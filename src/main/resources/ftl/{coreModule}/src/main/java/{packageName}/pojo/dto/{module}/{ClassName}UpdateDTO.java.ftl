@@ -19,7 +19,7 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
 
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
-    <#assign pkNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(this.pk.jfieldName,true)>
+    <#assign pkNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(this.pk.jfieldName, true)>
     @ApiModelProperty(notes = N_${pkNameSnakeCase}, example = E_${pkNameSnakeCase}, required = true)
     @NotNull
     <#if this.pk.jfieldType == JFieldType.STRING.getJavaType()>
@@ -30,12 +30,12 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     </#if>
     private ${this.pk.jfieldType} ${this.pk.jfieldName};
 
-<#list this.updateFields as id,field>
+<#list this.updateFields as id, field>
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
-    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
     @NotNull
@@ -58,7 +58,7 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     private ${field.jfieldType} ${field.jfieldName};
 
 </#list>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         <#assign otherPk = otherEntity.pkField>
@@ -71,15 +71,15 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
 
 <#if !this.projectFeature.lombokEnabled>
     <@call JavaTemplateFunction.printGetterSetter(this.pk)/>
-    <#list this.updateFields as id,field>
+    <#list this.updateFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
-    <#list this.holds! as otherEntity,mtm>
+    <#list this.holds! as otherEntity, mtm>
         <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
         <#if entityFeature.withinEntity>
             <#assign otherPk = otherEntity.pkField>
             <#assign othercName = lowerFirstWord(otherEntity.className)>
-            <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
+            <@call JavaTemplateFunction.printGetterSetterList(othercName, otherPk.jfieldType)/>
         </#if>
     </#list>
 </#if>

@@ -11,7 +11,7 @@
 <@call this.addImport("org.springframework.web.bind.annotation.RequestMapping")/>
 <@call this.addImport("org.springframework.web.bind.annotation.RestController")/>
 <@call this.addImport("java.util.Arrays")/>
-<@call this.printClassCom("用户登录控制器","当前并没有真正实现用户登录功能，只是Mock登录接口而已")/>
+<@call this.printClassCom("用户登录控制器", "当前并没有真正实现用户登录功能，只是Mock登录接口而已")/>
 @RestController
 @RequestMapping(WebConst.API_PATH + "/_user")
 public class UserLoginController extends AbstractController {

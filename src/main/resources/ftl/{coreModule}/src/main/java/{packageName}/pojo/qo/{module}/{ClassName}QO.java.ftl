@@ -34,7 +34,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     <#--字段名转下划线大写-->
-    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
     <#--查询方式：IN-->
     <#if QueryType.isIn(field.queryType)>
         <@call this.addImport("java.util.List")/>
@@ -57,7 +57,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 
 </#macro>
 <#--开始渲染查询字段声明语句-->
-<#list this.queryFields as id,field>
+<#list this.queryFields as id, field>
     <#if !QueryType.isBetween(field.queryType)>
         <@queryField field></@queryField>
     <#else>
@@ -66,7 +66,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     </#if>
 </#list>
 <#--开始渲染【外键级联扩展】字段声明语句-->
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     <#if field.cascadeQueryExts?? && field.cascadeQueryExts?size &gt; 0>
         <#assign exampleClass = "">
         <#if field.foreignEntity != this.metaEntity>
@@ -98,7 +98,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     </#if>
 </#list>
 <#--开始渲染排序条件声明语句-->
-<#list this.listSortFields as id,field>
+<#list this.listSortFields as id, field>
     @ApiParam(value = "${field.fieldDesc}排序标识【1升序,-1降序,0不排序】", example = "1")
     private Integer ${field.jfieldName}SortSign;
 
@@ -117,14 +117,14 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         </#if>
         <#--查询方式：IN-->
         <#if QueryType.isIn(field.queryType)>
-            <@call JavaTemplateFunction.printGetterSetterList("${jfieldName}","${field.jfieldType}",false)/>
+            <@call JavaTemplateFunction.printGetterSetterList("${jfieldName}", "${field.jfieldType}", false)/>
         <#else>
         <#--其他查询方式-->
-            <@call JavaTemplateFunction.printGetterSetter("${jfieldName}","${field.jfieldType}")/>
+            <@call JavaTemplateFunction.printGetterSetter("${jfieldName}", "${field.jfieldType}")/>
         </#if>
     </#macro>
     <#--开始渲染查询字段getter-setter方法-->
-    <#list this.queryFields as id,field>
+    <#list this.queryFields as id, field>
         <#if !QueryType.isBetween(field.queryType)>
             <@queryMethod field></@queryMethod>
         <#else>
@@ -133,7 +133,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         </#if>
     </#list>
     <#--开始渲染【外键级联扩展】字段getter-setter方法-->
-    <#list this.fkFields as id,field>
+    <#list this.fkFields as id, field>
         <#list field.cascadeQueryExts! as cascadeExt>
             <#assign cascadeField = cascadeExt.cascadeField>
             <#if !QueryType.isBetween(cascadeField.queryType)>
@@ -155,8 +155,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         </#if>
     </#list>
     <#--开始渲染排序字段getter-setter方法-->
-    <#list this.listSortFields as id,field>
-        <@call JavaTemplateFunction.printGetterSetter("${field.jfieldName}SortSign","Integer")/>
+    <#list this.listSortFields as id, field>
+        <@call JavaTemplateFunction.printGetterSetter("${field.jfieldName}SortSign", "Integer")/>
     </#list>
 </#if>
 }

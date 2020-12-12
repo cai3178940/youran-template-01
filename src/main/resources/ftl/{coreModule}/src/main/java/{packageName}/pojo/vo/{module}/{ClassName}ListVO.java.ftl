@@ -19,11 +19,11 @@
 public class ${this.className}ListVO extends AbstractVO {
 
 <#--当前实体列表展示字段-->
-<#list this.listFields as id,field>
+<#list this.listFields as id, field>
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
     <#--字段名转下划线大写-->
-    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
     </#if>
@@ -38,7 +38,7 @@ public class ${this.className}ListVO extends AbstractVO {
 
 </#list>
 <#--外键级联扩展，列表展示字段-->
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     <#list field.cascadeListExts! as cascadeExt>
         <#assign cascadeField = cascadeExt.cascadeField>
         <#--import字段类型-->
@@ -52,7 +52,7 @@ public class ${this.className}ListVO extends AbstractVO {
             <#assign exampleClass = "${field.foreignEntity.className}Example.">
         </#if>
         <#--字段名转下划线大写-->
-        <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
+        <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName, true)>
     @ApiModelProperty(notes = ${exampleClass}N_${jfieldNameSnakeCase}, example = ${exampleClass}E_${jfieldNameSnakeCase}<#if cascadeField.dicType??>, allowableValues = ${cascadeField.dicType}.VALUES_STR</#if>)
         <#if cascadeField.jfieldType == JFieldType.DATE.getJavaType()
             || cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()
@@ -76,20 +76,20 @@ public class ${this.className}ListVO extends AbstractVO {
 
 <#if !this.projectFeature.lombokEnabled>
     <#--当前实体列表展示字段：getter-setter方法-->
-    <#list this.listFields as id,field>
+    <#list this.listFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
     <#--外键级联扩展，列表展示字段：getter-setter方法-->
-    <#list this.fkFields as id,field>
+    <#list this.fkFields as id, field>
         <#list field.cascadeListExts! as cascadeExt>
-            <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias,cascadeExt.cascadeField.jfieldType)/>
+            <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias, cascadeExt.cascadeField.jfieldType)/>
         </#list>
     </#list>
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign otherCName = otherEntity.className/>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
+        <@call JavaTemplateFunction.printGetterSetterList(othercName, "${otherCName}VO")/>
     </#list>
 </#if>
 <#--多对多列表展示【静态内部类】-->
@@ -107,8 +107,8 @@ public class ${this.className}ListVO extends AbstractVO {
     <#--主键字段-->
     <#assign otherPkField = otherEntity.pkField>
     <#--字段名转下划线大写-->
-    <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(otherPkField.jfieldName,true)>
-        @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase},example = ${exampleClass}.E_${pkFieldNameSnakeCase})
+    <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(otherPkField.jfieldName, true)>
+        @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase}, example = ${exampleClass}.E_${pkFieldNameSnakeCase})
         private ${otherPkField.jfieldType} ${otherPkField.jfieldName};
 
     <#--多对多级联扩展，列表展示字段-->
@@ -117,11 +117,11 @@ public class ${this.className}ListVO extends AbstractVO {
         <#--import字段类型-->
         <@call this.addFieldTypeImport(field)/>
         <#--字段名转下划线大写-->
-        <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+        <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
         <#if field.dicType??>
             <@call this.addConstImport(field.dicType)/>
         </#if>
-        @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase},example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
+        @ApiModelProperty(notes = ${exampleClass}.N_${jfieldNameSnakeCase}, example = ${exampleClass}.E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
         <#if field.jfieldType == JFieldType.DATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
@@ -134,11 +134,11 @@ public class ${this.className}ListVO extends AbstractVO {
 
     <#if !this.projectFeature.lombokEnabled>
         <#--主键字段：getter-setter方法-->
-        <@call JavaTemplateFunction.printGetterSetter(otherPkField,2)/>
+        <@call JavaTemplateFunction.printGetterSetter(otherPkField, 2)/>
         <#--多对多级联扩展，列表展示字段：getter-setter方法-->
         <#list mtmCascadeExts as mtmCascadeExt>
             <#assign field = mtmCascadeExt.cascadeField>
-            <@call JavaTemplateFunction.printGetterSetter(field,2)/>
+            <@call JavaTemplateFunction.printGetterSetter(field, 2)/>
         </#list>
     </#if>
     }

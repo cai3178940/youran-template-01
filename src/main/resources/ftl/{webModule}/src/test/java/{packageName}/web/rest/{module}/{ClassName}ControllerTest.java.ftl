@@ -131,11 +131,11 @@
     }
 
 </#if>
-<#list this.holds! as otherEntity,mtm>
+<#list this.holds! as otherEntity, mtm>
     <#assign otherPk = otherEntity.pkField>
     <#assign otherCName = otherEntity.className>
     <#assign othercName = lowerFirstWord(otherEntity.className)>
-    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#--保存Example的代码块-->
     <#assign saveExampleCode = ""/>

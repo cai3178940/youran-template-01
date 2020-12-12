@@ -32,7 +32,7 @@
 </#if>
 public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 
-<#list this.insertFields as id,field>
+<#list this.insertFields as id, field>
     <#if field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}<#if field.notNull>*</#if>", converter = LocalDateConverter.class)
@@ -69,9 +69,9 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
      */
     public static ${this.className}ExcelDTO example() {
         ${this.className}ExcelDTO example = new ${this.className}ExcelDTO();
-<#list this.insertFields as id,field>
+<#list this.insertFields as id, field>
     <#--字段名转下划线大写-->
-    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
+    <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
     <#assign arg = "">
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
@@ -102,12 +102,12 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
     }
 
 <#if !this.projectFeature.lombokEnabled>
-    <#list this.insertFields as id,field>
-        <@call JavaTemplateFunction.printGetterSetter(field.jfieldName,parseJfieldType(field))/>
+    <#list this.insertFields as id, field>
+        <@call JavaTemplateFunction.printGetterSetter(field.jfieldName, parseJfieldType(field))/>
     </#list>
     <#list withinEntityList as otherEntity>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetter(othercName + "List","String")/>
+        <@call JavaTemplateFunction.printGetterSetter(othercName + "List", "String")/>
     </#list>
 </#if>
 }

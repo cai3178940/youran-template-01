@@ -32,7 +32,7 @@
 public class ${this.className}ExcelVO extends AbstractVO {
 
 <#--当前实体列表展示字段-->
-<#list this.listFields as id,field>
+<#list this.listFields as id, field>
     <#if field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${field.fieldDesc}", converter = LocalDateConverter.class)
@@ -55,7 +55,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
 
 </#list>
 <#--外键级联扩展，列表展示字段-->
-<#list this.fkFields as id,field>
+<#list this.fkFields as id, field>
     <#list field.cascadeListExts! as cascadeExt>
         <#assign cascadeField = cascadeExt.cascadeField>
         <#if cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()>
@@ -91,19 +91,19 @@ public class ${this.className}ExcelVO extends AbstractVO {
 
 <#if !this.projectFeature.lombokEnabled>
     <#--当前实体列表展示字段：getter-setter方法-->
-    <#list this.listFields as id,field>
-        <@call JavaTemplateFunction.printGetterSetter(field.jfieldName,parseJfieldType(field))/>
+    <#list this.listFields as id, field>
+        <@call JavaTemplateFunction.printGetterSetter(field.jfieldName, parseJfieldType(field))/>
     </#list>
     <#--外键级联扩展，列表展示字段：getter-setter方法-->
-    <#list this.fkFields as id,field>
+    <#list this.fkFields as id, field>
         <#list field.cascadeListExts! as cascadeExt>
-            <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias,parseJfieldType(cascadeExt.cascadeField))/>
+            <@call JavaTemplateFunction.printGetterSetter(cascadeExt.alias, parseJfieldType(cascadeExt.cascadeField))/>
         </#list>
     </#list>
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetter(othercName + "List","String")/>
+        <@call JavaTemplateFunction.printGetterSetter(othercName + "List", "String")/>
     </#list>
 </#if>
 
