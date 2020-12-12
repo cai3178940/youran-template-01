@@ -136,9 +136,13 @@
     <#assign otherCName=otherEntity.className>
     <#assign othercName=lowerFirstWord(otherEntity.className)>
     <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#--获取保存Example的代码-->
-    <#assign saveExampleCode=this.getPrintingSaveExampleForMtm(otherEntity)/>
     <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#--保存Example的代码块-->
+    <#assign saveExampleCode = ""/>
+    <#if entityFeature.addRemove || entityFeature.set>
+        <#assign saveExampleCode=this.getPrintingSaveExampleForMtm(otherEntity)/>
+    </#if>
+    <#--测试多对多的“添加/移除”功能-->
     <#if entityFeature.addRemove>
         <@call this.addImport("com.google.common.collect.Lists")/>
     @Test
@@ -169,6 +173,7 @@
     }
 
     </#if>
+    <#--测试多对多的“设置”功能-->
     <#if entityFeature.set>
         <@call this.addImport("com.google.common.collect.Lists")/>
     @Test
