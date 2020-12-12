@@ -12,9 +12,9 @@
 <#macro buildMtmCascadeForQuery holds hostEntityId>
     <#list holds as otherEntity,mtm>
         <#--初始化当前级联实体对应的级联扩展查询字段-->
-        <#assign mtmCascadeExts=[]>
+        <#assign mtmCascadeExts = []>
         <#list mtm.getCascadeExtList(hostEntityId) as mtmCascadeExt>
-            <#assign cascadeField=mtmCascadeExt.cascadeField>
+            <#assign cascadeField = mtmCascadeExt.cascadeField>
             <#--开启级联查询开关 && (是主键 || 字段支持查询) -->
             <#if mtmCascadeExt.query && (cascadeField.primaryKey || cascadeField.query)>
                 <#assign mtmCascadeExts +=[mtmCascadeExt]>

@@ -21,8 +21,8 @@
 </#list>
 <#list this.mtms! as mtm>
 
-    <#assign field1=mtm.refer1.pkField>
-    <#assign field2=mtm.refer2.pkField>
+    <#assign field1 = mtm.refer1.pkField>
+    <#assign field2 = mtm.refer2.pkField>
 ### ${mtm.desc?replace('\'','"')?replace('\n','\\n')}【${mtm.tableName}】
 |字段名 | 类型 | 非空 | 键 | 注释 |
 |------ | ---- | --- | --- | ---- |

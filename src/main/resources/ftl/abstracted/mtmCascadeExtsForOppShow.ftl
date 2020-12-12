@@ -10,9 +10,9 @@
 <#macro buildMtmCascadeForOppShow holds>
     <#list holds as otherEntity,mtm>
         <#--初始化当前级联实体对应的级联扩展【详情】字段-->
-        <#assign mtmCascadeExts=[]>
+        <#assign mtmCascadeExts = []>
         <#list mtm.getCascadeExtList(otherEntity.entityId) as mtmCascadeExt>
-            <#assign cascadeField=mtmCascadeExt.cascadeField>
+            <#assign cascadeField = mtmCascadeExt.cascadeField>
             <#--判断是否开启级联【详情】展示开关-->
             <#if mtmCascadeExt.show>
                 <#assign mtmCascadeExts +=[mtmCascadeExt]>

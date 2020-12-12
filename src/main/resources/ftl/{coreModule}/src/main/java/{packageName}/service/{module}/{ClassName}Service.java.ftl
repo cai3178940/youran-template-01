@@ -26,7 +26,7 @@ public class ${this.className}Service {
 <@call this.addAutowired("${daoPackageName}" "${this.className}DAO")/>
 <#-- 引入多对多关联实体的DAO（当前持有） -->
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherCName=otherEntity.className>
+    <#assign otherCName = otherEntity.className>
     <@call this.addAutowired("${daoPackageName}" "${otherCName}DAO")/>
 </#list>
 <#-- 引入多对多关联实体的DAO（被对方持有） -->
@@ -66,10 +66,10 @@ public class ${this.className}Service {
      */
     private void checkUnique(${this.className}PO ${this.classNameLower}, boolean isUpdate) {
     <#list this.metaEntity.checkUniqueIndexes as index>
-        <#assign suffix=(index?index == 0)?string('',''+index?index)>
-        <#assign params=''>
+        <#assign suffix = (index?index == 0)?string('', '' + index?index)>
+        <#assign params = ''>
         <#list index.fields as field>
-            <#assign params+=this.classNameLower+'.get'+field.jfieldName?capFirst+'(), '>
+            <#assign params += this.classNameLower + '.get'+field.jfieldName?capFirst+'(), '>
         </#list>
         if (${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate ? ${this.classNameLower}.get${this.idUpper}() : null)) {
             throw new BusinessException(ErrorCode.DUPLICATE_KEY);
@@ -83,7 +83,7 @@ public class ${this.className}Service {
     <#list fields as id,field>
         <#if field.foreignKey>
             <@call this.addImport("org.springframework.util.Assert")/>
-            <#assign foreigncName=lowerFirstWord(field.foreignEntity.className)>
+            <#assign foreigncName = lowerFirstWord(field.foreignEntity.className)>
         if (${this.classNameLower}.get${field.jfieldName?capFirst}() != null) {
             Assert.isTrue(${foreigncName}DAO.exist(${this.classNameLower}.get${field.jfieldName?capFirst}()), "${field.fieldDesc}有误");
         }
@@ -126,10 +126,10 @@ public class ${this.className}Service {
 <#list this.holds! as otherEntity,mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         List<${otherPk.jfieldType}> ${othercName}List = ${this.classNameLower}DTO.get${otherCName}List();
         if (CollectionUtils.isNotEmpty(${othercName}List)) {
@@ -185,10 +185,10 @@ public class ${this.className}Service {
 <#list this.holds! as otherEntity,mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         List<${otherPk.jfieldType}> ${othercName}List = ${this.classNameLower}UpdateDTO.get${otherCName}List();
         if (${othercName}List != null) {
@@ -212,8 +212,8 @@ public class ${this.className}Service {
         <#if mtmCascadeEntitiesForList?hasContent>
         for (${this.className}ListVO listVO : page.getList()) {
             <#list mtmCascadeEntitiesForList as otherEntity>
-                <#assign otherCName=otherEntity.className>
-                <#assign othercName=lowerFirstWord(otherEntity.className)>
+                <#assign otherCName = otherEntity.className>
+                <#assign othercName = lowerFirstWord(otherEntity.className)>
                 <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
             listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.className}List(
                     ${othercName}DAO.findBy${this.className}(listVO.get${this.idUpper}())));
@@ -235,8 +235,8 @@ public class ${this.className}Service {
     <#if mtmCascadeEntitiesForList?hasContent>
         for (${this.className}ListVO listVO : list) {
         <#list mtmCascadeEntitiesForList as otherEntity>
-            <#assign otherCName=otherEntity.className>
-            <#assign othercName=lowerFirstWord(otherEntity.className)>
+            <#assign otherCName = otherEntity.className>
+            <#assign othercName = lowerFirstWord(otherEntity.className)>
             <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
             listVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.className}List(
                     ${othercName}DAO.findBy${this.className}(listVO.get${this.idUpper}())));
@@ -274,9 +274,9 @@ public class ${this.className}Service {
      * @return
      */
     public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force) {
-    <#assign withFalseCode="">
+    <#assign withFalseCode = "">
     <#list this.holds! as otherEntity,mtm>
-        <#assign withFalseCode=withFalseCode+"false, ">
+        <#assign withFalseCode = withFalseCode+"false, ">
     </#list>
         return this.get${this.className}(${this.id}, ${withFalseCode}force);
     }
@@ -287,11 +287,11 @@ public class ${this.className}Service {
      *
      <@formatParamComments>
      * @param ${this.id} 主键
-<#assign withHoldParam="">
+<#assign withHoldParam = "">
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherCName=otherEntity.className>
-    <#assign withParamName="with"+otherCName>
-    <#assign withHoldParam=withHoldParam+"boolean with"+otherCName+", ">
+    <#assign otherCName = otherEntity.className>
+    <#assign withParamName = "with"+otherCName>
+    <#assign withHoldParam = withHoldParam+"boolean with"+otherCName+", ">
      * @param ${withParamName} 是否级联获取【${otherEntity.title}】
 </#list>
      * @param force 是否强制获取
@@ -304,8 +304,8 @@ public class ${this.className}Service {
             throw new BusinessException(ErrorCode.RECORD_NOT_FIND);
         }
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
         if (with${otherCName}) {
             ${this.classNameLower}.set${otherCName}POList(${othercName}DAO.findBy${this.className}(${this.id}));
         }
@@ -326,8 +326,8 @@ public class ${this.className}Service {
 <#--外键级联扩展，详情展示-->
 <#list this.fkFields as id,field>
     <#if field.cascadeShowExts?? && field.cascadeShowExts?size &gt; 0>
-        <#assign otherCName=field.foreignEntity.className>
-        <#assign othercName=lowerFirstWord(field.foreignEntity.className)>
+        <#assign otherCName = field.foreignEntity.className>
+        <#assign othercName = lowerFirstWord(field.foreignEntity.className)>
         <@call this.addImport("${poPackageName}.${otherCName}PO")/>
         if (${this.classNameLower}.get${field.jfieldName?capFirst}() != null) {
             ${otherCName}PO _${othercName}PO = ${othercName}DAO.findById(${this.classNameLower}.get${field.jfieldName?capFirst}());
@@ -341,8 +341,8 @@ public class ${this.className}Service {
 <#list this.holds! as otherEntity,mtm>
     <#if mtm.getEntityFeature(this.entityId).withinEntity
         && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
-        <#assign otherCName=otherEntity.className>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign otherCName = otherEntity.className>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call this.addImport("java.util.stream.Collectors")/>
         // 设置【${otherEntity.title}】主键列表
         showVO.set${otherCName}List(${othercName}DAO.findBy${this.className}(${this.id})
@@ -353,8 +353,8 @@ public class ${this.className}Service {
 </#list>
 <#--多对多级联扩展详情展示-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     <@call this.addImport("${mapperPackageName}.${otherCName}Mapper")/>
         // 设置【${otherEntity.title}】列表
         showVO.set${otherCName}List(${otherCName}Mapper.INSTANCE.to${otherCName}VOFor${this.className}Show(
@@ -374,11 +374,11 @@ public class ${this.className}Service {
         int count = 0;
         for (${this.type} ${this.id} : ${this.id}s) {
 <#list this.foreignEntities! as foreignEntity>
-    <#assign foreignCName=foreignEntity.className>
+    <#assign foreignCName = foreignEntity.className>
             this.checkDeleteBy${foreignCName}(${this.id});
 </#list>
 <#list mtmEntitiesForOpp as otherEntity>
-    <#assign otherCName=otherEntity.className>
+    <#assign otherCName = otherEntity.className>
             // 校验是否存在【${otherEntity.title}】关联
             this.checkDeleteBy${otherCName}(${this.id});
 </#list>
@@ -388,9 +388,9 @@ public class ${this.className}Service {
     }
 
 <#list this.foreignEntities! as foreignEntity>
-    <#assign foreignCName=foreignEntity.className>
-    <#assign foreigncName=lowerFirstWord(foreignEntity.className)>
-    <#assign alreadyFind=false>
+    <#assign foreignCName = foreignEntity.className>
+    <#assign foreigncName = lowerFirstWord(foreignEntity.className)>
+    <#assign alreadyFind = false>
     /**
      * 校验是否存在【${foreignEntity.title}】关联
      *
@@ -403,15 +403,15 @@ public class ${this.className}Service {
         if (count > 0) {
             throw new BusinessException(ErrorCode.CASCADE_DELETE_ERROR);
         }
-            <#assign alreadyFind=true>
+            <#assign alreadyFind = true>
         </#if>
     </#list>
     }
 
 </#list>
 <#list mtmEntitiesForOpp as otherEntity>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     /**
      * 校验是否存在【${otherEntity.title}】关联
      *
@@ -427,11 +427,11 @@ public class ${this.className}Service {
 </#list>
 <#list this.holds! as otherEntity,mtm>
     <@call this.addImport("org.apache.commons.lang3.ArrayUtils")/>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     /**
      * 执行【${otherEntity.title}】添加
      *

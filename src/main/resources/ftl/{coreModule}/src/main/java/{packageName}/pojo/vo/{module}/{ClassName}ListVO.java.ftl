@@ -13,7 +13,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 @ApiModel(description = "【${this.title}】列表展示对象")
 public class ${this.className}ListVO extends AbstractVO {
@@ -40,16 +40,16 @@ public class ${this.className}ListVO extends AbstractVO {
 <#--外键级联扩展，列表展示字段-->
 <#list this.fkFields as id,field>
     <#list field.cascadeListExts! as cascadeExt>
-        <#assign cascadeField=cascadeExt.cascadeField>
+        <#assign cascadeField = cascadeExt.cascadeField>
         <#--import字段类型-->
         <@call this.addFieldTypeImport(cascadeField)/>
-        <#assign exampleClass="">
+        <#assign exampleClass = "">
         <#if cascadeField.dicType??>
             <@call this.addConstImport(cascadeField.dicType)/>
         </#if>
         <#if field.foreignEntity != this.metaEntity>
             <@call this.addImport("${examplePackageName}.${field.foreignEntity.className}Example")/>
-            <#assign exampleClass="${field.foreignEntity.className}Example.">
+            <#assign exampleClass = "${field.foreignEntity.className}Example.">
         </#if>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
@@ -67,8 +67,8 @@ public class ${this.className}ListVO extends AbstractVO {
 <#--多对多级联扩展列表展示-->
 <#list mtmCascadeEntitiesForList as otherEntity>
     <@call this.addImport("java.util.List")/>
-    <#assign otherCName=otherEntity.className/>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherCName = otherEntity.className/>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     @ApiModelProperty(notes = "【${otherEntity.title}】列表")
     private List<${otherCName}VO> ${othercName}List;
 
@@ -87,25 +87,25 @@ public class ${this.className}ListVO extends AbstractVO {
     </#list>
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
-        <#assign otherCName=otherEntity.className/>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign otherCName = otherEntity.className/>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
     </#list>
 </#if>
 <#--多对多列表展示【静态内部类】-->
 <#list mtmCascadeEntitiesForList as otherEntity>
     <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
-    <#assign otherCName=otherEntity.className>
-    <#assign exampleClass="${otherEntity.className}Example">
+    <#assign otherCName = otherEntity.className>
+    <#assign exampleClass = "${otherEntity.className}Example">
     <@call this.addImport("${examplePackageName}.${exampleClass}")/>
     <#if this.projectFeature.lombokEnabled>
     @Data
-    @EqualsAndHashCode(callSuper=true)
+    @EqualsAndHashCode(callSuper = true)
     </#if>
     public static class ${otherCName}VO extends AbstractVO {
 
     <#--主键字段-->
-    <#assign otherPkField=otherEntity.pkField>
+    <#assign otherPkField = otherEntity.pkField>
     <#--字段名转下划线大写-->
     <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(otherPkField.jfieldName,true)>
         @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase},example = ${exampleClass}.E_${pkFieldNameSnakeCase})
@@ -113,7 +113,7 @@ public class ${this.className}ListVO extends AbstractVO {
 
     <#--多对多级联扩展，列表展示字段-->
     <#list mtmCascadeExts as mtmCascadeExt>
-        <#assign field=mtmCascadeExt.cascadeField>
+        <#assign field = mtmCascadeExt.cascadeField>
         <#--import字段类型-->
         <@call this.addFieldTypeImport(field)/>
         <#--字段名转下划线大写-->
@@ -137,7 +137,7 @@ public class ${this.className}ListVO extends AbstractVO {
         <@call JavaTemplateFunction.printGetterSetter(otherPkField,2)/>
         <#--多对多级联扩展，列表展示字段：getter-setter方法-->
         <#list mtmCascadeExts as mtmCascadeExt>
-            <#assign field=mtmCascadeExt.cascadeField>
+            <#assign field = mtmCascadeExt.cascadeField>
             <@call JavaTemplateFunction.printGetterSetter(field,2)/>
         </#list>
     </#if>

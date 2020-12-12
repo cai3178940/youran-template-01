@@ -132,7 +132,7 @@ public class ${this.chartName}Service {
      */
     private void initQueryParam(${this.chartName}QO qo) {
     <#list paramedWhere as where>
-        <#assign jfieldType=where.field.jfieldType>
+        <#assign jfieldType = where.field.jfieldType>
         <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
             <@call this.addImport("com.google.common.collect.Lists")/>
@@ -152,7 +152,7 @@ public class ${this.chartName}Service {
         </#if>
     </#list>
     <#list filteredHaving as having>
-        <#assign jfieldType=convertMetricsFieldType(having.parent)>
+        <#assign jfieldType = convertMetricsFieldType(having.parent)>
         <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
             <@call this.addImport("com.google.common.collect.Lists")/>

@@ -40,10 +40,10 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
 <#list this.holds! as otherEntity,mtm>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
-    <#assign otherCName=otherEntity.className>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign theFkId=mtm.getFkAlias(this.entityId,false)>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign otherCName = otherEntity.className>
+    <#assign otherType = otherEntity.pkField.jfieldType>
+    <#assign theFkId = mtm.getFkAlias(this.entityId, false)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     int getCountBy${otherCName}(${otherType} ${otherFkId});
 
     int add${otherCName}(@Param("${theFkId}") ${this.type} ${theFkId}, @Param("${otherFkId}")${otherType} ${otherFkId});
@@ -55,20 +55,20 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
 </#list>
 <#list mtmEntitiesForOpp as otherEntity>
     <@call this.addImport("java.util.List")/>
-    <#assign mtm=mtmsForOpp[otherEntity?index]/>
-    <#assign otherCName=otherEntity.className/>
-    <#assign otherType=otherEntity.pkField.jfieldType>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign mtm = mtmsForOpp[otherEntity?index]/>
+    <#assign otherCName = otherEntity.className/>
+    <#assign otherType = otherEntity.pkField.jfieldType>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
     List<${this.className}PO> findBy${otherCName}(${otherType} ${otherFkId});
 
 </#list>
 
 <#list this.metaEntity.checkUniqueIndexes as index>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
-    <#assign suffix=(index?index == 0)?string('', '' + index?index)>
-    <#assign params=''>
+    <#assign suffix = (index?index == 0)?string('', '' + index?index)>
+    <#assign params = ''>
     <#list index.fields as field>
-        <#assign params+='@Param("'+field.jfieldName+'") '+field.jfieldType+' '+field.jfieldName+', '>
+        <#assign params += '@Param("' + field.jfieldName + '") ' + field.jfieldType + ' ' + field.jfieldName + ', '>
     </#list>
     boolean notUnique${suffix}(${params}@Param("${this.id}") ${this.type} ${this.id});
 

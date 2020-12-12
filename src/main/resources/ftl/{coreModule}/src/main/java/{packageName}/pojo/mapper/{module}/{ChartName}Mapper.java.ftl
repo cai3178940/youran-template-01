@@ -49,13 +49,13 @@ public interface ${this.chartName}Mapper {
         <#if isChartType(ChartType.DETAIL_LIST)>
             <#-- 明细列字段 -->
             <#list this.columnList as column>
-                <#assign sourceItem=column.sourceItem>
+                <#assign sourceItem = column.sourceItem>
                 <#if !sourceItem.custom && sourceItem.field.dicType??>
-                    <#assign field=sourceItem.field>
+                    <#assign field = sourceItem.field>
                     <#if column.alias?hasContent>
-                        <#assign name=column.alias>
+                        <#assign name = column.alias>
                     <#else>
-                        <#assign name=field.jfieldName>
+                        <#assign name = field.jfieldName>
                     </#if>
             @Mapping(target = "${name}", expression = "java(${this.getConstFullClassPath(field.dicType)}.valueToDesc(vo.get${name?capFirst}()))"),
                 </#if>
@@ -65,11 +65,11 @@ public interface ${this.chartName}Mapper {
             <#list filteredDimension as dimension>
                 <#assign chartItem = chartItemMapWrapper.get(dimension.sourceItemId)>
                 <#if dimension.field.dicType??>
-                    <#assign field=dimension.field>
+                    <#assign field = dimension.field>
                     <#if chartItem.alias?hasContent>
-                        <#assign name=chartItem.alias>
+                        <#assign name = chartItem.alias>
                     <#else>
-                        <#assign name=field.jfieldName>
+                        <#assign name = field.jfieldName>
                     </#if>
             @Mapping(target = "${name}", expression = "java(${this.getConstFullClassPath(field.dicType)}.valueToDesc(vo.get${name?capFirst}()))"),
                 </#if>

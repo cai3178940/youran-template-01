@@ -16,7 +16,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>AbstractQO</#if> {
 
@@ -25,11 +25,11 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     alias-字段别名
     exampleClass-示例类名
 -->
-<#macro queryField field alias="" exampleClass="">
+<#macro queryField field alias = "" exampleClass = "">
     <#if alias?hasContent>
-        <#assign jfieldName=alias>
+        <#assign jfieldName = alias>
     <#else>
-        <#assign jfieldName=field.jfieldName>
+        <#assign jfieldName = field.jfieldName>
     </#if>
     <#--import字段类型-->
     <@call this.addFieldTypeImport(field)/>
@@ -68,13 +68,13 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 <#--开始渲染【外键级联扩展】字段声明语句-->
 <#list this.fkFields as id,field>
     <#if field.cascadeQueryExts?? && field.cascadeQueryExts?size &gt; 0>
-        <#assign exampleClass="">
+        <#assign exampleClass = "">
         <#if field.foreignEntity != this.metaEntity>
             <@call this.addImport("${examplePackageName}.${field.foreignEntity.className}Example")/>
-            <#assign exampleClass="${field.foreignEntity.className}Example.">
+            <#assign exampleClass = "${field.foreignEntity.className}Example.">
         </#if>
         <#list field.cascadeQueryExts as cascadeExt>
-            <#assign cascadeField=cascadeExt.cascadeField>
+            <#assign cascadeField = cascadeExt.cascadeField>
             <#if !QueryType.isBetween(cascadeField.queryType)>
                 <@queryField cascadeField cascadeExt.alias exampleClass></@queryField>
             <#else>
@@ -86,10 +86,10 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 </#list>
 <#--开始渲染【多对多级联扩展】字段声明语句-->
 <#list mtmCascadeExtsForQuery as mtmCascadeExt>
-    <#assign cascadeField=mtmCascadeExt.cascadeField>
-    <#assign cascadeEntity=mtmCascadeExt.cascadeEntity>
+    <#assign cascadeField = mtmCascadeExt.cascadeField>
+    <#assign cascadeEntity = mtmCascadeExt.cascadeEntity>
     <@call this.addImport("${examplePackageName}.${cascadeEntity.className}Example")/>
-    <#assign exampleClass="${cascadeEntity.className}Example.">
+    <#assign exampleClass = "${cascadeEntity.className}Example.">
     <#if !QueryType.isBetween(cascadeField.queryType)>
         <@queryField cascadeField mtmCascadeExt.alias exampleClass></@queryField>
     <#else>
@@ -109,11 +109,11 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         field-字段对象
         alias-字段别名
     -->
-    <#macro queryMethod field alias="">
+    <#macro queryMethod field alias = "">
         <#if alias?hasContent>
-            <#assign jfieldName=alias>
+            <#assign jfieldName = alias>
         <#else>
-            <#assign jfieldName=field.jfieldName>
+            <#assign jfieldName = field.jfieldName>
         </#if>
         <#--查询方式：IN-->
         <#if QueryType.isIn(field.queryType)>
@@ -135,7 +135,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#--开始渲染【外键级联扩展】字段getter-setter方法-->
     <#list this.fkFields as id,field>
         <#list field.cascadeQueryExts! as cascadeExt>
-            <#assign cascadeField=cascadeExt.cascadeField>
+            <#assign cascadeField = cascadeExt.cascadeField>
             <#if !QueryType.isBetween(cascadeField.queryType)>
                 <@queryMethod cascadeField cascadeExt.alias></@queryMethod>
             <#else>
@@ -146,7 +146,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     </#list>
     <#--开始渲染【多对多级联扩展】字段getter-setter方法-->
     <#list mtmCascadeExtsForQuery as mtmCascadeExt>
-        <#assign cascadeField=mtmCascadeExt.cascadeField>
+        <#assign cascadeField = mtmCascadeExt.cascadeField>
         <#if !QueryType.isBetween(cascadeField.queryType)>
             <@queryMethod cascadeField mtmCascadeExt.alias></@queryMethod>
         <#else>

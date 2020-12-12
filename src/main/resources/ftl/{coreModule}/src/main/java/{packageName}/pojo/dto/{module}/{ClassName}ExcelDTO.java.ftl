@@ -28,7 +28,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 
@@ -55,7 +55,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 
 </#list>
 <#list withinEntityList as otherEntity>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     @ExcelProperty("${otherEntity.title}")
     @ColumnWidth(15)
     private String ${othercName}List;
@@ -72,29 +72,29 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 <#list this.insertFields as id,field>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
-    <#assign arg="">
+    <#assign arg = "">
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
-        <#assign arg="${field.dicType}.valueToDesc(SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase}))">
+        <#assign arg = "${field.dicType}.valueToDesc(SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase}))">
     <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
-        <#assign arg="E_${jfieldNameSnakeCase}">
+        <#assign arg = "E_${jfieldNameSnakeCase}">
     <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-        <#assign arg="DateUtil.parseDate(E_${jfieldNameSnakeCase})">
+        <#assign arg = "DateUtil.parseDate(E_${jfieldNameSnakeCase})">
     <#elseIf field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-        <#assign arg="DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
+        <#assign arg = "DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
     <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-        <#assign arg="DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
+        <#assign arg = "DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
     <#elseIf field.jfieldType == JFieldType.BIGDECIMAL.getJavaType()>
         <@call this.addImport("java.math.BigDecimal")/>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
-        <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
+        <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
     <#else>
         <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
-        <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
+        <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
     </#if>
         example.set${field.jfieldName?capFirst}(${arg});
 </#list>
@@ -106,7 +106,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
         <@call JavaTemplateFunction.printGetterSetter(field.jfieldName,parseJfieldType(field))/>
     </#list>
     <#list withinEntityList as otherEntity>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
     </#list>
 </#if>

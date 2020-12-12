@@ -109,22 +109,22 @@ public interface ${this.className}API {
 
 </#if>
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign otherCName = otherEntity.className>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.addRemove || entityFeature.set>
         <@call this.addImport("java.util.List")/>
-        <#assign index=getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
+        <#assign index = getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
             <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
-            <#assign resultType="${otherCName}ListVO">
+            <#assign resultType = "${otherCName}ListVO">
         <#elseIf index &gt; -1>
             <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
-            <#assign resultType="${this.className}ShowVO.${otherCName}VO">
+            <#assign resultType = "${this.className}ShowVO.${otherCName}VO">
         <#else>
-            <#assign resultType=otherPk.jfieldType>
+            <#assign resultType = otherPk.jfieldType>
         </#if>
     /**
      * 获取【${otherEntity.title}】关联

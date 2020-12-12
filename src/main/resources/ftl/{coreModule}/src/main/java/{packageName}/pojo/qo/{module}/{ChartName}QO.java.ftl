@@ -13,12 +13,12 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>PageQO<#else>AbstractQO</#if> {
 
 <#list paramedWhere as where>
-    <#assign field=where.field>
+    <#assign field = where.field>
     <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
     || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
         <@call this.addImport("java.util.List")/>
@@ -46,7 +46,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         || FilterOperator.NOT_NULL.getValue() == having.filterOperator>
         <#continue>
     </#if>
-    <#assign jfieldType=convertMetricsFieldType(having.parent)>
+    <#assign jfieldType = convertMetricsFieldType(having.parent)>
     <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
         <@call this.addImport("java.util.List")/>
@@ -72,7 +72,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
 
 <#if !this.projectFeature.lombokEnabled>
     <#list paramedWhere as where>
-        <#assign field=where.field>
+        <#assign field = where.field>
         <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
             <@call JavaTemplateFunction.printGetterSetterList("whereParam${where?counter}","${field.jfieldType}",false)/>
@@ -91,7 +91,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         || FilterOperator.NOT_NULL.getValue() == having.filterOperator>
             <#continue>
         </#if>
-        <#assign jfieldType=convertMetricsFieldType(having.parent)>
+        <#assign jfieldType = convertMetricsFieldType(having.parent)>
         <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
             <@call JavaTemplateFunction.printGetterSetterList("havingParam${having?counter}","${jfieldType}",false)/>

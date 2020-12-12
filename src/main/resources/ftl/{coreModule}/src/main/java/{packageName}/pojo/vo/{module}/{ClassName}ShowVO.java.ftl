@@ -13,7 +13,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 @ApiModel(description = "【${this.title}】详情展示对象")
 public class ${this.className}ShowVO extends AbstractVO {
@@ -32,7 +32,7 @@ public class ${this.className}ShowVO extends AbstractVO {
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern=${guessDateFormat(field)}, timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
@@ -40,16 +40,16 @@ public class ${this.className}ShowVO extends AbstractVO {
 <#--外键级联扩展，详情展示字段-->
 <#list this.fkFields as id,field>
     <#list field.cascadeShowExts! as cascadeExt>
-        <#assign cascadeField=cascadeExt.cascadeField>
+        <#assign cascadeField = cascadeExt.cascadeField>
         <#--import字段类型-->
         <@call this.addFieldTypeImport(cascadeField)/>
-        <#assign exampleClass="">
+        <#assign exampleClass = "">
         <#if cascadeField.dicType??>
             <@call this.addConstImport(cascadeField.dicType)/>
         </#if>
         <#if field.foreignEntity != this.metaEntity>
             <@call this.addImport("${examplePackageName}.${field.foreignEntity.className}Example")/>
-            <#assign exampleClass="${field.foreignEntity.className}Example.">
+            <#assign exampleClass = "${field.foreignEntity.className}Example.">
         </#if>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(cascadeField.jfieldName,true)>
@@ -58,7 +58,7 @@ public class ${this.className}ShowVO extends AbstractVO {
             || cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || cascadeField.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormat(cascadeField)}, timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(cascadeField)}, timezone = "GMT+8")
         </#if>
     private ${cascadeField.jfieldType} ${cascadeExt.alias};
 
@@ -69,7 +69,7 @@ public class ${this.className}ShowVO extends AbstractVO {
     <#if mtm.getEntityFeature(this.entityId).withinEntity
         && !mtmCascadeEntitiesForShow?seqContains(otherEntity)>
         <@call this.addImport("java.util.List")/>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
     @ApiModelProperty(notes = "【${otherEntity.title}】主键列表")
     private List<${otherEntity.pkField.jfieldType}> ${othercName}List;
 
@@ -78,8 +78,8 @@ public class ${this.className}ShowVO extends AbstractVO {
 <#--多对多级联扩展详情展示-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <@call this.addImport("java.util.List")/>
-    <#assign otherCName=otherEntity.className/>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherCName = otherEntity.className/>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     @ApiModelProperty(notes = "【${otherEntity.title}】列表")
     private List<${otherCName}VO> ${othercName}List;
 
@@ -105,25 +105,25 @@ public class ${this.className}ShowVO extends AbstractVO {
     </#list>
     <#--多对多级联扩展详情展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForShow as otherEntity>
-        <#assign otherCName=otherEntity.className/>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign otherCName = otherEntity.className/>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetterList(othercName,"${otherCName}VO")/>
     </#list>
 </#if>
 <#--多对多级联扩展详情展示【静态内部类】-->
 <#list mtmCascadeEntitiesForShow as otherEntity>
     <#assign mtmCascadeExts = groupMtmCascadeExtsForShow[otherEntity?index]>
-    <#assign otherCName=otherEntity.className>
-    <#assign exampleClass="${otherEntity.className}Example">
+    <#assign otherCName = otherEntity.className>
+    <#assign exampleClass = "${otherEntity.className}Example">
     <@call this.addImport("${examplePackageName}.${exampleClass}")/>
     <#if this.projectFeature.lombokEnabled>
     @Data
-    @EqualsAndHashCode(callSuper=true)
+    @EqualsAndHashCode(callSuper = true)
     </#if>
     public static class ${otherCName}VO extends AbstractVO {
 
     <#--主键字段-->
-    <#assign pkField=otherEntity.pkField>
+    <#assign pkField = otherEntity.pkField>
     <#--字段名转下划线大写-->
     <#assign pkFieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(pkField.jfieldName,true)>
         @ApiModelProperty(notes = ${exampleClass}.N_${pkFieldNameSnakeCase}, example = ${exampleClass}.E_${pkFieldNameSnakeCase})
@@ -131,7 +131,7 @@ public class ${this.className}ShowVO extends AbstractVO {
 
     <#--多对多级联扩展，列表展示字段-->
     <#list mtmCascadeExts as mtmCascadeExt>
-        <#assign field=mtmCascadeExt.cascadeField>
+        <#assign field = mtmCascadeExt.cascadeField>
         <#--import字段类型-->
         <@call this.addFieldTypeImport(field)/>
         <#--字段名转下划线大写-->
@@ -144,7 +144,7 @@ public class ${this.className}ShowVO extends AbstractVO {
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-        @JsonFormat(pattern = ${guessDateFormat(field)}, timezone="GMT+8")
+        @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
         </#if>
         private ${field.jfieldType} ${field.jfieldName};
 
@@ -152,11 +152,11 @@ public class ${this.className}ShowVO extends AbstractVO {
 
     <#if !this.projectFeature.lombokEnabled>
         <#--主键字段：getter-setter方法-->
-        <@call JavaTemplateFunction.printGetterSetter(pkField,2)/>
+        <@call JavaTemplateFunction.printGetterSetter(pkField, 2)/>
         <#--多对多级联扩展，列表展示字段：getter-setter方法-->
         <#list mtmCascadeExts as mtmCascadeExt>
-            <#assign field=mtmCascadeExt.cascadeField>
-            <@call JavaTemplateFunction.printGetterSetter(field,2)/>
+            <#assign field = mtmCascadeExt.cascadeField>
+            <@call JavaTemplateFunction.printGetterSetter(field, 2)/>
         </#list>
     </#if>
     }

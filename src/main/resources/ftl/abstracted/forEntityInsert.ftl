@@ -8,7 +8,7 @@
 </#list>
 <#assign withinEntityList = []>
 <#list this.holds! as otherEntity,mtm>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#if entityFeature.withinEntity>
         <#assign withinEntityList += [otherEntity]>
     </#if>

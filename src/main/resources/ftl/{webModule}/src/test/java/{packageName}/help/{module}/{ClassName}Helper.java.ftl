@@ -13,17 +13,17 @@ public class ${this.className}Helper {
     <@call this.printAutowired()/>
 
     <#--定义外键字段参数串-->
-    <#assign foreignArg="">
-    <#assign foreignArg2="">
+    <#assign foreignArg = "">
+    <#assign foreignArg2 = "">
     <#list this.insertFields as id,field>
         <#if field.foreignKey>
-            <#assign foreignArg=foreignArg+"${field.jfieldType} ${field.jfieldName}, ">
-            <#assign foreignArg2=foreignArg2+"${field.jfieldName}, ">
+            <#assign foreignArg = foreignArg+"${field.jfieldType} ${field.jfieldName}, ">
+            <#assign foreignArg2 = foreignArg2+"${field.jfieldName}, ">
         </#if>
     </#list>
     <#if foreignArg?length gt 0>
-        <#assign foreignArg=foreignArg?substring(0,foreignArg?length-2)>
-        <#assign foreignArg2=foreignArg2?substring(0,foreignArg2?length-2)>
+        <#assign foreignArg = foreignArg?substring(0,foreignArg?length-2)>
+        <#assign foreignArg2 = foreignArg2?substring(0,foreignArg2?length-2)>
     </#if>
     /**
      * 生成add测试数据
@@ -35,27 +35,27 @@ public class ${this.className}Helper {
     <#list this.insertFields as id,field>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName,true)>
-        <#assign arg="">
+        <#assign arg = "">
         <#if field.foreignKey>
-            <#assign arg="${field.jfieldName}">
+            <#assign arg = "${field.jfieldName}">
         <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
-            <#assign arg="E_${jfieldNameSnakeCase}">
+            <#assign arg = "E_${jfieldNameSnakeCase}">
         <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-            <#assign arg="DateUtil.parseDate(E_${jfieldNameSnakeCase})">
+            <#assign arg = "DateUtil.parseDate(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-            <#assign arg="DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
+            <#assign arg = "DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-            <#assign arg="DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
+            <#assign arg = "DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.BIGDECIMAL.getJavaType()>
             <@call this.addImport("java.math.BigDecimal")/>
             <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
-            <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
+            <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
         <#else>
             <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
-            <#assign arg="SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
+            <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
         </#if>
         dto.set${field.jfieldName?capFirst}(${arg});
     </#list>

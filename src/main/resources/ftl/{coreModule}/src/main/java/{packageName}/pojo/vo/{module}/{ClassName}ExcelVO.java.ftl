@@ -27,7 +27,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 public class ${this.className}ExcelVO extends AbstractVO {
 
@@ -57,7 +57,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
 <#--外键级联扩展，列表展示字段-->
 <#list this.fkFields as id,field>
     <#list field.cascadeListExts! as cascadeExt>
-        <#assign cascadeField=cascadeExt.cascadeField>
+        <#assign cascadeField = cascadeExt.cascadeField>
         <#if cascadeField.jfieldType == JFieldType.LOCALDATE.getJavaType()>
             <@call this.addImport("${this.packageName}.excel.converter.LocalDateConverter")/>
     @ExcelProperty(value = "${cascadeField.fieldDesc}", converter = LocalDateConverter.class)
@@ -82,7 +82,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
 </#list>
 <#--多对多级联扩展列表展示-->
 <#list mtmCascadeEntitiesForList as otherEntity>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     @ExcelProperty("${otherEntity.title}")
     @ColumnWidth(20)
     private String ${othercName}List;
@@ -102,7 +102,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
     </#list>
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
     </#list>
 </#if>

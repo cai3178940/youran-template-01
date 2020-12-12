@@ -28,7 +28,7 @@ ${CommonTemplateFunction.formatParamComments(content)}</#macro>
 <#assign packageNamePath = this.packageName?replace(".", "/")>
 
 <#-- 生成getter setter -->
-<#function genGetterSetter type name override=false indent=1>
+<#function genGetterSetter type name override = false indent = 1>
     <#local code = "">
     <#local cap = name?capFirst>
     <#local uncap = name?uncapFirst>

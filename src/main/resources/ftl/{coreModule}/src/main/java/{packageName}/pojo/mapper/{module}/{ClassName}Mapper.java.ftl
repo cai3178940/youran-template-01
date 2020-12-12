@@ -57,7 +57,7 @@ public interface ${this.className}Mapper {
 
 <#--为被持有的实体提供级联【列表】查询方法-->
 <#list mtmCascadeEntitiesForOppList as otherEntity>
-    <#assign otherCName=otherEntity.className>
+    <#assign otherCName = otherEntity.className>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
     List<${otherCName}ListVO.${this.className}VO> to${this.className}VOFor${otherCName}List(List<${this.className}PO> list);
@@ -65,7 +65,7 @@ public interface ${this.className}Mapper {
 </#list>
 <#--为被持有的实体提供级联【详情】查询方法-->
 <#list mtmCascadeEntitiesForOppShow as otherEntity>
-    <#assign otherCName=otherEntity.className>
+    <#assign otherCName = otherEntity.className>
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${otherCName}ShowVO")/>
     List<${otherCName}ShowVO.${this.className}VO> to${this.className}VOFor${otherCName}Show(List<${this.className}PO> list);
@@ -73,8 +73,8 @@ public interface ${this.className}Mapper {
 </#list>
 <#--多对多被对方持有，提供PO列表转ListVO列表 -->
 <#list mtmEntitiesForOpp as otherEntity>
-    <#assign mtm=mtmsForOpp[otherEntity?index]/>
-    <#assign otherEntityFeature=mtm.getEntityFeature(otherEntity.entityId)>
+    <#assign mtm = mtmsForOpp[otherEntity?index]/>
+    <#assign otherEntityFeature = mtm.getEntityFeature(otherEntity.entityId)>
     <#--对方支持添加删除的情况才需要该服务 -->
     <#if otherEntityFeature.addRemove>
         <@call this.addImport("java.util.List")/>
@@ -98,11 +98,11 @@ public interface ${this.className}Mapper {
             </#if>
         </#list>
         <#list this.holds! as otherEntity,mtm>
-            <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
-            <#assign pkFieldType=otherEntity.pkField.jfieldType>
+            <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
+            <#assign pkFieldType = otherEntity.pkField.jfieldType>
             <#if entityFeature.withinEntity>
-                <#assign othercName=lowerFirstWord(otherEntity.className)>
-                <#assign otherCName=otherEntity.className>
+                <#assign othercName = lowerFirstWord(otherEntity.className)>
+                <#assign otherCName = otherEntity.className>
             @Mapping(target = "${othercName}List", expression = "java(${this.commonPackage}.util.ConvertUtil.convert${pkFieldType}List(dto.get${otherCName}List()))"),
             </#if>
         </#list>
@@ -136,7 +136,7 @@ public interface ${this.className}Mapper {
         </#list>
         <#list this.fkFields as id,field>
             <#list field.cascadeListExts! as cascadeExt>
-                <#assign cascadeField=cascadeExt.cascadeField>
+                <#assign cascadeField = cascadeExt.cascadeField>
                 <#if cascadeField.dicType??>
             @Mapping(target = "${cascadeField.jfieldName}", expression = "java(${this.getConstFullClassPath(cascadeField.dicType)}.valueToDesc(vo.get${cascadeField.jfieldName?capFirst}()))"),
                 </#if>
@@ -147,7 +147,7 @@ public interface ${this.className}Mapper {
 
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign mtmCascadeExts = groupMtmCascadeExtsForList[otherEntity?index]>
-        <#assign otherCName=otherEntity.className>
+        <#assign otherCName = otherEntity.className>
         <#--级联扩展列表字段中，如果有标题字段，则使用标题字段展示，否则直接展示主键字段-->
         <#if hasTitleField(otherEntity,mtmCascadeExts)>
             <#assign displayField = otherEntity.titleField>

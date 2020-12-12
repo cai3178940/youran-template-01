@@ -19,7 +19,7 @@
 <@call this.addStaticImport("org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath")/>
 <@call this.addStaticImport("org.springframework.test.web.servlet.result.MockMvcResultMatchers.status")/>
 <#--获取保存Example的代码-->
-<#assign saveExampleCode=this.getPrintingSaveExample()/>
+<#assign saveExampleCode = this.getPrintingSaveExample()/>
 <#--定义方法区代码-->
 <#assign methodCode>
 <#if this.entityFeature.save>
@@ -132,15 +132,15 @@
 
 </#if>
 <#list this.holds! as otherEntity,mtm>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign otherCName=otherEntity.className>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
-    <#assign otherFkId=mtm.getFkAlias(otherEntity.entityId,false)>
-    <#assign entityFeature=mtm.getEntityFeature(this.entityId)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign otherCName = otherEntity.className>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
+    <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId,false)>
+    <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
     <#--保存Example的代码块-->
     <#assign saveExampleCode = ""/>
     <#if entityFeature.addRemove || entityFeature.set>
-        <#assign saveExampleCode=this.getPrintingSaveExampleForMtm(otherEntity)/>
+        <#assign saveExampleCode = this.getPrintingSaveExampleForMtm(otherEntity)/>
     </#if>
     <#--测试多对多的“添加/移除”功能-->
     <#if entityFeature.addRemove>

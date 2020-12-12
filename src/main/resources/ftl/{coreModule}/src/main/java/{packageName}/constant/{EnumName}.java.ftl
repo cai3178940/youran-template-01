@@ -7,7 +7,7 @@
 <@call this.printClassCom("枚举【${this.remark}】")/>
 public enum ${this.constNameUpper} {
 
-<#assign allValuesStr="">
+<#assign allValuesStr = "">
 <#list this.detailList as detail>
     <#if this.constType == MetaConstType.INTEGER>
         <#assign valueStr>${detail.detailValue}</#assign>
@@ -15,9 +15,9 @@ public enum ${this.constNameUpper} {
         <#assign valueStr>"${detail.detailValue}"</#assign>
     </#if>
     <#if detail?hasNext>
-        <#assign allValuesStr+=detail.detailValue+",">
+        <#assign allValuesStr += detail.detailValue + ",">
     <#else>
-        <#assign allValuesStr+=detail.detailValue>
+        <#assign allValuesStr += detail.detailValue>
     </#if>
     /**
      * ${detail.detailRemark}

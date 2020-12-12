@@ -1,8 +1,8 @@
 <#include "/abstracted/common.ftl">
 <#-- 定义变量——主实体 -->
-<#assign mainEntity=this.chartSource.entity>
+<#assign mainEntity = this.chartSource.entity>
 <#-- 定义变量——join关联 -->
-<#assign joins=this.chartSource.joins>
+<#assign joins = this.chartSource.joins>
 <#-- 带模块名的包路径 -->
 <#if this.module?hasContent>
     <#assign daoPackageName = this.packageName+".dao."+this.module>
@@ -66,11 +66,11 @@
     </#if>
 </#function>
 <#-- 柱线图的参数模式 -->
-<#assign barLineParamMode=0>
+<#assign barLineParamMode = 0>
 <#if isChartType(ChartType.BAR_LINE)>
     <#if this.axisX2??>
-        <#assign barLineParamMode=1>
+        <#assign barLineParamMode = 1>
     <#else>
-        <#assign barLineParamMode=2>
+        <#assign barLineParamMode = 2>
     </#if>
 </#if>

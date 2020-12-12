@@ -9,9 +9,9 @@
 <#--组装多对多级联扩展相关的数据结构-->
 <#list this.holds as otherEntity,mtm>
     <#--初始化当前级联实体对应的级联扩展详情字段-->
-    <#assign mtmCascadeExts=[]>
+    <#assign mtmCascadeExts = []>
     <#list mtm.getCascadeExtList(this.entityId) as mtmCascadeExt>
-        <#assign cascadeField=mtmCascadeExt.cascadeField>
+        <#assign cascadeField = mtmCascadeExt.cascadeField>
         <#--判断是否开启级联详情展示开关-->
         <#if mtmCascadeExt.show>
             <#assign mtmCascadeExts +=[mtmCascadeExt]>

@@ -20,7 +20,7 @@
 </#function>
 
 <#-- 获取select列名，支持别名 -->
-<#function getSelectFieldWithAlias field tableAlias fieldAlias="">
+<#function getSelectFieldWithAlias field tableAlias fieldAlias = "">
     <#if fieldAlias?hasContent>
         <#return "${tableAlias}.${wrapMysqlKeyword(field.fieldName)} as ${wrapMysqlKeyword(fieldAlias)}">
     <#elseIf field.fieldName?capitalize != field.jfieldName?capitalize>

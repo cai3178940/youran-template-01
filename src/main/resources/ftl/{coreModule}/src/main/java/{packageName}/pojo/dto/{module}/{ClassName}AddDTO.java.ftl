@@ -12,7 +12,7 @@
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 </#if>
 @ApiModel(description = "新增【${this.title}】的参数")
 public class ${this.className}AddDTO extends AbstractDTO {
@@ -41,14 +41,14 @@ public class ${this.className}AddDTO extends AbstractDTO {
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("com.fasterxml.jackson.annotation.JsonFormat")/>
-    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone="GMT+8")
+    @JsonFormat(pattern = ${guessDateFormat(field)}, timezone = "GMT+8")
     </#if>
     private ${field.jfieldType} ${field.jfieldName};
 
 </#list>
 <#list withinEntityList as otherEntity>
-    <#assign otherPk=otherEntity.pkField>
-    <#assign othercName=lowerFirstWord(otherEntity.className)>
+    <#assign otherPk = otherEntity.pkField>
+    <#assign othercName = lowerFirstWord(otherEntity.className)>
     <@call this.addImport("java.util.List")/>
     private List<${otherPk.jfieldType}> ${othercName}List;
 
@@ -59,8 +59,8 @@ public class ${this.className}AddDTO extends AbstractDTO {
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>
     <#list withinEntityList as otherEntity>
-        <#assign otherPk=otherEntity.pkField>
-        <#assign othercName=lowerFirstWord(otherEntity.className)>
+        <#assign otherPk = otherEntity.pkField>
+        <#assign othercName = lowerFirstWord(otherEntity.className)>
         <@call JavaTemplateFunction.printGetterSetterList(othercName,otherPk.jfieldType)/>
     </#list>
 </#if>
