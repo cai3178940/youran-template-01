@@ -38,7 +38,6 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
 
 </#list>
 <#list this.holds! as otherEntity, mtm>
-    <@call this.addImport("java.util.List")/>
     <@call this.addImport("org.apache.ibatis.annotations.Param")/>
     <#assign otherCName = otherEntity.className>
     <#assign otherType = otherEntity.pkField.jfieldType>
@@ -46,9 +45,9 @@ public interface ${this.className}DAO extends DAO<${this.className}PO> {
     <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     int getCountBy${otherCName}(${otherType} ${otherFkId});
 
-    int add${otherCName}(@Param("${theFkId}") ${this.type} ${theFkId}, @Param("${otherFkId}")${otherType} ${otherFkId});
+    int add${otherCName}(@Param("${theFkId}") ${this.type} ${theFkId}, @Param("${otherFkId}") ${otherType} ${otherFkId});
 
-    int remove${otherCName}(@Param("${theFkId}") ${this.type} ${theFkId}, @Param("${otherFkId}")${otherType}[] ${otherFkId});
+    int remove${otherCName}(@Param("${theFkId}") ${this.type} ${theFkId}, @Param("${otherFkId}") ${otherType}[] ${otherFkId});
 
     int removeAll${otherCName}(${this.type} ${theFkId});
 

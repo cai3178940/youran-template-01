@@ -113,9 +113,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${dtoPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(dtoPackageName)/>
 
 ${code}
 

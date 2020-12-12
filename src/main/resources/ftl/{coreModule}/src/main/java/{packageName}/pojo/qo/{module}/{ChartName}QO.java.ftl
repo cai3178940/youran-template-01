@@ -3,7 +3,7 @@
 <#--定义主体代码-->
 <#assign code>
 <@call this.addImport("io.swagger.annotations.ApiParam")/>
-<#if isChartType(ChartType.DETAIL_LIST)>
+<#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     <@call this.addImport("${this.commonPackage}.pojo.qo.PageQO")/>
 <#else>
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
