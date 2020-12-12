@@ -2,7 +2,6 @@
 <#include "/abstracted/chartItem.ftl">
 <#--定义主体代码-->
 <#assign code>
-import com.cbb.common.pojo.qo.PageQO;
 <@call this.addImport("io.swagger.annotations.ApiParam")/>
 <#if isChartType(ChartType.DETAIL_LIST)>
     <@call this.addImport("${this.commonPackage}.pojo.qo.PageQO")/>
