@@ -198,8 +198,6 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 }
 </#assign>
 <#--开始渲染代码-->
-package ${voPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(voPackageName)/>
 
 ${code}

@@ -34,8 +34,6 @@ public class SyncReadExcelListener<T extends AbstractExcelDTO> extends AnalysisE
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.excel.listener;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".excel.listener")/>
 
 ${code}

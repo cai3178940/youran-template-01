@@ -29,8 +29,6 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.convert;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".convert")/>
 
 ${code}

@@ -208,8 +208,6 @@ public class DateUtil {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.util;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".util")/>
 
 ${code}

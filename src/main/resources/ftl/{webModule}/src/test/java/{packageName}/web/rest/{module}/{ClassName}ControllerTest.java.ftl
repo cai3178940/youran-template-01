@@ -222,9 +222,7 @@
 </#if>
 </#assign>
 <#--开始渲染代码-->
-package ${restPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(restPackageName)/>
 
 <@call this.printClassCom("【${this.title}】单元测试")/>
 @DisplayName("【${this.title}】Controller")

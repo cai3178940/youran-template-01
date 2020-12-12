@@ -26,8 +26,6 @@ public class WebConst {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.constant;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".web.constant")/>
 
 ${code}

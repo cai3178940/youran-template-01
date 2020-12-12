@@ -194,8 +194,6 @@ public class ExceptionTranslator {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.advice;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".web.advice")/>
 
 ${code}

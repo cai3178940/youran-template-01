@@ -6,8 +6,6 @@ public interface Jsr310Created extends CreatedBy, Jsr310CreatedTime {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.pojo.po;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".pojo.po")/>
 
 ${code}

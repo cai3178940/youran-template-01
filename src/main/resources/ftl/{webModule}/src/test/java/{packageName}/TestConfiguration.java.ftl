@@ -16,8 +16,6 @@ public class TestConfiguration {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName)/>
 
 ${code}

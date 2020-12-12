@@ -14,8 +14,6 @@ public class ${this.className}Example {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${examplePackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(examplePackageName)/>
 
 ${code}

@@ -16,8 +16,6 @@ public abstract class AbstractDTO implements Serializable {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.pojo.dto;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".pojo.dto")/>
 
 ${code}

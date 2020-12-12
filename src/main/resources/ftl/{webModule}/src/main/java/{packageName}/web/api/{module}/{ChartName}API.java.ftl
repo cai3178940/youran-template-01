@@ -39,8 +39,6 @@ public interface ${this.chartName}API {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${apiPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(apiPackageName)/>
 
 ${code}

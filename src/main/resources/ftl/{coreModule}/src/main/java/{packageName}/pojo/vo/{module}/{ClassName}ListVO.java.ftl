@@ -148,8 +148,6 @@ public class ${this.className}ListVO extends AbstractVO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${voPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(voPackageName)/>
 
 ${code}

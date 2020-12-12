@@ -33,8 +33,6 @@ public class UserLoginDTO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.pojo.dto;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".pojo.dto")/>
 
 ${code}

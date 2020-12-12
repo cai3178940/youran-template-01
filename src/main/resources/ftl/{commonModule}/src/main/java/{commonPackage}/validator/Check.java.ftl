@@ -15,8 +15,6 @@ public @interface Check {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.validator;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".validator")/>
 
 ${code}

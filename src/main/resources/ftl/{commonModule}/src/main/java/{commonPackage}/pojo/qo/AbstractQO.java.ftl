@@ -16,8 +16,6 @@ public abstract class AbstractQO implements Serializable {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.pojo.qo;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".pojo.qo")/>
 
 ${code}

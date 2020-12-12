@@ -49,8 +49,6 @@ public class JacksonXSSDeserializer extends StdScalarDeserializer<String> implem
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.xss;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".xss")/>
 
 ${code}

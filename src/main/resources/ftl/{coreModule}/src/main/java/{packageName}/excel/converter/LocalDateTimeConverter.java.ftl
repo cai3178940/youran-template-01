@@ -39,8 +39,6 @@ public class LocalDateTimeConverter implements Converter<LocalDateTime> {
 
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.excel.converter;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".excel.converter")/>
 
 ${code}

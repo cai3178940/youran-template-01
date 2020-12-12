@@ -18,8 +18,6 @@ public class OptimisticLockConfiguration {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.optimistic;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".optimistic")/>
 
 ${code}

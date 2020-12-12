@@ -110,8 +110,6 @@ public class ${this.className}ExcelVO extends AbstractVO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${voPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(voPackageName)/>
 
 ${code}

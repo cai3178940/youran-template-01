@@ -110,8 +110,6 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
 }
 </#assign>
 <#--开始渲染代码-->
-package ${qoPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(qoPackageName)/>
 
 ${code}

@@ -14,8 +14,6 @@ public interface LoginContext {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.context;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".context")/>
 
 ${code}

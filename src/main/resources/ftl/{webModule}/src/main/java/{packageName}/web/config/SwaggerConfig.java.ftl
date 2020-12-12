@@ -28,8 +28,6 @@ public class SwaggerConfig {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.config;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".web.config")/>
 
 ${code}

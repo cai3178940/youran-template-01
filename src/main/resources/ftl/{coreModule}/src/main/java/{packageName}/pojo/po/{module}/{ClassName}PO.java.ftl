@@ -267,8 +267,6 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
 }
 </#assign>
 <#--开始渲染代码-->
-package ${poPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(poPackageName)/>
 
 ${code}

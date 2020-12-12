@@ -335,9 +335,7 @@ public class H2Util {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.util;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".util")/>
 
 ${code}
 

@@ -81,8 +81,6 @@ public interface ${this.chartName}Mapper {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${mapperPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(mapperPackageName)/>
 
 ${code}

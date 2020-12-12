@@ -33,9 +33,7 @@ public interface ${this.chartName}DAO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${daoPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(daoPackageName)/>
 
 ${code}
 

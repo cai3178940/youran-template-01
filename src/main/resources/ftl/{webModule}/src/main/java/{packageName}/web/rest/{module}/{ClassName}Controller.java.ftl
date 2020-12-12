@@ -348,8 +348,6 @@ public class ${this.className}Controller extends AbstractController implements $
 
 </#assign>
 <#--开始渲染代码-->
-package ${restPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(restPackageName)/>
 
 ${code}

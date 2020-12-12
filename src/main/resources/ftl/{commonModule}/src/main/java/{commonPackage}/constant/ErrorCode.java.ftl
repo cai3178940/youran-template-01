@@ -82,8 +82,6 @@ public enum ErrorCode {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.constant;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".constant")/>
 
 ${code}

@@ -91,8 +91,6 @@ public class ${this.className}Helper {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${helpPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(helpPackageName)/>
 
 ${code}

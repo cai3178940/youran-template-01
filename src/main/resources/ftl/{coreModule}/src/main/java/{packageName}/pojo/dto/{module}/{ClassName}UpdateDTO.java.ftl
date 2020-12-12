@@ -87,8 +87,6 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${dtoPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(dtoPackageName)/>
 
 ${code}

@@ -49,8 +49,6 @@ public class ConstConstraintHandler implements SheetWriteHandler {
 
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.excel.handler;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".excel.handler")/>
 
 ${code}

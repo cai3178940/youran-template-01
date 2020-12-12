@@ -20,8 +20,6 @@ public class WebLoginContext implements LoginContext {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web.context;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".web.context")/>
 
 ${code}

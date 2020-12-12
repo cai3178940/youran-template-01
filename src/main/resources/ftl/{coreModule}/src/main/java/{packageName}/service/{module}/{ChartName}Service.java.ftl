@@ -176,8 +176,6 @@ public class ${this.chartName}Service {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${servicePackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(servicePackageName)/>
 
 ${code}

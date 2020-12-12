@@ -45,8 +45,6 @@ public class ${this.projectNameUpper}Configuration {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.config;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".config")/>
 
 ${code}

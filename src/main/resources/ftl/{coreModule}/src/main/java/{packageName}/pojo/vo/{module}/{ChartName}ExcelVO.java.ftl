@@ -150,8 +150,6 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
 }
 </#assign>
 <#--开始渲染代码-->
-package ${voPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(voPackageName)/>
 
 ${code}

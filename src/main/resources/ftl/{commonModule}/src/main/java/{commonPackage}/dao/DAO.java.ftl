@@ -129,8 +129,6 @@ public interface DAO<PO extends AbstractPO> {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.dao;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".dao")/>
 
 ${code}

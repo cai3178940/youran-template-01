@@ -162,8 +162,6 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 }
 </#assign>
 <#--开始渲染代码-->
-package ${qoPackageName};
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(qoPackageName)/>
 
 ${code}

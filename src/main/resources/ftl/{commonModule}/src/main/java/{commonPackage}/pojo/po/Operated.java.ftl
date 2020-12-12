@@ -6,8 +6,6 @@ public interface Operated extends OperatedBy, OperatedTime {
 }
 </#assign>
 <#--开始渲染代码-->
-package ${this.commonPackage}.pojo.po;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.commonPackage + ".pojo.po")/>
 
 ${code}

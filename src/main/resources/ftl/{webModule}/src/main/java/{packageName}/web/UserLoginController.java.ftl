@@ -40,8 +40,6 @@ public class UserLoginController extends AbstractController {
 
 </#assign>
 <#--开始渲染代码-->
-package ${this.packageName}.web;
-
-<@call this.printImport()/>
+<@call this.printPackageAndImport(this.packageName + ".web")/>
 
 ${code}
