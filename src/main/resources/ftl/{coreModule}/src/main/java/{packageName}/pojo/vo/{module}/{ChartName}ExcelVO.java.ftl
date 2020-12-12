@@ -147,7 +147,6 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
 </#if>
 
 <#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
-
 }
 </#assign>
 <#--开始渲染代码-->

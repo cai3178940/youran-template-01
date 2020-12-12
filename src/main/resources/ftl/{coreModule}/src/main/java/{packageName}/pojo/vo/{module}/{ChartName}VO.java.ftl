@@ -195,7 +195,6 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
 
 </#if>
 <#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
-
 }
 </#assign>
 <#--开始渲染代码-->

@@ -60,7 +60,7 @@ public class ${this.chartName}Service {
      * @param list
      * @return
      */
-    private static List<Object[]> convertChartData(List<${this.chartName}VO> list) {
+    private List<Object[]> convertChartData(List<${this.chartName}VO> list) {
         <@call this.addImport("java.util.LinkedList")/>
         List<Object[]> result = new LinkedList<>();
     <#-- 柱线图的数据转换 -->

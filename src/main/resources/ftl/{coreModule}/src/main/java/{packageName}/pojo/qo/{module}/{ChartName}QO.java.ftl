@@ -2,7 +2,6 @@
 <#include "/abstracted/chartItem.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("io.swagger.annotations.ApiParam")/>
 <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     <@call this.addImport("${this.commonPackage}.pojo.qo.PageQO")/>
 <#else>
@@ -19,6 +18,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
 
 <#list paramedWhere as where>
     <#assign field = where.field>
+    <@call this.addImport("io.swagger.annotations.ApiParam")/>
     <#if FilterOperator.CONTAIN.getValue() == where.filterOperator
     || FilterOperator.NOT_CONTAIN.getValue() == where.filterOperator>
         <@call this.addImport("java.util.List")/>
@@ -47,6 +47,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
         <#continue>
     </#if>
     <#assign jfieldType = convertMetricsFieldType(having.parent)>
+    <@call this.addImport("io.swagger.annotations.ApiParam")/>
     <#if FilterOperator.CONTAIN.getValue() == having.filterOperator
         || FilterOperator.NOT_CONTAIN.getValue() == having.filterOperator>
         <@call this.addImport("java.util.List")/>
