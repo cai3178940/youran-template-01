@@ -69,7 +69,7 @@ public class ${this.className}Service {
         <#assign suffix = (index?index == 0)?string('', '' + index?index)>
         <#assign params = ''>
         <#list index.fields as field>
-            <#assign params += this.classNameLower + '.get'+field.jfieldName?capFirst+'(), '>
+            <#assign params += this.classNameLower + '.get' + field.jfieldName?capFirst + '(), '>
         </#list>
         if (${this.classNameLower}DAO.notUnique${suffix}(${params}isUpdate ? ${this.classNameLower}.get${this.idUpper}() : null)) {
             throw new BusinessException(ErrorCode.DUPLICATE_KEY);
@@ -276,7 +276,7 @@ public class ${this.className}Service {
     public ${this.className}PO get${this.className}(${this.type} ${this.id}, boolean force) {
     <#assign withFalseCode = "">
     <#list this.holds! as otherEntity,mtm>
-        <#assign withFalseCode = withFalseCode+"false, ">
+        <#assign withFalseCode = withFalseCode + "false, ">
     </#list>
         return this.get${this.className}(${this.id}, ${withFalseCode}force);
     }
@@ -290,8 +290,8 @@ public class ${this.className}Service {
 <#assign withHoldParam = "">
 <#list this.holds! as otherEntity,mtm>
     <#assign otherCName = otherEntity.className>
-    <#assign withParamName = "with"+otherCName>
-    <#assign withHoldParam = withHoldParam+"boolean with"+otherCName+", ">
+    <#assign withParamName = "with" + otherCName>
+    <#assign withHoldParam = withHoldParam + "boolean with" + otherCName + ", ">
      * @param ${withParamName} 是否级联获取【${otherEntity.title}】
 </#list>
      * @param force 是否强制获取

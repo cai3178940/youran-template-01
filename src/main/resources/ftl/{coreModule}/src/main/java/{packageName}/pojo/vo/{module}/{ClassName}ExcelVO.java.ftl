@@ -103,7 +103,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
     <#--多对多列表展示：getter-setter方法-->
     <#list mtmCascadeEntitiesForList as otherEntity>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
+        <@call JavaTemplateFunction.printGetterSetter(othercName + "List","String")/>
     </#list>
 </#if>
 

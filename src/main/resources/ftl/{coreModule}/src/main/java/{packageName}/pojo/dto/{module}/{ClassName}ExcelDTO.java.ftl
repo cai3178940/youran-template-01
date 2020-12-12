@@ -107,7 +107,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
     </#list>
     <#list withinEntityList as otherEntity>
         <#assign othercName = lowerFirstWord(otherEntity.className)>
-        <@call JavaTemplateFunction.printGetterSetter(othercName+"List","String")/>
+        <@call JavaTemplateFunction.printGetterSetter(othercName + "List","String")/>
     </#list>
 </#if>
 }

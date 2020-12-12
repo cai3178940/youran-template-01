@@ -17,8 +17,8 @@ public class ${this.className}Helper {
     <#assign foreignArg2 = "">
     <#list this.insertFields as id,field>
         <#if field.foreignKey>
-            <#assign foreignArg = foreignArg+"${field.jfieldType} ${field.jfieldName}, ">
-            <#assign foreignArg2 = foreignArg2+"${field.jfieldName}, ">
+            <#assign foreignArg = foreignArg + "${field.jfieldType} ${field.jfieldName}, ">
+            <#assign foreignArg2 = foreignArg2 + "${field.jfieldName}, ">
         </#if>
     </#list>
     <#if foreignArg?length gt 0>

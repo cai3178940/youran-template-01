@@ -150,9 +150,9 @@ public class ${this.className}Controller extends AbstractController implements $
         <#assign withFalseCode = "">
         <#list this.holds! as otherHoldEntity,mtm>
             <#if otherEntity == otherHoldEntity>
-                <#assign withCode = withFalseCode+"true, ">
+                <#assign withCode = withFalseCode + "true, ">
             <#else>
-                <#assign withCode = withFalseCode+"false, ">
+                <#assign withCode = withFalseCode + "false, ">
             </#if>
         </#list>
         ${this.className}PO ${this.classNameLower} = ${this.classNameLower}Service.get${this.className}(${this.id}, ${withCode}true);

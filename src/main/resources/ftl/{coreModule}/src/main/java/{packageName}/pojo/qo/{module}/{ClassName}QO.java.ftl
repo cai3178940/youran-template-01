@@ -61,8 +61,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#if !QueryType.isBetween(field.queryType)>
         <@queryField field></@queryField>
     <#else>
-        <@queryField field field.jfieldName+"Start"></@queryField>
-        <@queryField field field.jfieldName+"End"></@queryField>
+        <@queryField field field.jfieldName + "Start"></@queryField>
+        <@queryField field field.jfieldName + "End"></@queryField>
     </#if>
 </#list>
 <#--开始渲染【外键级联扩展】字段声明语句-->
@@ -78,8 +78,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
             <#if !QueryType.isBetween(cascadeField.queryType)>
                 <@queryField cascadeField cascadeExt.alias exampleClass></@queryField>
             <#else>
-                <@queryField cascadeField cascadeExt.alias+"Start" exampleClass></@queryField>
-                <@queryField cascadeField cascadeExt.alias+"End" exampleClass></@queryField>
+                <@queryField cascadeField cascadeExt.alias + "Start" exampleClass></@queryField>
+                <@queryField cascadeField cascadeExt.alias + "End" exampleClass></@queryField>
             </#if>
         </#list>
     </#if>
@@ -93,8 +93,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#if !QueryType.isBetween(cascadeField.queryType)>
         <@queryField cascadeField mtmCascadeExt.alias exampleClass></@queryField>
     <#else>
-        <@queryField cascadeField mtmCascadeExt.alias+"Start" exampleClass></@queryField>
-        <@queryField cascadeField mtmCascadeExt.alias+"End" exampleClass></@queryField>
+        <@queryField cascadeField mtmCascadeExt.alias + "Start" exampleClass></@queryField>
+        <@queryField cascadeField mtmCascadeExt.alias + "End" exampleClass></@queryField>
     </#if>
 </#list>
 <#--开始渲染排序条件声明语句-->
@@ -128,8 +128,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         <#if !QueryType.isBetween(field.queryType)>
             <@queryMethod field></@queryMethod>
         <#else>
-            <@queryMethod field field.jfieldName+"Start"></@queryMethod>
-            <@queryMethod field field.jfieldName+"End"></@queryMethod>
+            <@queryMethod field field.jfieldName + "Start"></@queryMethod>
+            <@queryMethod field field.jfieldName + "End"></@queryMethod>
         </#if>
     </#list>
     <#--开始渲染【外键级联扩展】字段getter-setter方法-->
@@ -139,8 +139,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
             <#if !QueryType.isBetween(cascadeField.queryType)>
                 <@queryMethod cascadeField cascadeExt.alias></@queryMethod>
             <#else>
-                <@queryMethod cascadeField cascadeExt.alias+"Start"></@queryMethod>
-                <@queryMethod cascadeField cascadeExt.alias+"End"></@queryMethod>
+                <@queryMethod cascadeField cascadeExt.alias + "Start"></@queryMethod>
+                <@queryMethod cascadeField cascadeExt.alias + "End"></@queryMethod>
             </#if>
         </#list>
     </#list>
@@ -150,8 +150,8 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
         <#if !QueryType.isBetween(cascadeField.queryType)>
             <@queryMethod cascadeField mtmCascadeExt.alias></@queryMethod>
         <#else>
-            <@queryMethod cascadeField mtmCascadeExt.alias+"Start"></@queryMethod>
-            <@queryMethod cascadeField mtmCascadeExt.alias+"End"></@queryMethod>
+            <@queryMethod cascadeField mtmCascadeExt.alias + "Start"></@queryMethod>
+            <@queryMethod cascadeField mtmCascadeExt.alias + "End"></@queryMethod>
         </#if>
     </#list>
     <#--开始渲染排序字段getter-setter方法-->

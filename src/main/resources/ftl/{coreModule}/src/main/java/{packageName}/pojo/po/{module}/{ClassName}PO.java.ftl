@@ -130,7 +130,7 @@
     </#if>
 </#if>
 <#if implementsStr != "">
-    <#assign implementsStr = " implements"+implementsStr?removeEnding(",")>
+    <#assign implementsStr = " implements" + implementsStr?removeEnding(",")>
 </#if>
 <@call this.printClassCom("${this.title}" "${this.desc}")/>
 <#if this.projectFeature.lombokEnabled>
