@@ -22,7 +22,6 @@
 <@call this.addImport("${this.packageName}.pojo.dto.AbstractExcelDTO")/>
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("excel导入【${this.title}】的数据传输对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -72,6 +71,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
 <#list this.insertFields as id, field>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
     <#assign arg = "">
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>

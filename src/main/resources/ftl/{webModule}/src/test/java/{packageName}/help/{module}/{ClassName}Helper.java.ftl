@@ -5,7 +5,6 @@
 <@call this.addImport("${dtoPackageName}.*")/>
 <@call this.addImport("${poPackageName}.*")/>
 <@call this.addImport("org.springframework.stereotype.Component")/>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 @Component
 public class ${this.className}Helper {
 
@@ -35,6 +34,7 @@ public class ${this.className}Helper {
     <#list this.insertFields as id, field>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
+        <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
         <#assign arg = "">
         <#if field.foreignKey>
             <#assign arg = "${field.jfieldName}">

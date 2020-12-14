@@ -6,7 +6,6 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("新增【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -23,6 +22,8 @@ public class ${this.className}AddDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${jfieldNameSnakeCase}")/>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
         <@call this.addImport("javax.validation.constraints.NotNull")/>

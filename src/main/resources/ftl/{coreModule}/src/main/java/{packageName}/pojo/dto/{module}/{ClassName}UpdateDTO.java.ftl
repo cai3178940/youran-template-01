@@ -6,7 +6,6 @@
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("javax.validation.constraints.NotNull")/>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("修改【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -20,6 +19,8 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign pkNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(this.pk.jfieldName, true)>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${pkNameSnakeCase}")/>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${pkNameSnakeCase}")/>
     @ApiModelProperty(notes = N_${pkNameSnakeCase}, example = E_${pkNameSnakeCase}, required = true)
     @NotNull
     <#if this.pk.jfieldType == JFieldType.STRING.getJavaType()>
@@ -36,6 +37,8 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
     <#--字段名转下划线大写-->
     <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${jfieldNameSnakeCase}")/>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.notNull>, required = true</#if><#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.notNull>
     @NotNull

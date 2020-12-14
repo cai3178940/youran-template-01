@@ -10,7 +10,6 @@
 <#else>
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
 </#if>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("查询【${this.title}】的参数")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -38,10 +37,16 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
     <#--查询方式：IN-->
     <#if QueryType.isIn(field.queryType)>
         <@call this.addImport("java.util.List")/>
+        <#if exampleClass == "">
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${jfieldNameSnakeCase}")/>
+        </#if>
     @ApiParam(value = ${exampleClass}N_${jfieldNameSnakeCase})
     private List<${field.jfieldType}> ${jfieldName};
-    <#else>
-    <#--其他查询方式-->
+    <#else><#--其他查询方式-->
+        <#if exampleClass == "">
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${jfieldNameSnakeCase}")/>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
+        </#if>
     @ApiParam(value = ${exampleClass}N_${jfieldNameSnakeCase}, example = ${exampleClass}E_${jfieldNameSnakeCase})
         <#if field.jfieldType == JFieldType.STRING.getJavaType()>
             <@call this.addImport("org.hibernate.validator.constraints.Length")/>

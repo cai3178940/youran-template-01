@@ -7,7 +7,6 @@
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
-<@call this.addStaticImport("${examplePackageName}.${this.className}Example.*")/>
 <@call this.printClassCom("【${this.title}】列表展示对象")/>
 <#if this.projectFeature.lombokEnabled>
     <@call this.addImport("lombok.Data")/>
@@ -27,6 +26,8 @@ public class ${this.className}ListVO extends AbstractVO {
     <#if field.dicType??>
         <@call this.addConstImport(field.dicType)/>
     </#if>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.N_${jfieldNameSnakeCase}")/>
+    <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
     @ApiModelProperty(notes = N_${jfieldNameSnakeCase}, example = E_${jfieldNameSnakeCase}<#if field.dicType??>, allowableValues = ${field.dicType}.VALUES_STR</#if>)
     <#if field.jfieldType == JFieldType.DATE.getJavaType()
             || field.jfieldType == JFieldType.LOCALDATE.getJavaType()
