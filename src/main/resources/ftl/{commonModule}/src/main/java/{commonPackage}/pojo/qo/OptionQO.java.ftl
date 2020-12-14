@@ -3,6 +3,7 @@
 <#assign code>
 <@call this.addImport("io.swagger.annotations.ApiParam")/>
 <@call this.addImport("javax.validation.constraints.Max")/>
+<@call this.addImport("javax.validation.constraints.Min")/>
 <@call this.printClassCom("查询选项入参")/>
 public class OptionQO<K, V> extends AbstractQO {
 
@@ -11,7 +12,8 @@ public class OptionQO<K, V> extends AbstractQO {
      * 一次请求加载条数
      */
     @ApiParam(value = "一次请求加载条数", example = "20")
-    @Max(value = 1000, message = "limit不能大于1000")
+    @Max(value = 1000, message = "limit不能大于{value}")
+    @Min(value = 1, message = "limit不能小于{value}")
     protected Integer limit;
 
     /**

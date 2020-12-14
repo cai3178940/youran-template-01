@@ -14,19 +14,20 @@ public class PageQO extends AbstractQO {
      * 每页的条数
      */
     @ApiParam(value = "分页参数，每页的条数", example = "20")
-    @Max(value = 1000, message = "pageSize不能大于1000")
+    @Max(value = 1000, message = "pageSize不能大于{value}")
+    @Min(value = 1, message = "pageSize不能小于{value}")
     protected Integer pageSize;
 
     /**
      * 当前第几页
      */
     @ApiParam(value = "分页参数，第几页", example = "1")
-    @Min(value = 1, message = "pageNo不能小于1")
+    @Min(value = 1, message = "pageNo不能小于{value}")
     protected Integer pageNo;
 
     public PageQO() {
         // 默认第一页，每页20条
-        this(1, 20);
+        this(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE);
     }
 
     public PageQO(Integer pageNo, Integer pageSize) {
