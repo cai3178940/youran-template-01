@@ -13,7 +13,8 @@
 <@call this.addImport("${apiPackageName}.${this.className}API")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
-<@call this.addImport("org.springframework.web.bind.annotation.*")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RestController")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RequestMapping")/>
 <@call this.addImport("javax.validation.Valid")/>
 <@call this.addImport("java.net.URI")/>
 <@call this.printClassCom("【${this.title}】控制器")/>
@@ -32,6 +33,9 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
     <@call this.addImport("${poPackageName}.${this.className}PO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.ResponseStatus")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,6 +51,8 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
     <@call this.addImport("${poPackageName}.${this.className}PO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PutMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @PutMapping
     public ResponseEntity<${this.className}ShowVO> update(@Valid @RequestBody ${this.className}UpdateDTO ${this.classNameLower}UpdateDTO) {
@@ -58,6 +64,7 @@ public class ${this.className}Controller extends AbstractController implements $
 <#if this.entityFeature.list>
     <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     @Override
@@ -81,6 +88,7 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
     <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @Override
     @GetMapping(value = "/options")
     public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo) {
@@ -91,6 +99,8 @@ public class ${this.className}Controller extends AbstractController implements $
 </#if>
 <#if this.entityFeature.show>
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @GetMapping(value = "/{${this.id}}")
     public ResponseEntity<${this.className}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
@@ -100,6 +110,8 @@ public class ${this.className}Controller extends AbstractController implements $
 
 </#if>
 <#if this.entityFeature.delete>
+    <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @DeleteMapping(value = "/{${this.id}}")
     public ResponseEntity<Integer> delete(@PathVariable ${this.type} ${this.id}) {
@@ -111,6 +123,8 @@ public class ${this.className}Controller extends AbstractController implements $
 <#if this.entityFeature.deleteBatch>
     <@call this.addImport("${this.commonPackage}.exception.BusinessException")/>
     <@call this.addImport("${this.commonPackage}.constant.ErrorCode")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @DeleteMapping
     public ResponseEntity<Integer> deleteBatch(@RequestBody ${this.type}[] id) {
@@ -133,6 +147,8 @@ public class ${this.className}Controller extends AbstractController implements $
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${poPackageName}.${otherCName}PO")/>
         <@call this.addImport("${poPackageName}.${this.className}PO")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
         <#assign index = getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
@@ -174,6 +190,9 @@ public class ${this.className}Controller extends AbstractController implements $
     </#if>
     <#if entityFeature.addRemove>
         <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @PostMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> add${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -191,6 +210,8 @@ public class ${this.className}Controller extends AbstractController implements $
     }
 
     <#elseIf entityFeature.set>
+        <@call this.addImport("org.springframework.web.bind.annotation.PutMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @PutMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> set${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -202,10 +223,11 @@ public class ${this.className}Controller extends AbstractController implements $
     </#if>
 </#list>
 <#if this.entityFeature.excelExport>
-    @Override
-    @GetMapping("/export")
     <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    @Override
+    @GetMapping("/export")
     public void exportExcel(@Valid ${this.className}QO ${this.classNameLower}QO, HttpServletResponse response) throws Exception {
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
@@ -231,6 +253,8 @@ public class ${this.className}Controller extends AbstractController implements $
 
 </#if>
 <#if this.entityFeature.excelImport>
+    <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestPart")/>
     @Override
     @PostMapping("/import")
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
@@ -275,9 +299,10 @@ public class ${this.className}Controller extends AbstractController implements $
             <@justCall dicSet.add(field.dicType)/>
         </#if>
     </#list>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     @Override
     @GetMapping("/template")
-    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");

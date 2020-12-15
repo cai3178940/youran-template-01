@@ -6,7 +6,8 @@
 <@call this.addImport("${apiPackageName}.${this.chartName}API")/>
 <@call this.addImport("${servicePackageName}.${this.chartName}Service")/>
 <@call this.addImport("org.springframework.beans.factory.annotation.Autowired")/>
-<@call this.addImport("org.springframework.web.bind.annotation.*")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RestController")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RequestMapping")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
 <@call this.addImport("${qoPackageName}.${this.chartName}QO")/>
 <@call this.addImport("javax.validation.Valid")/>
@@ -20,6 +21,7 @@ public class ${this.chartName}Controller extends AbstractController implements $
 
 <#if isChartType(ChartType.DETAIL_LIST) || isChartType(ChartType.AGG_TABLE)>
     <@call this.addImport("${voPackageName}.${this.chartName}VO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @Override
     @GetMapping
     <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
@@ -35,6 +37,7 @@ public class ${this.chartName}Controller extends AbstractController implements $
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${mapperPackageName}.${this.chartName}Mapper")/>
         <@call this.addImport("${voPackageName}.${this.chartName}ExcelVO")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @Override
     @GetMapping("/export")
     public void exportExcel(@Valid ${this.chartName}QO qo, HttpServletResponse response) throws Exception {
@@ -51,9 +54,10 @@ public class ${this.chartName}Controller extends AbstractController implements $
     }
     </#if>
 <#else>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    <@call this.addImport("java.util.List")/>
     @Override
     @GetMapping
-    <@call this.addImport("java.util.List")/>
     public ResponseEntity<List<Object[]>> findChartData(@Valid ${this.chartName}QO qo) {
         List<Object[]> list = ${this.chartNameLower}Service.findChartData(qo);
         return ResponseEntity.ok(list);

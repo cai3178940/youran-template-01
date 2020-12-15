@@ -2,8 +2,6 @@
 <#include "/abstracted/commonForEntity.ftl">
 <#--定义主体代码-->
 <#assign code>
-<@call this.addImport("${dtoPackageName}.*")/>
-<@call this.addImport("${poPackageName}.*")/>
 <@call this.addImport("org.springframework.stereotype.Component")/>
 @Component
 public class ${this.className}Helper {
@@ -29,31 +27,37 @@ public class ${this.className}Helper {
      *
      * @return
      */
+    <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
     public ${this.className}AddDTO get${this.className}AddDTO(${foreignArg}) {
         ${this.className}AddDTO dto = new ${this.className}AddDTO();
     <#list this.insertFields as id, field>
         <#--字段名转下划线大写-->
         <#assign jfieldNameSnakeCase = CommonTemplateFunction.camelCaseToSnakeCase(field.jfieldName, true)>
-        <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
         <#assign arg = "">
         <#if field.foreignKey>
             <#assign arg = "${field.jfieldName}">
         <#elseIf field.jfieldType == JFieldType.STRING.getJavaType()>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <#assign arg = "E_${jfieldNameSnakeCase}">
         <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
             <#assign arg = "DateUtil.parseDate(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
             <#assign arg = "DateUtil.parseLocalDate(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
             <#assign arg = "DateUtil.parseLocalDateTime(E_${jfieldNameSnakeCase})">
         <#elseIf field.jfieldType == JFieldType.BIGDECIMAL.getJavaType()>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <@call this.addImport("java.math.BigDecimal")/>
             <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
             <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
         <#else>
+            <@call this.addStaticImport("${examplePackageName}.${this.className}Example.E_${jfieldNameSnakeCase}")/>
             <@call this.addImport("${this.commonPackage}.util.SafeUtil")/>
             <#assign arg = "SafeUtil.get${field.jfieldType}(E_${jfieldNameSnakeCase})">
         </#if>
@@ -68,6 +72,8 @@ public class ${this.className}Helper {
      *
      * @return
      */
+    <@call this.addImport("${dtoPackageName}.${this.className}UpdateDTO")/>
+    <@call this.addImport("${poPackageName}.${this.className}PO")/>
     public ${this.className}UpdateDTO get${this.className}UpdateDTO(${this.className}PO ${this.classNameLower}) {
         ${this.className}UpdateDTO dto = new ${this.className}UpdateDTO();
         dto.set${this.idUpper}(${this.classNameLower}.get${this.idUpper}());
