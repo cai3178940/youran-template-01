@@ -31,26 +31,21 @@ public class ${this.chartName}Controller extends AbstractController implements $
     }
 
     <#if this.excelExport>
-        <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
-        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("java.net.URLEncoder")/>
-        <@call this.addImport("java.util.List")/>
-        <@call this.addImport("${mapperPackageName}.${this.chartName}Mapper")/>
-        <@call this.addImport("${voPackageName}.${this.chartName}ExcelVO")/>
-        <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @Override
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @GetMapping("/export")
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     public void exportExcel(@Valid ${this.chartName}QO qo, HttpServletResponse response) throws Exception {
         qo.setPageSize(Integer.MAX_VALUE);
         qo.setPageNo(1);
+        <@call this.addImport("java.util.List")/>
         List<${this.chartName}VO> list = ${this.chartNameLower}Service.findList(qo).getList();
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("${this.title}", "utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), ${this.chartName}ExcelVO.class)
-                .sheet()
-                .doWrite(${this.chartName}Mapper.INSTANCE.toExcelVOList(list));
+        this.exportExcel(response,
+                <@call this.addImport("${voPackageName}.${this.chartName}ExcelVO")/>
+                ${this.chartName}ExcelVO.class,
+                <@call this.addImport("${mapperPackageName}.${this.chartName}Mapper")/>
+                ${this.chartName}Mapper.INSTANCE.toExcelVOList(list),
+                "${this.title}");
     }
     </#if>
 <#else>

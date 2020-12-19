@@ -238,41 +238,28 @@ public class ${this.className}Controller extends AbstractController implements $
     <#else>
         List<${this.className}ListVO> list = ${this.classNameLower}Service.list(${this.classNameLower}QO);
     </#if>
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        <@call this.addImport("java.net.URLEncoder")/>
-        String fileName = URLEncoder.encode("${this.title}导出", "utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
-        EasyExcel.write(response.getOutputStream(), ${this.className}ExcelVO.class)
-                .sheet()
+        this.exportExcel(response,
+                <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
+                ${this.className}ExcelVO.class,
                 <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
-                .doWrite(${this.className}Mapper.INSTANCE.toExcelVOList(list));
+                ${this.className}Mapper.INSTANCE.toExcelVOList(list),
+                "${this.title}导出");
     }
 
 </#if>
 <#if this.entityFeature.excelImport>
     <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
-    <@call this.addImport("org.springframework.web.bind.annotation.RequestPart")/>
     @Override
     @PostMapping("/import")
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestPart")/>
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
     public ResponseEntity<Integer> importExcel(@RequestPart MultipartFile file) throws Exception {
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
-        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${this.packageName}.excel.listener.SyncReadExcelListener")/>
         <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
-        SyncReadExcelListener<${this.className}ExcelDTO> excelListener = new SyncReadExcelListener();
-        EasyExcel.read(file.getInputStream())
-                .head(${this.className}ExcelDTO.class)
-                .sheet()
-                .headRowNumber(3)
-                .registerReadListener(excelListener)
-                .doRead();
-        List<${this.className}AddDTO> list = excelListener.getList().stream()
+        List<${this.className}AddDTO> list = this.parseExcel(file, ${this.className}ExcelDTO.class).stream()
                 .map(excelDTO -> {
+                    // 将excelDTO映射成addDTO
                     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
                     ${this.className}AddDTO addDTO = ${this.className}Mapper.INSTANCE.fromExcelDTO(excelDTO);
                     // 校验数据
@@ -296,7 +283,7 @@ public class ${this.className}Controller extends AbstractController implements $
     <#assign dicSet = CommonTemplateFunction.createHashSet()>
     <#list this.insertFields as id, field>
         <#if field.dicType??>
-            <@justCall dicSet.add(field.dicType)/>
+            <@justCall dicSet.add(field)/>
         </#if>
     </#list>
     <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
@@ -304,68 +291,58 @@ public class ${this.className}Controller extends AbstractController implements $
     @Override
     @GetMapping("/template")
     public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        <@call this.addImport("java.util.Date")/>
-        <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-        String title = "${this.title}导入模板(" + DateUtil.getDateStr(new Date()) + ")";
-        <@call this.addImport("java.net.URLEncoder")/>
-        String fileName = URLEncoder.encode(title, "utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        String[] description = new String[]{
-                "模版前三行标题请勿修改",
-                "带“*”号为必填项",
-        <#if fkFieldsForInsert?hasContent>
-            <#assign fkFieldNames = "">
-            <#list fkFieldsForInsert as fkField>
-                <#assign fkFieldNames += "“${fkField.fieldDesc}”">
-                <#if fkField?hasNext>
-                    <#assign fkFieldNames += "、">
-                </#if>
-            </#list>
-                "${fkFieldNames}请填入id值",
-        </#if>
-        <#if withinEntityList?hasContent>
-            <#assign withinTitles = "">
-            <#list withinEntityList as otherEntity>
-                <#assign withinTitles += "“${otherEntity.title}”">
-                <#if otherEntity?hasNext>
-                    <#assign withinTitles += "、">
-                </#if>
-            </#list>
-                "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
-        </#if>
-        };
-        <#list dicSet as dic>
+        <#list dicSet as dicField>
+            <#assign dic = dicField.dicType>
             <@call this.addImport("java.util.Arrays")/>
             <@call this.addConstImport(dic)/>
         String[] ${dic?uncapFirst}Constraint = Arrays.stream(${dic}.values()).map(${dic}::getDesc).toArray(String[]::new);
         </#list>
-        <@call this.addImport("com.alibaba.excel.ExcelWriter")/>
-        ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream())
-        <#list this.insertFields as id, field>
-            <#if field.dicType??>
-                <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
-                .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}))
-            </#if>
-        </#list>
-                // 第一行是标题，第二行是说明
-                <@call this.addImport("${this.packageName}.excel.handler.TitleDescriptionWriteHandler")/>
-                .registerWriteHandler(new TitleDescriptionWriteHandler(title, description, ${this.className}ExcelDTO.class))
-                // 自定义模板单元格样式
-                <@call this.addImport("${this.packageName}.excel.handler.TemplateCellStyleStrategy")/>
-                .registerWriteHandler(new TemplateCellStyleStrategy())
-                .build();
-        <@call this.addImport("com.alibaba.excel.write.metadata.WriteSheet")/>
-        WriteSheet writeSheet = EasyExcel.writerSheet(0, "Sheet1")
-                .head(${this.className}ExcelDTO.class)
-                // 从第三行开始写表头
-                .relativeHeadRowIndex(2)
-                .build();
-        <@call this.addImport("java.util.Arrays")/>
-        excelWriter.write(Arrays.asList(${this.className}ExcelDTO.example()), writeSheet);
-
-        excelWriter.finish();
+        this.downloadExcelTemplate(response,
+                <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
+                ${this.className}ExcelDTO.class,
+                <@call this.addImport("java.util.Arrays")/>
+                Arrays.asList(${this.className}ExcelDTO.example()),
+                <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
+                <@call this.addImport("java.util.Date")/>
+                "${this.title}导入模板(" + DateUtil.getDateStr(new Date()) + ")",
+                new String[]{
+                        "模版前三行标题请勿修改",
+                        "带“*”号为必填项",
+                <#if fkFieldsForInsert?hasContent>
+                    <#assign fkFieldNames = "">
+                    <#list fkFieldsForInsert as fkField>
+                        <#assign fkFieldNames += "“${fkField.fieldDesc}”">
+                        <#if fkField?hasNext>
+                            <#assign fkFieldNames += "、">
+                        </#if>
+                    </#list>
+                        "${fkFieldNames}请填入id值",
+                </#if>
+                        "“部门id”请填入id值",
+                <#if withinEntityList?hasContent>
+                    <#assign withinTitles = "">
+                    <#list withinEntityList as otherEntity>
+                        <#assign withinTitles += "“${otherEntity.title}”">
+                        <#if otherEntity?hasNext>
+                            <#assign withinTitles += "、">
+                        </#if>
+                    </#list>
+                        "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
+                </#if>
+                },
+                <#if dicSet?hasContent>
+                    <@call this.addImport("com.alibaba.excel.write.handler.WriteHandler")/>
+                new WriteHandler[]{
+                    <#list this.insertFields as id, field>
+                        <#if field.dicType??>
+                        <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
+                        new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}),
+                        </#if>
+                    </#list>
+                });
+                <#else>
+                null);
+                </#if>
     }
 
 </#if>
