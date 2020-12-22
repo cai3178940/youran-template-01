@@ -1,6 +1,14 @@
-# java后端代码模板
+# java后端代码模板(最低兼容youran版本3.5.0)
 
-## 1.3.0新特性
+![version](https://img.shields.io/badge/youran-v3.5.0-orange)
+
+## 1.4.x新特性
+- 单元测试从junit4升级成junit5
+- 格式化java代码(按idea默认格式)
+- 优化excel导入导出代码
+- 升级maven依赖
+
+## 1.3.x新特性
 - 支持生成自定义表格和echarts图表的后端服务代码
 - 升级maven依赖
 
