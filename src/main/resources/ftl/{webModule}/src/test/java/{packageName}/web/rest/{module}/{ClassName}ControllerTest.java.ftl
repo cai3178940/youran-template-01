@@ -131,16 +131,63 @@
     }
 
 </#if>
+<#if this.entityFeature.excelExport>
+    @Test
+    @DisplayName("导出【${this.title}】excel")
+    <@call this.addImport("org.junit.jupiter.api.TestReporter")/>
+    public void exportExcel(TestReporter testReporter) throws Exception {
+    <#list saveExampleCode as saveExample>
+        ${saveExample}
+    </#list>
+        <@call this.addImport("org.springframework.test.web.servlet.MvcResult")/>
+        MvcResult mvcResult = restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/export")}))
+                .andExpect(status().isOk())
+                .andReturn();
+        <@call this.addImport("org.springframework.mock.web.MockHttpServletResponse")/>
+        MockHttpServletResponse response = mvcResult.getResponse();
+        <@call this.addImport("${this.commonPackage}.util.TempDirUtil")/>
+        String outFile = TempDirUtil.getTmpDir(null, true, true) + ".xlsx";
+        // 写入临时文件
+        <@call this.addImport("org.apache.commons.io.FileUtils")/>
+        <@call this.addImport("java.io.File")/>
+        FileUtils.writeByteArrayToFile(new File(outFile), response.getContentAsByteArray());
+        // 输出导出路径，手动查看导出文件是否正确
+        testReporter.publishEntry("导出路径", outFile);
+    }
+
+</#if>
+<#if this.entityFeature.excelImport>
+    @Test
+    @DisplayName("导入【${this.title}】excel")
+    public void importExcel() throws Exception {
+        <@call this.addImport("org.springframework.test.web.servlet.MvcResult")/>
+        // 首先下载excel模板
+        MvcResult mvcResult = restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/template")}))
+                .andExpect(status().isOk())
+                .andReturn();
+        <@call this.addImport("org.springframework.mock.web.MockHttpServletResponse")/>
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        <@call this.addImport("org.springframework.mock.web.MockMultipartFile")/>
+        // 将模板原封不动导入
+        MockMultipartFile file = new MockMultipartFile("file", response.getContentAsByteArray());
+        restMockMvc.perform(multipart(${renderApiPath(this.metaEntity, "/import")})
+                .file(file))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(is(1)));
+    }
+
+</#if>
 <#list this.holds! as otherEntity, mtm>
     <#assign otherPk = otherEntity.pkField>
     <#assign otherCName = otherEntity.className>
     <#assign othercName = lowerFirstWord(otherEntity.className)>
     <#assign otherFkId = mtm.getFkAlias(otherEntity.entityId, false)>
     <#assign entityFeature = mtm.getEntityFeature(this.entityId)>
-    <#--保存Example的代码块-->
-    <#assign saveExampleCode = ""/>
+    <#--保存多对多Example的代码块-->
+    <#assign saveMtmExampleCode = ""/>
     <#if entityFeature.addRemove || entityFeature.set>
-        <#assign saveExampleCode = this.getPrintingSaveExampleForMtm(otherEntity)/>
+        <#assign saveMtmExampleCode = this.getPrintingSaveExampleForMtm(otherEntity)/>
     </#if>
     <#--测试多对多的“添加/移除”功能-->
     <#if entityFeature.addRemove>
@@ -148,7 +195,7 @@
     @Test
     @DisplayName("添加/移除【${otherEntity.title}】关联")
     public void addRemove${otherCName}2() throws Exception {
-        <#list saveExampleCode as saveExample>
+        <#list saveMtmExampleCode as saveExample>
         ${saveExample}
         </#list>
         // 先测试添加【${otherEntity.title}】关联
@@ -179,7 +226,7 @@
     @Test
     @DisplayName("设置【${otherEntity.title}】关联")
     public void set${otherCName}() throws Exception {
-        <#list saveExampleCode as saveExample>
+        <#list saveMtmExampleCode as saveExample>
         ${saveExample}
         </#list>
         // 先测试设置【${otherEntity.title}】关联
@@ -198,28 +245,6 @@
 
     </#if>
 </#list>
-<#if this.entityFeature.excelImport>
-    @Test
-    @DisplayName("导入【${this.title}】excel")
-    public void importExcel() throws Exception {
-        <@call this.addImport("org.springframework.test.web.servlet.MvcResult")/>
-        // 首先下载excel模板
-        MvcResult mvcResult = restMockMvc.perform(get(${renderApiPath(this.metaEntity, "/template")}))
-                .andExpect(status().isOk())
-                .andReturn();
-        <@call this.addImport("org.springframework.mock.web.MockHttpServletResponse")/>
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        <@call this.addImport("org.springframework.mock.web.MockMultipartFile")/>
-        // 将模板原封不动导入
-        MockMultipartFile file = new MockMultipartFile("file", response.getContentAsByteArray());
-        restMockMvc.perform(multipart(${renderApiPath(this.metaEntity, "/import")})
-                .file(file))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(is(1)));
-    }
-
-</#if>
 </#assign>
 <#--开始渲染代码-->
 <@call this.printPackageAndImport(restPackageName)/>

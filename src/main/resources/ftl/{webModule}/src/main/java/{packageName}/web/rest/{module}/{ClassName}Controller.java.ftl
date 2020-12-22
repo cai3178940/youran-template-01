@@ -13,7 +13,8 @@
 <@call this.addImport("${apiPackageName}.${this.className}API")/>
 <@call this.addImport("org.springframework.http.HttpStatus")/>
 <@call this.addImport("org.springframework.http.ResponseEntity")/>
-<@call this.addImport("org.springframework.web.bind.annotation.*")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RestController")/>
+<@call this.addImport("org.springframework.web.bind.annotation.RequestMapping")/>
 <@call this.addImport("javax.validation.Valid")/>
 <@call this.addImport("java.net.URI")/>
 <@call this.printClassCom("【${this.title}】控制器")/>
@@ -32,6 +33,9 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
     <@call this.addImport("${poPackageName}.${this.className}PO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.ResponseStatus")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,6 +51,8 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
     <@call this.addImport("${poPackageName}.${this.className}PO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PutMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @PutMapping
     public ResponseEntity<${this.className}ShowVO> update(@Valid @RequestBody ${this.className}UpdateDTO ${this.classNameLower}UpdateDTO) {
@@ -58,6 +64,7 @@ public class ${this.className}Controller extends AbstractController implements $
 <#if this.entityFeature.list>
     <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     <#if this.pageSign>
         <@call this.addImport("${this.commonPackage}.pojo.vo.PageVO")/>
     @Override
@@ -81,6 +88,7 @@ public class ${this.className}Controller extends AbstractController implements $
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${this.commonPackage}.pojo.vo.OptionVO")/>
     <@call this.addImport("${this.commonPackage}.pojo.qo.OptionQO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
     @Override
     @GetMapping(value = "/options")
     public ResponseEntity<List<OptionVO<${this.type}, ${this.titleField.jfieldType}>>> findOptions(OptionQO<${this.type}, ${this.titleField.jfieldType}> qo) {
@@ -91,6 +99,8 @@ public class ${this.className}Controller extends AbstractController implements $
 </#if>
 <#if this.entityFeature.show>
     <@call this.addImport("${voPackageName}.${this.className}ShowVO")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @GetMapping(value = "/{${this.id}}")
     public ResponseEntity<${this.className}ShowVO> show(@PathVariable ${this.type} ${this.id}) {
@@ -100,6 +110,8 @@ public class ${this.className}Controller extends AbstractController implements $
 
 </#if>
 <#if this.entityFeature.delete>
+    <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @DeleteMapping(value = "/{${this.id}}")
     public ResponseEntity<Integer> delete(@PathVariable ${this.type} ${this.id}) {
@@ -111,6 +123,8 @@ public class ${this.className}Controller extends AbstractController implements $
 <#if this.entityFeature.deleteBatch>
     <@call this.addImport("${this.commonPackage}.exception.BusinessException")/>
     <@call this.addImport("${this.commonPackage}.constant.ErrorCode")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestBody")/>
     @Override
     @DeleteMapping
     public ResponseEntity<Integer> deleteBatch(@RequestBody ${this.type}[] id) {
@@ -133,6 +147,8 @@ public class ${this.className}Controller extends AbstractController implements $
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${poPackageName}.${otherCName}PO")/>
         <@call this.addImport("${poPackageName}.${this.className}PO")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
         <#assign index = getMtmCascadeEntityIndexForShow(otherEntity.entityId)>
         <#--如果存在级联扩展，则返回值为级联扩展VO-->
         <#if entityFeature.addRemove>
@@ -174,6 +190,9 @@ public class ${this.className}Controller extends AbstractController implements $
     </#if>
     <#if entityFeature.addRemove>
         <@call this.addImport("${voPackageName}.${otherCName}ListVO")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.DeleteMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @PostMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> add${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -191,6 +210,8 @@ public class ${this.className}Controller extends AbstractController implements $
     }
 
     <#elseIf entityFeature.set>
+        <@call this.addImport("org.springframework.web.bind.annotation.PutMapping")/>
+        <@call this.addImport("org.springframework.web.bind.annotation.PathVariable")/>
     @Override
     @PutMapping(value = "/{${this.id}}/${othercName}")
     public ResponseEntity<Integer> set${otherCName}(@PathVariable ${this.type} ${this.id},
@@ -202,10 +223,11 @@ public class ${this.className}Controller extends AbstractController implements $
     </#if>
 </#list>
 <#if this.entityFeature.excelExport>
-    @Override
-    @GetMapping("/export")
     <@call this.addImport("${qoPackageName}.${this.className}QO")/>
     <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    @Override
+    @GetMapping("/export")
     public void exportExcel(@Valid ${this.className}QO ${this.classNameLower}QO, HttpServletResponse response) throws Exception {
     <@call this.addImport("java.util.List")/>
     <@call this.addImport("${voPackageName}.${this.className}ListVO")/>
@@ -216,39 +238,28 @@ public class ${this.className}Controller extends AbstractController implements $
     <#else>
         List<${this.className}ListVO> list = ${this.classNameLower}Service.list(${this.classNameLower}QO);
     </#if>
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        <@call this.addImport("java.net.URLEncoder")/>
-        String fileName = URLEncoder.encode("${this.title}导出", "utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
-        EasyExcel.write(response.getOutputStream(), ${this.className}ExcelVO.class)
-                .sheet()
+        this.exportExcel(response,
+                <@call this.addImport("${voPackageName}.${this.className}ExcelVO")/>
+                ${this.className}ExcelVO.class,
                 <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
-                .doWrite(${this.className}Mapper.INSTANCE.toExcelVOList(list));
+                ${this.className}Mapper.INSTANCE.toExcelVOList(list),
+                "${this.title}导出");
     }
 
 </#if>
 <#if this.entityFeature.excelImport>
+    <@call this.addImport("org.springframework.web.bind.annotation.PostMapping")/>
     @Override
     @PostMapping("/import")
+    <@call this.addImport("org.springframework.web.bind.annotation.RequestPart")/>
     <@call this.addImport("org.springframework.web.multipart.MultipartFile")/>
     public ResponseEntity<Integer> importExcel(@RequestPart MultipartFile file) throws Exception {
         <@call this.addImport("java.util.List")/>
         <@call this.addImport("${dtoPackageName}.${this.className}AddDTO")/>
-        <@call this.addImport("com.alibaba.excel.EasyExcel")/>
-        <@call this.addImport("${this.packageName}.excel.listener.SyncReadExcelListener")/>
         <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
-        SyncReadExcelListener<${this.className}ExcelDTO> excelListener = new SyncReadExcelListener();
-        EasyExcel.read(file.getInputStream())
-                .head(${this.className}ExcelDTO.class)
-                .sheet()
-                .headRowNumber(3)
-                .registerReadListener(excelListener)
-                .doRead();
-        List<${this.className}AddDTO> list = excelListener.getList().stream()
+        List<${this.className}AddDTO> list = this.parseExcel(file, ${this.className}ExcelDTO.class).stream()
                 .map(excelDTO -> {
+                    // 将excelDTO映射成addDTO
                     <@call this.addImport("${mapperPackageName}.${this.className}Mapper")/>
                     ${this.className}AddDTO addDTO = ${this.className}Mapper.INSTANCE.fromExcelDTO(excelDTO);
                     // 校验数据
@@ -272,75 +283,66 @@ public class ${this.className}Controller extends AbstractController implements $
     <#assign dicSet = CommonTemplateFunction.createHashSet()>
     <#list this.insertFields as id, field>
         <#if field.dicType??>
-            <@justCall dicSet.add(field.dicType)/>
+            <@justCall dicSet.add(field)/>
         </#if>
     </#list>
+    <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
+    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     @Override
     @GetMapping("/template")
-    <@call this.addImport("javax.servlet.http.HttpServletResponse")/>
     public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        <@call this.addImport("java.util.Date")/>
-        <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
-        String title = "${this.title}导入模板(" + DateUtil.getDateStr(new Date()) + ")";
-        <@call this.addImport("java.net.URLEncoder")/>
-        String fileName = URLEncoder.encode(title, "utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-        String[] description = new String[]{
-                "模版前三行标题请勿修改",
-                "带“*”号为必填项",
-        <#if fkFieldsForInsert?hasContent>
-            <#assign fkFieldNames = "">
-            <#list fkFieldsForInsert as fkField>
-                <#assign fkFieldNames += "“${fkField.fieldDesc}”">
-                <#if fkField?hasNext>
-                    <#assign fkFieldNames += "、">
-                </#if>
-            </#list>
-                "${fkFieldNames}请填入id值",
-        </#if>
-        <#if withinEntityList?hasContent>
-            <#assign withinTitles = "">
-            <#list withinEntityList as otherEntity>
-                <#assign withinTitles += "“${otherEntity.title}”">
-                <#if otherEntity?hasNext>
-                    <#assign withinTitles += "、">
-                </#if>
-            </#list>
-                "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
-        </#if>
-        };
-        <#list dicSet as dic>
+        <#list dicSet as dicField>
+            <#assign dic = dicField.dicType>
             <@call this.addImport("java.util.Arrays")/>
             <@call this.addConstImport(dic)/>
         String[] ${dic?uncapFirst}Constraint = Arrays.stream(${dic}.values()).map(${dic}::getDesc).toArray(String[]::new);
         </#list>
-        <@call this.addImport("com.alibaba.excel.ExcelWriter")/>
-        ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream())
-        <#list this.insertFields as id, field>
-            <#if field.dicType??>
-                <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
-                .registerWriteHandler(new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}))
-            </#if>
-        </#list>
-                // 第一行是标题，第二行是说明
-                <@call this.addImport("${this.packageName}.excel.handler.TitleDescriptionWriteHandler")/>
-                .registerWriteHandler(new TitleDescriptionWriteHandler(title, description, ${this.className}ExcelDTO.class))
-                // 自定义模板单元格样式
-                <@call this.addImport("${this.packageName}.excel.handler.TemplateCellStyleStrategy")/>
-                .registerWriteHandler(new TemplateCellStyleStrategy())
-                .build();
-        <@call this.addImport("com.alibaba.excel.write.metadata.WriteSheet")/>
-        WriteSheet writeSheet = EasyExcel.writerSheet(0, "Sheet1")
-                .head(${this.className}ExcelDTO.class)
-                // 从第三行开始写表头
-                .relativeHeadRowIndex(2)
-                .build();
-        <@call this.addImport("java.util.Arrays")/>
-        excelWriter.write(Arrays.asList(${this.className}ExcelDTO.example()), writeSheet);
-
-        excelWriter.finish();
+        this.downloadExcelTemplate(response,
+                <@call this.addImport("${dtoPackageName}.${this.className}ExcelDTO")/>
+                ${this.className}ExcelDTO.class,
+                <@call this.addImport("java.util.Arrays")/>
+                Arrays.asList(${this.className}ExcelDTO.example()),
+                <@call this.addImport("${this.commonPackage}.util.DateUtil")/>
+                <@call this.addImport("java.util.Date")/>
+                "${this.title}导入模板(" + DateUtil.getDateStr(new Date()) + ")",
+                new String[]{
+                        "模版前三行标题请勿修改",
+                        "带“*”号为必填项",
+                <#if fkFieldsForInsert?hasContent>
+                    <#assign fkFieldNames = "">
+                    <#list fkFieldsForInsert as fkField>
+                        <#assign fkFieldNames += "“${fkField.fieldDesc}”">
+                        <#if fkField?hasNext>
+                            <#assign fkFieldNames += "、">
+                        </#if>
+                    </#list>
+                        "${fkFieldNames}请填入id值",
+                </#if>
+                        "“部门id”请填入id值",
+                <#if withinEntityList?hasContent>
+                    <#assign withinTitles = "">
+                    <#list withinEntityList as otherEntity>
+                        <#assign withinTitles += "“${otherEntity.title}”">
+                        <#if otherEntity?hasNext>
+                            <#assign withinTitles += "、">
+                        </#if>
+                    </#list>
+                        "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
+                </#if>
+                },
+                <#if dicSet?hasContent>
+                    <@call this.addImport("com.alibaba.excel.write.handler.WriteHandler")/>
+                new WriteHandler[]{
+                    <#list this.insertFields as id, field>
+                        <#if field.dicType??>
+                        <@call this.addImport("${this.packageName}.excel.handler.ConstConstraintHandler")/>
+                        new ConstConstraintHandler(${field.dicType?uncapFirst}Constraint, 3, 3, ${field?index}, ${field?index}),
+                        </#if>
+                    </#list>
+                });
+                <#else>
+                null);
+                </#if>
     }
 
 </#if>
