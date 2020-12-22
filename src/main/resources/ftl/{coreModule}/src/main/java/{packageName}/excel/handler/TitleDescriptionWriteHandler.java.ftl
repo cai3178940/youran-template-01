@@ -11,7 +11,7 @@
 <@call this.addImport("com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder")/>
 <@call this.addImport("org.apache.poi.ss.usermodel.*")/>
 <@call this.addImport("org.apache.poi.ss.util.CellRangeAddress")/>
-<@call this.printClassCom("给excel单元格设置下拉框")/>
+<@call this.printClassCom("excel标题及说明写入处理器")/>
 public class TitleDescriptionWriteHandler implements SheetWriteHandler {
 
     private final String title;
