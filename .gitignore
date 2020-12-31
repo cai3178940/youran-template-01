@@ -44,6 +44,5 @@ src/main/webapp/WEB-INF/classes/
 bin
 .rules
 
-#ui编译目录
-#/youran-generate/src/main/resources/ui
-#/youran-generate/src/main/resources/ui/*
+#排除动态生成的文件
+/src/main/resources/template.json
