@@ -15,6 +15,7 @@
             <outputDirectory>./</outputDirectory>
             <excludes>
                 <exclude>**/__type.json</exclude>
+                <exclude>/freemarker_implicit.ftl</exclude>
             </excludes>
         </fileSet>
     </fileSets>
