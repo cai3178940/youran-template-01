@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "__{EnumName}.java.ftl",
+    "contextType": 3,
+    "fileType": 5
+  },
+  {
+    "fileName": "{EnumName}.java.ftl",
+    "contextType": 3,
+    "fileType": 1
+  }
+]

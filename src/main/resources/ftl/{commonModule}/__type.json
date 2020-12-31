@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "pom.xml.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

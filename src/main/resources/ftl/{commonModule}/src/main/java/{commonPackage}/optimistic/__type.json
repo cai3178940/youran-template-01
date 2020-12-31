@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "EnableOptimisticLock.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "OptimisticException.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "OptimisticLock.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "OptimisticLockAspect.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "OptimisticLockConfiguration.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

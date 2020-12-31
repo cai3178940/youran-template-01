@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "StartLogCommandLineRunner.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "SwaggerConfig.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "WebConfig.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

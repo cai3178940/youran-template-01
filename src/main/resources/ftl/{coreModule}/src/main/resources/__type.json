@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "messages.properties.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "messages_zh_CN.properties.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "mybatis-config.xml.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

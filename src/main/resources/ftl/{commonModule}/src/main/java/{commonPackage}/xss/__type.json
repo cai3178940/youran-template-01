@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "IgnoreXSS.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "JacksonXSSDeserializer.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "WebXSSFilter.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "XSSRequestWrapper.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "XSSUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

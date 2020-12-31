@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ChartName}Mapper.java.ftl",
+    "contextType": 4,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}Mapper.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ChartName}Mapper.java.ftl",
+    "contextType": 4,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}Mapper.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

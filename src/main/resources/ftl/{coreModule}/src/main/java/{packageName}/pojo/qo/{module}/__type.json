@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ChartName}QO.java.ftl",
+    "contextType": 4,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}QO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ChartName}QO.java.ftl",
+    "contextType": 4,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}QO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

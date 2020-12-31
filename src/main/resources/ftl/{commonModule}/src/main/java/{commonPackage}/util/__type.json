@@ -1,0 +1,47 @@
+[
+  {
+    "fileName": "ChartDataUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "ConvertUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "DateUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "TempDirUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "JsonUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "MessageSourceUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "SafeUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "SpringUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "UUIDUtil.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

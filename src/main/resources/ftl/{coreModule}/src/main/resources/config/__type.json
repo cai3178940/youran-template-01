@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "__{project-name}-default.properties.ftl",
+    "contextType": 1,
+    "fileType": 5
+  },
+  {
+    "fileName": "{project-name}-default.properties.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

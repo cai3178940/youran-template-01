@@ -1,0 +1,87 @@
+[
+  {
+    "fileName": "chartItem.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "checkFeatureForRest.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "common.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "commonForChart.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "commonForEntity.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "forEntityInsert.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "guessDateFormat.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "guessDefaultJfieldValue.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmCascadeExtsForList.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmCascadeExtsForOppList.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmCascadeExtsForOppShow.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmCascadeExtsForQuery.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmCascadeExtsForShow.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mtmForOpp.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mybatis.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "mybatisForChart.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
+    "fileName": "usingExcel.ftl",
+    "contextType": 1,
+    "fileType": 2
+  }
+]

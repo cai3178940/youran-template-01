@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": ".gitignore.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "pom.xml.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "README.md.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "__{projectName}.sql.ftl",
+    "contextType": 1,
+    "fileType": 5
+  },
+  {
+    "fileName": "{projectName}.sql.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

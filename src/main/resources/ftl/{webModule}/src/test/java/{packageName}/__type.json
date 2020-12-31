@@ -1,0 +1,22 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "AbstractTest.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "H2Flusher.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "TestConfiguration.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "MyCustomDateEditor.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "MyCustomLocalDateEditor.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "MyCustomLocalDateTimeEditor.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "__{ProjectName}Configuration.java.ftl",
+    "contextType": 1,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ProjectName}Configuration.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

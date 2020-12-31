@@ -13,6 +13,9 @@
         <fileSet>
             <directory>${project.basedir}/src/main/resources</directory>
             <outputDirectory>./</outputDirectory>
+            <excludes>
+                <exclude>**/__type.json</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 </assembly>

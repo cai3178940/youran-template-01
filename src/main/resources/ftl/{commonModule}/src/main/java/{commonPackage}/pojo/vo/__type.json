@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "AbstractVO.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "Chart2DimensionVO.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "OptionVO.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "PageVO.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "ReplyVO.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]

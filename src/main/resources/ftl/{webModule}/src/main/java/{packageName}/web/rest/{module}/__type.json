@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ChartName}Controller.java.ftl",
+    "contextType": 4,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}Controller.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ChartName}Controller.java.ftl",
+    "contextType": 4,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}Controller.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

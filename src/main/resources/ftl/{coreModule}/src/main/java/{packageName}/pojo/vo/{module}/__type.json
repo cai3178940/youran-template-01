@@ -1,0 +1,57 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ChartName}ExcelVO.java.ftl",
+    "contextType": 4,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ChartName}VO.java.ftl",
+    "contextType": 4,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}ExcelVO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}ListVO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}ShowVO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ChartName}ExcelVO.java.ftl",
+    "contextType": 4,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ChartName}VO.java.ftl",
+    "contextType": 4,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}ExcelVO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}ListVO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}ShowVO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

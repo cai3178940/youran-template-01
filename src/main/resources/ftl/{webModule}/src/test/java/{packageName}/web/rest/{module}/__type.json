@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ClassName}ControllerTest.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ClassName}ControllerTest.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "fileName": "__dir.ftl",
+    "contextType": 1,
+    "fileType": 4
+  },
+  {
+    "fileName": "__{ClassName}AddDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}ExcelDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "__{ClassName}UpdateDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 5
+  },
+  {
+    "fileName": "{ClassName}AddDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}ExcelDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  },
+  {
+    "fileName": "{ClassName}UpdateDTO.java.ftl",
+    "contextType": 2,
+    "fileType": 1
+  }
+]

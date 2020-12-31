@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "LocalDateConverter.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
+    "fileName": "LocalDateTimeConverter.java.ftl",
+    "contextType": 1,
+    "fileType": 1
+  }
+]
