@@ -15,5 +15,9 @@ spring:
 springfox:
     documentation:
         enabled: false
+<#if this.hasLabel("knife4j")>
+knife4j:
+    enable: false
+</#if>
 
 

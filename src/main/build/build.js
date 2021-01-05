@@ -21,6 +21,9 @@ System.out.println('开始构建template.json文件')
 var obj = JSON.parse(FileUtils.readFileToString(new File('src/main/build/template.json'), 'utf-8'))
 // 读取remark
 obj.remark = FileUtils.readFileToString(new File('src/main/build/remark.md'), 'utf-8') + ''
+// 解析metaLabel.json
+var metaLabel = JSON.parse(FileUtils.readFileToString(new File('src/main/build/metaLabel.json'), 'utf-8'))
+obj.metaLabel = JSON.stringify(metaLabel);
 // 初始化模板文件数组
 obj.templateFiles = []
 // freemarker的基础目录

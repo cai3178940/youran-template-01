@@ -34,10 +34,18 @@
         <jsoup.version>1.13.1</jsoup.version>
         <h2.version>1.4.200</h2.version>
         <mysql2h2.version>0.2.1</mysql2h2.version>
+    <#if this.hasLabel("knife4j")>
+        <knife4j.version>3.0.2</knife4j.version>
+    <#else>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+    </#if>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
-        <#if this.projectFeature.lombokEnabled><lombok.version>1.18.16</lombok.version></#if>
-        <#if usingExcel><easyexcel.version>2.2.7</easyexcel.version></#if>
+    <#if this.projectFeature.lombokEnabled>
+        <lombok.version>1.18.16</lombok.version>
+    </#if>
+    <#if usingExcel>
+        <easyexcel.version>2.2.7</easyexcel.version>
+    </#if>
     </properties>
 
     <dependencyManagement>
@@ -112,11 +120,20 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${r'$'}{swagger-annotations.version}</version>
             </dependency>
+        <#if this.hasLabel("knife4j")>
+            <!-- knife4j(swagger-ui) https://doc.xiaominfo.com/ -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${r'$'}{knife4j.version}</version>
+            </dependency>
+        <#else>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${r'$'}{springfox-boot-starter.version}</version>
             </dependency>
+        </#if>
             <!-- jsoup HTML parser library（用于过滤XSS） https://jsoup.org/ -->
             <dependency>
                 <groupId>org.jsoup</groupId>

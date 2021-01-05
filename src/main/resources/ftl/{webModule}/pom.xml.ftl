@@ -49,11 +49,19 @@
             <artifactId>mysql2h2-parser</artifactId>
             <scope>test</scope>
         </dependency>
+    <#if this.hasLabel("knife4j")>
+        <!-- knife4j(swagger-ui) -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+    <#else>
         <!-- swagger依赖 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
         </dependency>
+    </#if>
     </dependencies>
     <build>
         <plugins>

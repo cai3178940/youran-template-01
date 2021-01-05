@@ -1,0 +1,13 @@
+{
+  "project": [
+    {
+      "key": "knife4j",
+      "name": "增加knife4j依赖",
+      "desc": "将使用knife4j替代默认的swagger-ui页面，详情请访问knife4j主页：https://doc.xiaominfo.com",
+      "mode": "none",
+      "candidate": []
+    }
+  ],
+  "entity": [],
+  "field": []
+}
