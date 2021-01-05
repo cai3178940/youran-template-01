@@ -44,7 +44,11 @@ public class StartLogCommandLineRunner implements CommandLineRunner, Ordered {
                 .append("\t本地: \thttp://localhost:").append(port).append(contextPath).append("\n")
                 .append("\t外部: \thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("\n");
         if (swaggerEnabled) {
+        <#if this.hasLabel("knife4j")>
+            sb.append("\t文档:\thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("doc.html");
+        <#else>
             sb.append("\t文档:\thttp://").append(IpUtil.getLocalIp()).append(":").append(port).append(contextPath).append("swagger-ui/index.html");
+        </#if>
         }
         sb.append("\n----------------------------------------------------------");
         LOG.info(sb.toString());

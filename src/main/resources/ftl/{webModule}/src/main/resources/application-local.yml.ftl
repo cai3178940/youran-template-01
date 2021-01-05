@@ -7,10 +7,6 @@ spring:
 springfox:
     documentation:
         enabled: true
-<#if this.hasLabel("knife4j")>
-knife4j:
-    enable: true
-</#if>
 
 logging:
     level:
