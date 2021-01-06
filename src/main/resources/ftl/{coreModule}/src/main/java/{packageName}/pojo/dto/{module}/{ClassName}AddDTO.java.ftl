@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/forEntityInsert.ftl">
@@ -7,7 +8,7 @@
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.printClassCom("新增【${this.title}】的参数")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -55,7 +56,7 @@ public class ${this.className}AddDTO extends AbstractDTO {
 
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#list this.insertFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
     </#list>

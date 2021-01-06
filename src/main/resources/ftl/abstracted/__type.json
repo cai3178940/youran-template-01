@@ -40,6 +40,11 @@
     "fileType": 2
   },
   {
+    "fileName": "lombokEnabled.ftl",
+    "contextType": 1,
+    "fileType": 2
+  },
+  {
     "fileName": "mtmCascadeExtsForList.ftl",
     "contextType": 1,
     "fileType": 2

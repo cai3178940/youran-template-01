@@ -1,4 +1,5 @@
 <#include "/abstracted/commonForChart.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/chartItem.ftl">
 <#--定义主体代码-->
 <#assign code>
@@ -8,7 +9,7 @@
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
 </#if>
 <@call this.printClassCom("查询【${this.title}】的参数")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -71,7 +72,7 @@ public class ${this.chartName}QO extends <#if isChartType(ChartType.DETAIL_LIST)
     </#if>
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#list paramedWhere as where>
         <#assign field = where.field>
         <#if FilterOperator.CONTAIN.getValue() == where.filterOperator

@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForList.ftl">
@@ -23,7 +24,7 @@
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.printClassCom("【${this.title}】excel导出对象")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -89,7 +90,7 @@ public class ${this.className}ExcelVO extends AbstractVO {
 
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#--当前实体列表展示字段：getter-setter方法-->
     <#list this.listFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field.jfieldName, parseJfieldType(field))/>

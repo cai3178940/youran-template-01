@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/usingExcel.ftl">
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -40,7 +41,7 @@
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
     </#if>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
-    <#if this.projectFeature.lombokEnabled>
+    <#if lombokEnabled>
         <lombok.version>1.18.16</lombok.version>
     </#if>
     <#if usingExcel>
@@ -140,7 +141,7 @@
                 <artifactId>jsoup</artifactId>
                 <version>${r'$'}{jsoup.version}</version>
             </dependency>
-        <#if this.projectFeature.lombokEnabled>
+        <#if lombokEnabled>
             <!-- 用注解简化pojo类 https://projectlombok.org/ -->
             <dependency>
                 <groupId>org.projectlombok</groupId>

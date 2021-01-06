@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForShow.ftl">
@@ -8,7 +9,7 @@
 <@call this.addImport("io.swagger.annotations.ApiModelProperty")/>
 <@call this.addImport("${this.commonPackage}.pojo.vo.AbstractVO")/>
 <@call this.printClassCom("【${this.title}】详情展示对象")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -86,7 +87,7 @@ public class ${this.className}ShowVO extends AbstractVO {
 
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#--当前实体详情展示字段：getter-setter方法-->
     <#list this.showFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>
@@ -117,7 +118,7 @@ public class ${this.className}ShowVO extends AbstractVO {
     <#assign otherCName = otherEntity.className>
     <#assign exampleClass = "${otherEntity.className}Example">
     <@call this.addImport("${examplePackageName}.${exampleClass}")/>
-    <#if this.projectFeature.lombokEnabled>
+    <#if lombokEnabled>
     @Data
     @EqualsAndHashCode(callSuper = true)
     </#if>
@@ -151,7 +152,7 @@ public class ${this.className}ShowVO extends AbstractVO {
 
     </#list>
 
-    <#if !this.projectFeature.lombokEnabled>
+    <#if !lombokEnabled>
         <#--主键字段：getter-setter方法-->
         <@call JavaTemplateFunction.printGetterSetter(pkField, 2)/>
         <#--多对多级联扩展，列表展示字段：getter-setter方法-->

@@ -1,4 +1,5 @@
 <#include "/abstracted/commonForChart.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/chartItem.ftl">
 <#if !isChartType(ChartType.DETAIL_LIST) && !isChartType(ChartType.AGG_TABLE)>
@@ -13,7 +14,7 @@
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.printClassCom("【${this.title}】excel导出对象")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -146,7 +147,7 @@ public class ${this.chartName}ExcelVO extends AbstractVO <#if barLineParamMode =
     </#list>
 </#if>
 
-<#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
+<#if !lombokEnabled>${getterSetterCode}</#if>
 }
 </#assign>
 <#--开始渲染代码-->

@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#--定义主体代码-->
 <#assign code>
@@ -133,7 +134,7 @@
     <#assign implementsStr = " implements" + implementsStr?removeEnding(",")>
 </#if>
 <@call this.printClassCom("${this.title}" "${this.desc}")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -159,7 +160,7 @@ ${JavaTemplateFunction.convertCommentDisplayWithIndentStar(field.fetchComment())
     private List<${otherEntity.className}PO> ${lowerFirstWord(otherEntity.className)}POList;
 
     </#list>
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#list this.fields as id, field>
         <@call JavaTemplateFunction.printGetterSetterForPO(field)/>
     </#list>

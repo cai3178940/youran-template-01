@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/usingExcel.ftl">
 <#if !usingExcel>
     <@call this.skipCurrent()/>
@@ -7,7 +8,7 @@
 <#assign code>
 <@call this.addImport("${this.commonPackage}.pojo.dto.AbstractDTO")/>
 <@call this.printClassCom("抽象excel数据传输对象")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
 @Data
 </#if>
@@ -20,7 +21,7 @@ public abstract class AbstractExcelDTO extends AbstractDTO {
     @ExcelIgnore
     private Integer rowIndex;
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     public Integer getRowIndex() {
         return rowIndex;
     }

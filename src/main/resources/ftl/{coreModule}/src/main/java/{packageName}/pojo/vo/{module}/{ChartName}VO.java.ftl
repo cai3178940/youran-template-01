@@ -1,4 +1,5 @@
 <#include "/abstracted/commonForChart.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/chartItem.ftl">
 <#--定义主体代码-->
@@ -10,7 +11,7 @@
 <#if barLineParamMode == 1>
     <@call this.addImport("${this.commonPackage}.pojo.vo.Chart2DimensionVO")/>
 </#if>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -194,7 +195,7 @@ public class ${this.chartName}VO extends AbstractVO <#if barLineParamMode == 1>i
     }
 
 </#if>
-<#if !this.projectFeature.lombokEnabled>${getterSetterCode}</#if>
+<#if !lombokEnabled>${getterSetterCode}</#if>
 }
 </#assign>
 <#--开始渲染代码-->

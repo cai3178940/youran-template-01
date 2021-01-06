@@ -1,8 +1,9 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#--定义主体代码-->
 <#assign code>
 <@call this.printClassCom("用户登录请求体")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
 @Data
 </#if>
@@ -12,7 +13,7 @@ public class UserLoginDTO {
 
     private String password;
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     public String getUsername() {
         return username;
     }

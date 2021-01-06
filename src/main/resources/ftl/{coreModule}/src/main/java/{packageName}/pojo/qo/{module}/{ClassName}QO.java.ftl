@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/mtmCascadeExtsForQuery.ftl">
@@ -11,7 +12,7 @@
     <@call this.addImport("${this.commonPackage}.pojo.qo.AbstractQO")/>
 </#if>
 <@call this.printClassCom("查询【${this.title}】的参数")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -109,7 +110,7 @@ public class ${this.className}QO extends <#if this.pageSign>PageQO<#else>Abstrac
 
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#--定义宏-查询字段getter-setter模块
         field-字段对象
         alias-字段别名

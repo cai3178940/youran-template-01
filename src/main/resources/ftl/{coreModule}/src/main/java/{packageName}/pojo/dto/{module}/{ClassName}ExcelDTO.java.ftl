@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#include "/abstracted/forEntityInsert.ftl">
@@ -23,7 +24,7 @@
 <@call this.addImport("com.alibaba.excel.annotation.ExcelProperty")/>
 <@call this.addImport("com.alibaba.excel.annotation.write.style.ColumnWidth")/>
 <@call this.printClassCom("excel导入【${this.title}】的数据传输对象")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -101,7 +102,7 @@ public class ${this.className}ExcelDTO extends AbstractExcelDTO {
         return example;
     }
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <#list this.insertFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field.jfieldName, parseJfieldType(field))/>
     </#list>

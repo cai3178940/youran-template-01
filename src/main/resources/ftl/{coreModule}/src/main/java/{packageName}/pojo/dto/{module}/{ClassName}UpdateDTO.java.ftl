@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/commonForEntity.ftl">
 <#include "/abstracted/guessDateFormat.ftl">
 <#--定义主体代码-->
@@ -7,7 +8,7 @@
 <@call this.addImport("io.swagger.annotations.ApiModel")/>
 <@call this.addImport("javax.validation.constraints.NotNull")/>
 <@call this.printClassCom("修改【${this.title}】的参数")/>
-<#if this.projectFeature.lombokEnabled>
+<#if lombokEnabled>
     <@call this.addImport("lombok.Data")/>
     <@call this.addImport("lombok.EqualsAndHashCode")/>
 @Data
@@ -72,7 +73,7 @@ public class ${this.className}UpdateDTO extends AbstractDTO {
     </#if>
 </#list>
 
-<#if !this.projectFeature.lombokEnabled>
+<#if !lombokEnabled>
     <@call JavaTemplateFunction.printGetterSetter(this.pk)/>
     <#list this.updateFields as id, field>
         <@call JavaTemplateFunction.printGetterSetter(field)/>

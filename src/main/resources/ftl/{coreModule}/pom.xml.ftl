@@ -1,4 +1,5 @@
 <#include "/abstracted/common.ftl">
+<#include "/abstracted/lombokEnabled.ftl">
 <#include "/abstracted/usingExcel.ftl">
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -24,7 +25,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
-    <#if this.projectFeature.lombokEnabled>
+    <#if lombokEnabled>
         <!-- 用注解简化pojo类 https://projectlombok.org/ -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -49,13 +50,7 @@
                     <source>${r'$'}{java.version}</source>
                     <target>${r'$'}{java.version}</target>
                     <annotationProcessorPaths>
-                        <!-- 提供编译期生成mapper实现类 -->
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${r'$'}{org.mapstruct.version}</version>
-                        </path>
-                    <#if this.projectFeature.lombokEnabled>
+                    <#if lombokEnabled>
                         <!-- 编译期生成pojo的getter-setter -->
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -63,6 +58,12 @@
                             <version>${r'$'}{lombok.version}</version>
                         </path>
                     </#if>
+                        <!-- 提供编译期生成mapper实现类 -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${r'$'}{org.mapstruct.version}</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
