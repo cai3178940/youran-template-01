@@ -7,6 +7,7 @@
 - 格式化java代码(按idea默认格式)
 - 优化excel导入导出代码
 - 升级maven依赖
+- 可选择用knife4j替换原始的swagger-ui
 
 ## 1.3.x新特性
 - 支持生成自定义表格和echarts图表的后端服务代码
