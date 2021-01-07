@@ -318,7 +318,6 @@ public class ${this.className}Controller extends AbstractController implements $
                     </#list>
                         "${fkFieldNames}请填入id值",
                 </#if>
-                        "“部门id”请填入id值",
                 <#if withinEntityList?hasContent>
                     <#assign withinTitles = "">
                     <#list withinEntityList as otherEntity>
