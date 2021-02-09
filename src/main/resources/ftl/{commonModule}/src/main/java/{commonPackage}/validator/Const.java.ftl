@@ -65,11 +65,50 @@ public @interface Const {
             if (checkMethod == null) {
                 return false;
             }
-            boolean success;
+            boolean success = true;
+            // 校验常量数组
+            if (value.getClass().isArray()) {
+                Object[] array = (Object[]) value;
+                for (Object obj : array) {
+                    success &= this.doValid(obj);
+                    if (!success) {
+                        break;
+                    }
+                }
+            }
+            // 校验常量集合
+            else if (value instanceof Iterable) {
+                Iterable iterable = (Iterable) value;
+                for (Object obj : iterable) {
+                    success &= this.doValid(obj);
+                    if (!success) {
+                        break;
+                    }
+                }
+            }
+            // 校验单个常量
+            else {
+                success = this.doValid(value);
+            }
+            if (!success && StringUtils.isNotBlank(defaultMsg)) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate(defaultMsg)
+                        .addConstraintViolation();
+            }
+            return success;
+        }
+
+        /**
+         * 单个常量值校验
+         */
+        private boolean doValid(Object value) {
+            if (value == null) {
+                return true;
+            }
             try {
                 Object result = checkMethod.invoke(null, value);
                 if (result instanceof Boolean) {
-                    success = (Boolean) result;
+                    return (Boolean) result;
                 } else {
                     throw new RuntimeException("校验方法返回值类型必须是boolean");
                 }
@@ -80,14 +119,8 @@ public @interface Const {
                 logger.error("自定义校验异常", e);
                 throw new RuntimeException("自定义校验异常", e);
             }
-
-            if (!success && StringUtils.isNotBlank(defaultMsg)) {
-                context.disableDefaultConstraintViolation();
-                context.buildConstraintViolationWithTemplate(defaultMsg)
-                        .addConstraintViolation();
-            }
-            return success;
         }
+
     }
 
 }
