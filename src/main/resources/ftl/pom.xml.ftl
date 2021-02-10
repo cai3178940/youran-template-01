@@ -13,7 +13,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>${this.groupId}</groupId>
     <artifactId>${this.originProjectName}</artifactId>
+<#if this.hasLabel("flatten-maven-plugin")>
+    <version>${r'$'}{revision}</version>
+<#else>
     <version>1.0.0-SNAPSHOT</version>
+</#if>
     <packaging>pom</packaging>
 
     <modules>
@@ -23,6 +27,9 @@
     </modules>
 
     <properties>
+    <#if this.hasLabel("flatten-maven-plugin")>
+        <revision>1.0.0-SNAPSHOT</revision>
+    </#if>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -160,4 +167,37 @@
         </dependencies>
     </dependencyManagement>
 
+<#if this.hasLabel("flatten-maven-plugin")>
+    <build>
+        <plugins>
+            <!-- version占位符替换插件-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.5</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</#if>
 </project>

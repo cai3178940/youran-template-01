@@ -8,7 +8,11 @@
     <parent>
         <artifactId>${this.originProjectName}</artifactId>
         <groupId>${this.groupId}</groupId>
+    <#if this.hasLabel("flatten-maven-plugin")>
+        <version>${r'$'}{revision}</version>
+    <#else>
         <version>1.0.0-SNAPSHOT</version>
+    </#if>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

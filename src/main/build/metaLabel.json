@@ -13,6 +13,13 @@
       "desc": "lombok是一个Java库，可以通过简单的注解的形式来帮助我们简化和消除一些必须有但显得很臃肿的Java代码，比如常见的Getter&Setter、toString()、构造函数等等。我们将利用lombok来简化pojo类，详情请访问lombok主页：https://projectlombok.org",
       "mode": "select",
       "candidate": ["true", "false"]
+    },
+    {
+      "key": "flatten-maven-plugin",
+      "name": "是否通过flatten-maven-plugin控制统一的版本号",
+      "desc": "在父pom中引入flatten-maven-plugin插件，并定义一个revision属性来指定统一的版本号，在子pom文件中使用${revision}占位符指定版本号。适合maven多模块化项目，并且所有模块版本号相同的场景。",
+      "mode": "none",
+      "candidate": []
     }
   ],
   "entity": [],
