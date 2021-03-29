@@ -1,5 +1,10 @@
 [
   {
+    "fileName": ".editorconfig.ftl",
+    "contextType": 1,
+    "fileType": 1
+  },
+  {
     "fileName": ".gitignore.ftl",
     "contextType": 1,
     "fileType": 1

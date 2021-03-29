@@ -5,7 +5,7 @@
     <groupId>com.youran</groupId>
     <artifactId>youran-template-01</artifactId>
     <!-- 提醒自己：每次改版本号需要同时修改template.json里面的版本号-->
-    <version>1.4.1</version>
+    <version>1.4.2</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 

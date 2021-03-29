@@ -1,7 +1,7 @@
 {
   "code": "youran-template-01",
   "name": "java后端模板",
-  "templateVersion": "1.4.1",
+  "templateVersion": "1.4.2",
   "sysLowVersion": "3.5.0",
   "sysDefault": true,
   "remark": "【从remark.md文件解析】",

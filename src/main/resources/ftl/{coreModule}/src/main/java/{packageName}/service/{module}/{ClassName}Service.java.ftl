@@ -109,12 +109,15 @@ public class ${this.className}Service {
 <#list this.fields as id, field>
     <#if !field.insert && field.notNull && field.specialField?default("")?length == 0>
         <#if !field.primaryKey>
-        ${this.classNameLower}.set${field.jfieldName?capFirst}(${guessDefaultJfieldValue(field.jfieldType)});
+        // 设置默认【${field.fieldDesc}】
+        ${this.classNameLower}.set${field.jfieldName?capFirst}(${guessDefaultJfieldValue(field.jfieldType, field.defaultValue)});
         <#elseIf field.pkStrategy == PrimaryKeyStrategy.UUID_16.getValue()>
             <@call this.addImport("${this.commonPackage}.util.UUIDUtil")/>
+        // 设置UUID主键
         ${this.classNameLower}.set${field.jfieldName?capFirst}(UUIDUtil.getUUID16());
         <#elseIf field.pkStrategy == PrimaryKeyStrategy.UUID_32.getValue()>
             <@call this.addImport("${this.commonPackage}.util.UUIDUtil")/>
+        // 设置UUID主键
         ${this.classNameLower}.set${field.jfieldName?capFirst}(UUIDUtil.getUUID());
         <#elseIf field.pkStrategy == PrimaryKeyStrategy.NONE.getValue()>
         // TODO 请手动给主键赋值
