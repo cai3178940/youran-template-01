@@ -16,14 +16,14 @@
     },
     {
       "key": "flatten-maven-plugin",
-      "name": "是否通过flatten-maven-plugin控制统一的版本号",
+      "name": "通过flatten-maven-plugin控制统一的版本号",
       "desc": "在父pom中引入flatten-maven-plugin插件，并定义一个revision属性来指定统一的版本号，在子pom文件中使用${revision}占位符指定版本号。适合maven多模块化项目，并且所有模块版本号相同的场景。",
       "mode": "none",
       "candidate": []
     },
     {
       "key": "editorconfig",
-      "name": "是否添加.editorconfig文件",
+      "name": "添加.editorconfig文件",
       "desc": "在项目根目录创建.editorconfig文件，用于统一代码规范和风格，详情请访问官方主页：https://editorconfig.org/",
       "mode": "none",
       "candidate": []

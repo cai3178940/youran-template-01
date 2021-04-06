@@ -280,10 +280,12 @@ public class ${this.className}Controller extends AbstractController implements $
         return ResponseEntity.ok(count);
     }
 
+    <#assign dicFieldSet = CommonTemplateFunction.createHashSet()>
     <#assign dicSet = CommonTemplateFunction.createHashSet()>
     <#list this.insertFields as id, field>
         <#if field.dicType??>
-            <@justCall dicSet.add(field)/>
+            <@justCall dicFieldSet.add(field)/>
+            <@justCall dicSet.add(field.dicType)/>
         </#if>
     </#list>
     <@call this.addImport("org.springframework.web.bind.annotation.GetMapping")/>
@@ -291,8 +293,7 @@ public class ${this.className}Controller extends AbstractController implements $
     @Override
     @GetMapping("/template")
     public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
-        <#list dicSet as dicField>
-            <#assign dic = dicField.dicType>
+        <#list dicSet as dic>
             <@call this.addImport("java.util.Arrays")/>
             <@call this.addConstImport(dic)/>
         String[] ${dic?uncapFirst}Constraint = Arrays.stream(${dic}.values()).map(${dic}::getDesc).toArray(String[]::new);
@@ -329,7 +330,7 @@ public class ${this.className}Controller extends AbstractController implements $
                         "${withinTitles}支持一次性填入多个id（请用英文逗号分隔）",
                 </#if>
                 },
-                <#if dicSet?hasContent>
+                <#if dicFieldSet?hasContent>
                     <@call this.addImport("com.alibaba.excel.write.handler.WriteHandler")/>
                 new WriteHandler[]{
                     <#list this.insertFields as id, field>
