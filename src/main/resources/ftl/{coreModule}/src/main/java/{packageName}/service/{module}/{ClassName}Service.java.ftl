@@ -97,7 +97,7 @@ public class ${this.className}Service {
      * @param ${this.classNameLower}DTO
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     public ${this.className}PO save(${this.className}AddDTO ${this.classNameLower}DTO) {
         ${this.className}PO ${this.classNameLower} = ${this.className}Mapper.INSTANCE.fromAddDTO(${this.classNameLower}DTO);
         <@checkForeignKeys this.insertFields/>
@@ -150,7 +150,7 @@ public class ${this.className}Service {
      * @param list
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     <@call this.addImport("java.util.List")/>
     public int batchSave(List<${this.className}AddDTO> list) {
         <@call this.addImport("org.apache.commons.collections4.CollectionUtils")/>
@@ -170,7 +170,7 @@ public class ${this.className}Service {
      * @param ${this.classNameLower}UpdateDTO
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     <#if this.metaEntity.versionField??>
         <@call this.addImport("${this.commonPackage}.optimistic.OptimisticLock")/>
     @OptimisticLock
@@ -372,7 +372,7 @@ public class ${this.className}Service {
      * @param ${this.id}s
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     public int delete(${this.type}... ${this.id}s) {
         int count = 0;
         for (${this.type} ${this.id} : ${this.id}s) {
@@ -460,7 +460,7 @@ public class ${this.className}Service {
      * @param ${otherFkId}
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     public int add${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}... ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
         if (ArrayUtils.isEmpty(${otherFkId})) {
@@ -476,7 +476,7 @@ public class ${this.className}Service {
      * @param ${otherFkId}
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     public int remove${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}... ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
         if (ArrayUtils.isEmpty(${otherFkId})) {
@@ -494,7 +494,7 @@ public class ${this.className}Service {
      * @param ${otherFkId}
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     public int set${otherCName}(${this.type} ${this.id}, ${otherPk.jfieldType}[] ${otherFkId}) {
         ${this.className}PO ${this.classNameLower} = this.get${this.className}(${this.id}, true);
         ${this.classNameLower}DAO.removeAll${otherCName}(${this.id});
