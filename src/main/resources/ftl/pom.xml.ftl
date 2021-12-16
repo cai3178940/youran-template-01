@@ -115,6 +115,12 @@
                 <groupId>com.parmet</groupId>
                 <artifactId>mysql2h2-parser</artifactId>
                 <version>${r'$'}{mysql2h2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>log4j-core</artifactId>
+                        <groupId>org.apache.logging.log4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- mapstruct提供属性映射功能 http://mapstruct.org/ -->
             <dependency>
