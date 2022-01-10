@@ -10,7 +10,7 @@
 ## 表结构
 <#list this.metaEntities as metaEntity>
 
-### ${metaEntity.desc?replace('\'','"')?replace('\n','\\n')}【${metaEntity.tableName}】
+### <#if metaEntity.desc??>${metaEntity.desc?replace('\'','"')?replace('\n','\\n')}</#if>【${metaEntity.tableName}】
 
 |字段名 | 类型 | 非空 | 键 | 注释 |
 |------ | ---- | --- | --- | ---- |
