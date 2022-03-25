@@ -43,3 +43,5 @@ Thumbs.db
 src/main/webapp/WEB-INF/classes/
 bin
 .rules
+
+.flattened-pom.xml
