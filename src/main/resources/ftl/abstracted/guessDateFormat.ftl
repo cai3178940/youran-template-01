@@ -8,11 +8,11 @@
     <#elseIf field.editType == EditType.DATETIME.getValue()>
         <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
         <#return "JsonFieldConst.DEFAULT_DATETIME_FORMAT">
-    <#elseIf field.fieldType == JFieldType.DATE.getJavaType()
-    || field.fieldType == JFieldType.LOCALDATE.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.DATE.getJavaType()
+    || field.jfieldType == JFieldType.LOCALDATE.getJavaType()>
         <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
         <#return "JsonFieldConst.DEFAULT_DATE_FORMAT">
-    <#elseIf field.fieldType == JFieldType.LOCALDATETIME.getJavaType()>
+    <#elseIf field.jfieldType == JFieldType.LOCALDATETIME.getJavaType()>
         <@call this.addImport("${this.commonPackage}.constant.JsonFieldConst")/>
         <#return "JsonFieldConst.DEFAULT_DATETIME_FORMAT">
     <#else>
